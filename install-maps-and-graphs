@@ -1,0 +1,38 @@
+#!/bin/sh
+
+server_user=
+
+if [ "$(id -un)" != "$server_user" ]; then
+	printf 'You must run this as %s user\n' "$server_user"
+	exit 1
+fi
+
+set -- git 7z curl
+
+for pkg in "$@"; do
+	if  [ -z "$(command -v "$pkg")" ]; then
+		to_install="$to_install $pkg"
+	fi
+done
+
+if [ -n "$to_install" ]; then
+	printf '\nInstall%s\n\n' "$to_install"
+	exit 1
+fi
+
+mkdir -v cs16-maps-and-graphs
+cd cs16-maps-and-graphs || exit
+
+printf '==> Downloading map pack, it is going to take some time\n'
+
+if ! curl -fL 'https://archive.org/download/cs-1.6-mega-map-pack-v-2018.1.7z/CS%201.6%20Mega%20Map%20Pack%20v2018.1.7z' -o cs-1.6-mega-map-pack-v-2018.1.7z; then
+	printf 'Failed to download archive\n'
+	exit 1
+fi
+
+git clone https://github.com/yapb/graph
+
+7z x -o"/home/$server_user/.steam/cs16" cs-1.6-mega-map-pack-v-2018.1.7z
+cp -v graph/graph/* "/home/$server_user/.steam/cs16/cstrike/addons/yapb/data/graph"
+
+printf '\nInstallation completed\n\n'

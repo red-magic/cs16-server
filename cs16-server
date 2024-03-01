@@ -1,0 +1,69 @@
+#!/bin/sh 
+
+if [ "$(id -u)" -ne 0 ]; then
+	printf 'Use sudo to run this script\n'
+	exit 1
+fi
+
+server_user=
+steam_dir=/home/$server_user/.steam
+server_conf=
+
+start_server() {
+	if [ -n "$(pgrep hlds)" ]; then
+		printf 'Server is already running\n'
+		exit 1
+	fi
+	printf 'Starting server\n'
+	while read -r line || [ -n "$line" ]; do
+		eval "$line"
+	done < "$server_conf"
+	su "$server_user" -c "cd $steam_dir/cs16 && ./hlds_run ${server_params:?} &> /dev/null &"
+}
+
+stop_server() {
+	if [ -z "$(pgrep hlds)" ]; then
+		printf 'Server is not running\n'
+		exit 1
+	fi
+	printf 'Stopping server\n'
+	su "$server_user" -c "kill -15 $(pgrep hlds_linux) &> /dev/null"
+	su "$server_user" -c "kill -15 $(pgrep hlds_run) &> /dev/null"
+}
+
+restart_server() {
+	if [ -n "$(pgrep hlds)" ]; then
+		printf 'Stopping server\n'
+		su "$server_user" -c "kill -15 $(pgrep hlds_linux) &> /dev/null"
+		su "$server_user" -c "kill -15 $(pgrep hlds_run) &> /dev/null"
+		printf 'Restarting server\n'
+	else
+		printf 'Starting server\n'
+	fi
+	while read -r line || [ -n "$line" ]; do
+		eval "$line"
+	done < "$server_conf"
+	su "$server_user" -c "cd $steam_dir/cs16 && ./hlds_run ${server_params:?} &> /dev/null &"
+}
+
+update_server() {
+	if [ -n "$(pgrep hlds)" ]; then
+		printf 'Stop server first\n'
+		exit 1
+	fi
+	printf 'Updating server\n'
+	su "$server_user" -c "cd $steam_dir && ./steamcmd.sh +force_install_dir cs16 +login anonymous +app_update 90 validate +quit"
+}
+
+print_help() {
+	printf 'Usage: %s [start | restart | stop | update]\n' "$(basename "$0")"
+	exit 1
+}
+
+case $1 in
+	start) start_server;;
+	restart) restart_server;;
+	stop) stop_server;;
+	update) update_server;;
+	-h | --help | *) print_help;;
+esac

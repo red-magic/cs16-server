@@ -1,0 +1,113 @@
+#!/bin/sh
+
+if [ "$(id -u)" -ne 0 ]; then
+	printf '\nUse sudo to run this script\n\n'
+	exit 1
+fi
+
+if [ -n "$(command -v pacman)" ]; then
+	if [ ! -d /usr/lib32 ] || [ "$(find /usr/lib32 -type f | grep libstdc++)" = "" ] ; then
+		printf '\nInstall 32 bit libstdc++\n'
+		printf 'README.md for more info\n\n'
+		exit 1
+	fi
+fi
+
+if [ -n "$(command -v apt)" ]; then
+	if [ "$(find /usr/lib32 -type f | grep libstdc++)" = "" ]; then
+		printf '\nInstall 32 bit libstdc++\n'
+		printf 'README.md for more info\n\n'
+		exit 1
+	fi
+fi
+
+if [ -n "$(command -v dnf)" ]; then
+	if [ "$(find /usr/lib -type f | grep libstdc++)" = "" ] ; then
+		printf '\nInstall 32 bit libstdc++\n'
+		printf 'README.md for more info\n\n'
+		exit 1
+	fi
+fi
+
+set -- sudo tar xz gzip curl
+
+for pkg in "$@"; do
+	if  [ -z "$(command -v "$pkg")" ]; then
+		to_install="$to_install $pkg"
+	fi
+done
+
+if [ -n "$to_install" ]; then
+	printf '\nInstall%s\n\n' "$to_install"
+	exit 1
+fi
+
+set -- \
+https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz \
+https://github.com/Bots-United/metamod-p/releases/download/v1.21p38/metamod_i686_linux_win32-1.21p38.tar.xz \
+https://www.amxmodx.org/amxxdrop/1.10/amxmodx-latest-base-linux.tar.gz \
+https://www.amxmodx.org/amxxdrop/1.10/amxmodx-latest-cstrike-linux.tar.gz \
+https://github.com/yapb/yapb/releases/download/4.4.957/yapb-4.4.957-linux.tar.xz
+
+work_dir=$(pwd)
+
+mkdir -vm 755 /tmp/cs16-server
+cd /tmp/cs16-server || exit
+
+for link in "$@"; do
+	printf "==> Downloading %s\n" "$link"
+	curl -fLO "$link" && continue
+	printf "Failed to download %s\n" "$link"
+	exit 1
+done
+
+cd "$work_dir" || exit
+
+chmod -v 644 /tmp/c16-server/*
+
+server_user=steam
+server_conf=/etc/cs16-server/cs16-server.conf
+
+useradd -m -s /usr/bin/bash $server_user
+passwd -l $server_user
+
+install -vm 755 cs16-server -t /usr/bin
+install -vDm 644 cs16-server.conf "$server_conf"
+
+cp -vf install-stage-two /tmp/install-stage-two
+cp -vf install-maps-and-graphs /tmp/install-maps-and-graphs
+
+chmod -v 755 /tmp/install-stage-two
+chmod -v 755 /tmp/install-maps-and-graphs
+
+sed -i "s|server_user=|server_user=$server_user|" /usr/bin/cs16-server
+sed -i "s|server_conf=|server_conf=$server_conf|" /usr/bin/cs16-server
+sed -i "s|server_user=|server_user=$server_user|" /tmp/install-maps-and-graphs
+
+sudo -u $server_user /tmp/install-stage-two
+
+if [ -x "$(command -v systemctl)" ]; then
+	install -vm 644 cs16-server.service -t /usr/lib/systemd/system
+fi
+
+printf '\nInstallation completed\n\n'
+
+# Admin access
+# [cs16/cstrike/addons/amxmodx/configs/users.ini]
+# "STEAM_0:0:YOUR_STEAM_ID" "" "abcdefghijklmnopqrstuv" "ce"
+# [console]
+# bind "]" "amxmodmenu"
+#
+# Yapb
+# [cs16/cstrike/addons/yapb/conf/yapb.cfg]
+# yb_password="your_password"
+# [console]
+# bind "[" "yb menu"
+# setinfo _ybpw "your_password"
+#
+# Additional config
+# [cs16/cstrike/server.cfg]
+# mp_timelimit 0
+# mp_freezetime 0
+# mp_buytime 10
+# mp_startmoney 16000

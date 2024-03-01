@@ -1,0 +1,12 @@
+[Unit]
+Description=Counter-Strike 1.6 Dedicated Server
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/cs16-server start
+ExecRestart=/usr/bin/cs16-server restart
+ExecStop=/usr/bin/cs16-server stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
