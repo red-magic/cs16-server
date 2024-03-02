@@ -1,4 +1,4 @@
-#!/bin/sh 
+#!/bin/sh
 
 if [ "$(id -u)" -ne 0 ]; then
 	printf 'Use sudo to run this script\n'

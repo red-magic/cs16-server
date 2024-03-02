@@ -13,7 +13,7 @@ mkdir -pv addons/metamod/dlls
 mv -vf metamod.* addons/metamod/dlls
 
 cnt=0
-while [ $((cnt)) -lt 3 ]; do 
+while [ $((cnt)) -lt 3 ]; do
 	# Update needs to be run a few times to download and validate everything
 	./steamcmd.sh +force_install_dir cs16 +login anonymous +app_update 90 validate +quit
 	cnt=$((cnt+1))
