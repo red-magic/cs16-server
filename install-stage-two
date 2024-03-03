@@ -27,4 +27,4 @@ printf 'linux addons/yapb/bin/yapb.so\n' >> cs16/cstrike/addons/metamod/plugins.
 touch cs16/cstrike/listip.cfg
 touch cs16/cstrike/banned.cfg
 
-cp -vf /tmp/install-maps-and-graphs "/home/$USER"
+cp -vf /tmp/install-maps-and-graphs ~/
