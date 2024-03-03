@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd "/home/$USER" || exit
-
 mkdir -v ~/.steam
 ln -sfv ~/.steam ~/.steam/steam
 
