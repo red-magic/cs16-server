@@ -7,6 +7,13 @@ if [ "$(id -un)" != "$server_user" ]; then
 	exit 1
 fi
 
+ctrl_c() {
+	printf '\nAborted\n\n'
+	exit 1
+}
+
+trap ctrl_c INT
+
 set -- git 7z curl
 
 for pkg in "$@"; do
