@@ -47,9 +47,8 @@ stop_server() {
 
 restart_server() {
 	if [ -n "$(pgrep hlds)" ]; then
-		printf 'Stopping server\n'
-		_kill_hlds
 		printf 'Restarting server\n'
+		_kill_hlds
 	else
 		printf 'Starting server\n'
 	fi
