@@ -88,13 +88,15 @@ sed -i "s|server_user=|server_user=$server_user|" /usr/bin/cs16-server
 sed -i "s|server_conf=|server_conf=$server_conf|" /usr/bin/cs16-server
 sed -i "s|server_user=|server_user=$server_user|" /tmp/install-maps-and-graphs
 
-sudo -u $server_user /tmp/install-stage-two
-
 if [ -x "$(command -v systemctl)" ]; then
 	install -vm 644 cs16-server.service -t /usr/lib/systemd/system
 fi
 
-printf '\nInstallation completed\n\n'
+sudo -u $server_user /tmp/install-stage-two
+
+if [ -f "/home/$server_user/install-maps-and-graphs" ]; then
+	printf '\nInstallation completed\n\n'
+fi
 
 # Admin access
 # [cs16/cstrike/addons/amxmodx/configs/users.ini]

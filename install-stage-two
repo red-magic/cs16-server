@@ -1,5 +1,12 @@
 #!/bin/sh
 
+ctrl_c() {
+	printf '\nAborted\n\n'
+	exit 1
+}
+
+trap ctrl_c INT
+
 mkdir -v ~/.steam
 ln -sfv ~/.steam ~/.steam/steam
 
