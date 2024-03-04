@@ -8,7 +8,7 @@ fi
 server_user=steam
 server_conf=/etc/cs16-server/cs16-server.conf
 
-if [ "$1" = "remove" ]; then
+if [ "$1" = remove ]; then
 	if [ -n "$(pgrep hlds)" ]; then
 		printf 'Server is running\n'
 		printf 'Stop it before uninstalling it\n'
