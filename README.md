@@ -51,15 +51,17 @@ You can change ```custom_params``` to whatever you want to, it all just passes o
 
 ## Removal
 
-If you want to uninstall and clean everything:
+Run ```./install remove``` to uninstall and clean everything.
+
+User ```steam``` will be deleted. The following directories and files will also be deleted:
 
 ```
-rm -vf /usr/bin/cs16-server
-rm -vrf /etc/cs16-server
-rm -vrf /home/steam
-rm -vf /usr/lib/systemd/system/cs16-server.service
-userdel steam
+/home/steam
+/etc/cs16-server
+/usr/bin/cs16-server
+/usr/lib/systemd/system/cs16-server.service
 ```
+
 ## Extra
 
 A big map pack is available on the [Internet Archive](https://archive.org/details/cs-1.6-mega-map-pack-v-2018.1.7z).
