@@ -6,7 +6,7 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 server_user=
-server_conf=
+server_conf=/etc/cs16-server/cs16-server.conf
 
 _read_conf() {
 	while read -r line || [ -n "$line" ]; do
