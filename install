@@ -108,6 +108,8 @@ fi
 
 sudo -u $server_user /tmp/install-stage-two
 
+chmod 700 /home/$server_user
+
 if [ -f "/home/$server_user/install-maps-and-graphs" ]; then
 	printf '\nInstallation completed\n\n'
 fi
