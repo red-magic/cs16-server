@@ -5,20 +5,32 @@ if [ "$(id -u)" -ne 0 ]; then
 	exit 1
 fi
 
+ctrl_c() {
+	printf '\nAborted\n\n'
+	exit 1
+}
+
+trap ctrl_c INT
+
+lib32_warn() {
+	printf '\nInstall 32 bit libstdc++\n'
+	printf 'README.md for more info\n\n'
+	exit 1
+}
+
 if [ -n "$(command -v pacman)" ] || [ -n "$(command -v apt)" ]; then
 	if [ ! -d /usr/lib32 ] || [ "$(find /usr/lib32 -type f | grep libstdc++)" = "" ]; then
-		printf '\nInstall 32 bit libstdc++\n'
-		printf 'README.md for more info\n\n'
-		exit 1
+		lib32_warn
 	fi
-fi
-
-if [ -n "$(command -v dnf)" ]; then
+elif [ -n "$(command -v dnf)" ]; then
 	if [ "$(find /usr/lib -type f | grep libstdc++)" = "" ]; then
-		printf '\nInstall 32 bit libstdc++\n'
-		printf 'README.md for more info\n\n'
-		exit 1
+		lib32_warn
 	fi
+else
+	stty -echo
+	printf '\nUnknown distro, make sure you have 32 bit libstdc++\n'
+	printf 'Press Enter to continue\n' && read -r
+	stty echo
 fi
 
 set -- sudo tar xz gzip curl
