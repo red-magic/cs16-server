@@ -88,6 +88,7 @@ cd "$work_dir" || exit
 chmod -v 644 /tmp/c16-server/*
 
 useradd -m -s /usr/bin/bash $server_user
+chmod 700 /home/$server_user
 passwd -l $server_user
 
 install -vm 755 cs16-server -t /usr/bin
@@ -107,8 +108,6 @@ if [ -x "$(command -v systemctl)" ]; then
 fi
 
 sudo -u $server_user /tmp/install-stage-two
-
-chmod 700 /home/$server_user
 
 if [ -f "/home/$server_user/install-maps-and-graphs" ]; then
 	printf '\nInstallation completed\n\n'
