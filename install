@@ -13,7 +13,7 @@ if [ "$1" = remove ]; then
 		printf 'Stop it before uninstalling it\n'
 		exit 1
 	fi
-	rm -vrf "/home/${server_user:?}"
+	rm -vrf /home/${server_user:?}
 	rm -vrf /etc/cs16-server
 	rm -vf /usr/bin/cs16-server
 	if [ -n "$(command -v systemctl)" ]; then
