@@ -74,5 +74,5 @@ case $1 in
 	restart) restart_server;;
 	stop) stop_server;;
 	update) update_server;;
-	-h | --help | *) print_help;;
+	*) print_help;;
 esac
