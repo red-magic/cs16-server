@@ -27,6 +27,7 @@ if [ -n "$to_install" ]; then
 	exit 1
 fi
 
+cd "/home/$server_user" || exit
 mkdir -v cs16-maps-and-graphs
 cd cs16-maps-and-graphs || exit
 

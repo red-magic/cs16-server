@@ -36,7 +36,7 @@ If you use a systemd based distro ```cs16-server.service``` will be installed to
 
 ## Usage
 
-```Usage: cs16-server [start | restart | stop | update]```
+```Usage: cs16-server [start | restart | stop | update | status]```
 
 ## cs16-server.conf
 

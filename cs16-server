@@ -64,8 +64,17 @@ update_server() {
 	_update_hlds
 }
 
+status_server() {
+	if [ -z "$(pgrep hlds)" ]; then
+		printf 'Server is not running\n'
+	else
+		printf 'Server is running with the following args:\n'
+		pgrep -a hlds_linux | awk '{$1=""}1' | awk '{$1=$1}1'
+	fi
+}
+
 print_help() {
-	printf 'Usage: %s [start | restart | stop | update]\n' "$(basename "$0")"
+	printf 'Usage: %s [start | restart | stop | update | status]\n' "$(basename "$0")"
 	exit 1
 }
 
@@ -74,5 +83,6 @@ case $1 in
 	restart) restart_server;;
 	stop) stop_server;;
 	update) update_server;;
+	status) status_server;;
 	*) print_help;;
 esac
