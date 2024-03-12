@@ -10,11 +10,9 @@ ctrl_c() {
 trap ctrl_c INT
 
 cd "/home/$server_user/" || exit
-
 mkdir -v .steam
-ln -sfv .steam .steam/steam
-
 cd .steam || exit
+ln -sfv . steam
 
 for arc in /tmp/cs16-server/*.tar.*; do tar xvf "$arc"; done
 

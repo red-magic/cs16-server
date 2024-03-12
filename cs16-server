@@ -15,7 +15,7 @@ _read_conf() {
 }
 
 _start_hlds() {
-	su "$server_user" -c "cd ~/.steam/cs16 && ./hlds_run ${server_params:?} &> /dev/null &"
+	su "$server_user" -c "cd /home/$server_user/.steam/cs16 && ./hlds_run ${server_params:?} &> /dev/null &"
 }
 
 _kill_hlds() {
@@ -24,7 +24,7 @@ _kill_hlds() {
 }
 
 _update_hlds() {
-	su "$server_user" -c "cd ~/.steam && ./steamcmd.sh +force_install_dir cs16 +login anonymous +app_update 90 validate +quit"
+	su "$server_user" -c "cd /home/$server_user/.steam && ./steamcmd.sh +force_install_dir cs16 +login anonymous +app_update 90 validate +quit"
 }
 
 start_server() {
