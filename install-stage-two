@@ -1,5 +1,7 @@
 #!/bin/sh
 
+server_user=
+
 ctrl_c() {
 	printf '\nAborted\n'
 	exit 1
@@ -7,10 +9,12 @@ ctrl_c() {
 
 trap ctrl_c INT
 
-mkdir -v ~/.steam
-ln -sfv ~/.steam ~/.steam/steam
+cd "/home/$server_user/" || exit
 
-cd ~/.steam || exit
+mkdir -v .steam
+ln -sfv .steam .steam/steam
+
+cd .steam || exit
 
 for arc in /tmp/cs16-server/*.tar.*; do tar xvf "$arc"; done
 
@@ -25,7 +29,7 @@ while [ $((cnt)) -lt 3 ]; do
 done
 
 mv -vf addons cs16/cstrike
-ln -sfv ~/.steam/linux32 ~/.steam/sdk32
+ln -sfv linux32 sdk32
 
 printf 'linux addons/amxmodx/dlls/amxmodx_mm_i386.so\n' >> cs16/cstrike/addons/metamod/plugins.ini
 printf 'linux addons/yapb/bin/yapb.so\n' >> cs16/cstrike/addons/metamod/plugins.ini
@@ -34,4 +38,4 @@ printf 'linux addons/yapb/bin/yapb.so\n' >> cs16/cstrike/addons/metamod/plugins.
 touch cs16/cstrike/listip.cfg
 touch cs16/cstrike/banned.cfg
 
-cp -vf /tmp/install-maps-and-graphs ~/
+cp -vf /tmp/install-maps-and-graphs "/home/$server_user"
