@@ -47,7 +47,12 @@ elif [ -n "$(command -v dnf)" ]; then
 else
 	stty -echo
 	printf '\nUnknown distro, make sure you have 32 bit libstdc++\n'
-	printf 'Press Enter to continue\n' && read -r
+	printf 'Press Enter to continue\n'
+	while IFS= read -r line; do
+		if [ -z "$line" ]; then
+			break
+		fi
+	done
 	stty echo
 fi
 
