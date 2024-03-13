@@ -96,11 +96,11 @@ useradd -m -s /usr/bin/bash $server_user
 chmod 700 /home/$server_user
 passwd -l $server_user
 
-install -vm 755 cs16-server -t /usr/bin
-install -vDm 644 cs16-server.conf -t /etc/cs16-server
+install -vm 755 cs16-server/cs16-server -t /usr/bin
+install -vDm 644 cs16-server/cs16-server.conf -t /etc/cs16-server
 
-cp -vf install-stage-two /tmp/install-stage-two
-cp -vf install-maps-and-graphs /tmp/install-maps-and-graphs
+cp -vf cs16-server/install-stage-two /tmp/install-stage-two
+cp -vf cs16-server/install-maps-and-graphs /tmp/install-maps-and-graphs
 
 chmod -v 755 /tmp/install-stage-two
 chmod -v 755 /tmp/install-maps-and-graphs
@@ -108,7 +108,7 @@ chmod -v 755 /tmp/install-maps-and-graphs
 sed -i "s|server_user=|server_user=$server_user|" /usr/bin/cs16-server /tmp/install-stage-two /tmp/install-maps-and-graphs
 
 if [ -x "$(command -v systemctl)" ]; then
-	install -vm 644 cs16-server.service -t /usr/lib/systemd/system
+	install -vm 644 cs16-server/cs16-server.service -t /usr/lib/systemd/system
 fi
 
 sudo -u $server_user /tmp/install-stage-two
