@@ -99,8 +99,8 @@ passwd -l $server_user
 install -vm 755 cs16-server/cs16-server -t /usr/bin
 install -vDm 644 cs16-server/cs16-server.conf -t /etc/cs16-server
 
-cp -vf cs16-server/install-stage-two /tmp/install-stage-two
-cp -vf cs16-server/install-maps-and-graphs /tmp/install-maps-and-graphs
+cp -vf install-scripts/install-stage-two /tmp/install-stage-two
+cp -vf install-scripts/install-maps-and-graphs /tmp/install-maps-and-graphs
 
 chmod -v 755 /tmp/install-stage-two
 chmod -v 755 /tmp/install-maps-and-graphs
