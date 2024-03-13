@@ -28,8 +28,6 @@ It also creates ```steam``` user which launches ```install-stage-two``` script.
 
 **metamod is disabled by default**, if you want to enable it uncomment ```enable_metamod``` line in ```cs16-server.conf```
 
-Optionally you can install ```nftables.example``` for a simple firewall.
-
 ### systemd
 
 If you use a systemd based distro ```cs16-server.service``` will be installed to ```/usr/lib/systemd/system``` which you can enable to start ```cs16-server``` on boot.
