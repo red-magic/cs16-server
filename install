@@ -107,7 +107,7 @@ chmod -v 755 /tmp/install-maps-and-graphs
 
 sed -i "s|server_user=|server_user=$server_user|" /usr/bin/cs16-server /tmp/install-stage-two /tmp/install-maps-and-graphs
 
-if [ -x "$(command -v systemctl)" ]; then
+if [ -n "$(command -v systemctl)" ]; then
 	install -vm 644 systemd/cs16-server.service -t /usr/lib/systemd/system
 fi
 
