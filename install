@@ -111,23 +111,3 @@ sudo -u $server_user /tmp/install-stage-two
 if [ -f "/home/$server_user/.steam/cs16/cstrike/banned.cfg" ]; then
 	printf '\nInstallation completed\n\n'
 fi
-
-# Admin access
-# [cs16/cstrike/addons/amxmodx/configs/users.ini]
-# "STEAM_0:0:YOUR_STEAM_ID" "" "abcdefghijklmnopqrstuv" "ce"
-# [console]
-# bind "]" "amxmodmenu"
-#
-# Yapb
-# [cs16/cstrike/addons/yapb/conf/yapb.cfg]
-# yb_password="your_password"
-# [console]
-# bind "[" "yb menu"
-# setinfo _ybpw "your_password"
-#
-# Additional config
-# [cs16/cstrike/server.cfg]
-# mp_timelimit 0
-# mp_freezetime 0
-# mp_buytime 10
-# mp_startmoney 16000
