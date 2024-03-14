@@ -26,7 +26,7 @@ It also creates ```steam``` user which launches ```install-stage-two``` script.
 
 ```steam``` user is created with account locked and password disabled, you need to use ```sudo su - steam``` if you want to do further server configuration in ```/home/steam/.steam``` directory.
 
-yapb bots are disabled by default, if you want to enable them uncomment ```;;linux addons/yapb/bin/yapb.so``` line in ```cs16/cstrike/addons/metamod/plugins.ini```
+yapb bots are disabled by default, if you want to enable them uncomment ```;;linux addons/yapb/bin/yapb.so``` line in ```cs16/cstrike/addons/metamod/plugins.ini```.
 
 ### systemd
 
