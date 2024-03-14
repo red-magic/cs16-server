@@ -1,6 +1,6 @@
 #!/bin/sh
 
-server_user=
+server_user=steam
 
 if [ "$(id -un)" != "$server_user" ]; then
 	printf 'You must run this as %s user\n' "$server_user"

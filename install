@@ -99,13 +99,8 @@ passwd -l $server_user
 install -vm 755 cs16-server/cs16-server -t /usr/bin
 install -vDm 644 cs16-server/cs16-server.conf -t /etc/cs16-server
 
-cp -vf install-scripts/install-stage-two /tmp/install-stage-two
-cp -vf install-scripts/install-maps-and-graphs /tmp/install-maps-and-graphs
-
+cp -vf install-stage-two /tmp/install-stage-two
 chmod -v 755 /tmp/install-stage-two
-chmod -v 755 /tmp/install-maps-and-graphs
-
-sed -i "s|server_user=|server_user=$server_user|" /usr/bin/cs16-server /tmp/install-stage-two /tmp/install-maps-and-graphs
 
 if [ -n "$(command -v systemctl)" ]; then
 	install -vm 644 systemd/cs16-server.service -t /usr/lib/systemd/system
@@ -113,7 +108,7 @@ fi
 
 sudo -u $server_user /tmp/install-stage-two
 
-if [ -f "/home/$server_user/install-maps-and-graphs" ]; then
+if [ -f "/home/$server_user/.steam/cs16/cstrike/banned.cfg" ]; then
 	printf '\nInstallation completed\n\n'
 fi
 

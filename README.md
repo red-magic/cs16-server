@@ -26,7 +26,7 @@ It also creates ```steam``` user which launches ```install-stage-two``` script.
 
 ```steam``` user is created with account locked and password disabled, you need to use ```sudo su - steam``` if you want to do further server configuration in ```/home/steam/.steam``` directory.
 
-**metamod is disabled by default**, if you want to enable it uncomment ```enable_metamod``` line in ```cs16-server.conf```
+yapb bots are disabled by default, if you want to enable them uncomment ```;;linux addons/yapb/bin/yapb.so``` line in ```cs16/cstrike/addons/metamod/plugins.ini```
 
 ### systemd
 
@@ -40,10 +40,10 @@ If you use a systemd based distro ```cs16-server.service``` will be installed to
 
 ```
 custom_params="-pingboost 3 -maxplayers 32 +sv_lan 0 +map de_dust2"
-#enable_metamod="-dll cstrike/addons/metamod/dlls/metamod.so"
+enable_metamod="-dll cstrike/addons/metamod/dlls/metamod.so"
 server_params="-game cstrike -secure $custom_params $enable_metamod"
 ```
-By default it's a vanilla server, but you can uncomment ```enable_metamod``` line which enables **metamod** itself, **amxmodx** and **yapb**.
+Comment out ```enable_metamod``` line with '#' if you want to enable vanilla server without any mods.
 
 You can change ```custom_params``` to whatever you want to, it all just passes options to ```hlds_run```.
 
@@ -65,5 +65,3 @@ User ```steam``` will be deleted. The following directories and files will also 
 A big map pack is available on the [Internet Archive](https://archive.org/details/cs-1.6-mega-map-pack-v-2018.1.7z).
 
 Bot waypoints for maps are downloaded automatically if there's no ```.graph``` file for a map, but you can also get them all from [yapb/graph](https://github.com/yapb/graph) repo.
-
-Or you can do all above using ```install-maps-and-graphs``` script which is copied to ```/home/steam``` during installation. ~15Gb of free space is required for doing this.

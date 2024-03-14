@@ -1,6 +1,6 @@
 #!/bin/sh
 
-server_user=
+server_user=steam
 
 ctrl_c() {
 	printf '\nAborted\n'
@@ -30,10 +30,8 @@ mv -vf addons cs16/cstrike
 ln -sfv linux32 sdk32
 
 printf 'linux addons/amxmodx/dlls/amxmodx_mm_i386.so\n' >> cs16/cstrike/addons/metamod/plugins.ini
-printf 'linux addons/yapb/bin/yapb.so\n' >> cs16/cstrike/addons/metamod/plugins.ini
+printf ';;linux addons/yapb/bin/yapb.so\n' >> cs16/cstrike/addons/metamod/plugins.ini
 
 # Create cfg files so steamcmd won't complain
 touch cs16/cstrike/listip.cfg
 touch cs16/cstrike/banned.cfg
-
-cp -vf /tmp/install-maps-and-graphs "/home/$server_user"

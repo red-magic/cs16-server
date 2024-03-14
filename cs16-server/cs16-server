@@ -5,7 +5,7 @@ if [ "$(id -u)" -ne 0 ]; then
 	exit 1
 fi
 
-server_user=
+server_user=steam
 server_conf=/etc/cs16-server/cs16-server.conf
 
 _read_conf() {
