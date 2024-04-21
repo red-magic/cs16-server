@@ -15,6 +15,7 @@ if [ "$1" = remove ]; then
 	fi
 	rm -vrf /home/${server_user:?}
 	rm -vrf /etc/cs16-server
+	rm -vf /usr/share/man/man1/cs16-server.1.gz
 	rm -vf /usr/bin/cs16-server
 	if [ -n "$(command -v systemctl)" ]; then
 		rm -vf /usr/lib/systemd/system/cs16-server.service
@@ -98,6 +99,7 @@ passwd -l $server_user
 
 install -vm 755 cs16-server/cs16-server -t /usr/bin
 install -vDm 644 cs16-server/cs16-server.conf -t /etc/cs16-server
+install -vm 644 man/cs16-server.1.gz -t /usr/share/man/man1
 
 cp -vf install-stage-two /tmp/install-stage-two
 chmod -v 755 /tmp/install-stage-two

@@ -46,7 +46,7 @@ server_params="-game cstrike -secure $custom_params $enable_metamod"
 
 You can change ```custom_params``` to whatever you want to, it all just passes options to ```hlds_run```.
 
-Comment out ```enable_metamod``` line with ```#``` if you want to enable vanilla server without any mods.
+Comment out ```enable_metamod``` line with ```#``` if you want to have a pure vanilla server without any mods.
 
 ## Removal
 
