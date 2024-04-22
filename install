@@ -93,7 +93,7 @@ cd "$work_dir" || exit
 
 chmod -v 644 /tmp/c16-server/*
 
-useradd -m -s /usr/bin/bash $server_user
+useradd -m -s /usr/bin/sh $server_user
 chmod 700 /home/$server_user
 passwd -l $server_user
 
