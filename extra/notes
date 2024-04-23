@@ -1,18 +1,26 @@
-Admin access
+# RCON commands
+rcon_password rcon_server_password
+rcon maps *
+rcon changelevel cs_assault
+rcon sv_restart 1
+rcon sv_restartround 1
+
+# Admin access
 [cs16/cstrike/addons/amxmodx/configs/users.ini]
 "STEAM_0:0:YOUR_STEAM_ID" "" "abcdefghijklmnopqrstuv" "ce"
 [console]
 bind "]" "amxmodmenu"
 
-Yapb
+# Yapb
 [cs16/cstrike/addons/yapb/conf/yapb.cfg]
 yb_password="your_password"
 [console]
 bind "[" "yb menu"
 setinfo _ybpw "your_password"
 
-Additional config
+# Additional config
 [cs16/cstrike/server.cfg]
+rcon_password "rcon_server_password"
 mp_timelimit 0
 mp_freezetime 0
 mp_buytime 10
