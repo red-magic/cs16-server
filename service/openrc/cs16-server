@@ -6,11 +6,11 @@ command="/usr/bin/cs16-server"
 command_background="yes"
 
 start() {
+	ebegin "Starting ${description}"
 	${command} start &> /dev/null
-	einfo "Starting Counter-Strike 1.6 Dedicated Server"
 }
 
 stop() {
+	ebegin "Stopping ${description}"
 	${command} stop &> /dev/null
-	einfo "Stopping Counter-Strike 1.6 Dedicated Server"
 }
