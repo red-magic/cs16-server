@@ -54,7 +54,6 @@ User ```steam``` will be deleted. The following directories and files will also 
 /home/steam
 /etc/cs16-server
 /usr/bin/cs16-server
-/usr/lib/systemd/system/cs16-server.service
 ```
 
 ## Extra
