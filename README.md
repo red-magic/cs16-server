@@ -28,10 +28,6 @@ It also creates ```steam``` user which launches ```install-stage-two``` script.
 
 yapb bots are disabled by default, if you want to enable them uncomment ```;;linux addons/yapb/bin/yapb.so``` line in ```cs16/cstrike/addons/metamod/plugins.ini```.
 
-### systemd
-
-If you use a systemd based distro ```cs16-server.service``` will be installed to ```/usr/lib/systemd/system``` which you can enable to start ```cs16-server``` on boot.
-
 ## Usage
 
 ```Usage: cs16-server [start | restart | stop | update | status]```

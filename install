@@ -19,6 +19,8 @@ if [ "$1" = remove ]; then
 	rm -vf /usr/bin/cs16-server
 	if [ -n "$(command -v systemctl)" ]; then
 		rm -vf /usr/lib/systemd/system/cs16-server.service
+	elif [ -n "$(command -v openrc-run)" ]; then
+		rm -vf /etc/init.d/cs16-server
 	fi
 	userdel -f $server_user
 	exit 0
@@ -71,11 +73,11 @@ if [ -n "$to_install" ]; then
 fi
 
 set -- \
-https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz \
-https://github.com/Bots-United/metamod-p/releases/download/v1.21p38/metamod_i686_linux_win32-1.21p38.tar.xz \
-https://www.amxmodx.org/amxxdrop/1.10/amxmodx-latest-base-linux.tar.gz \
-https://www.amxmodx.org/amxxdrop/1.10/amxmodx-latest-cstrike-linux.tar.gz \
-https://github.com/yapb/yapb/releases/download/4.4.957/yapb-4.4.957-linux.tar.xz
+    https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz \
+    https://github.com/Bots-United/metamod-p/releases/download/v1.21p38/metamod_i686_linux_win32-1.21p38.tar.xz \
+    https://www.amxmodx.org/amxxdrop/1.10/amxmodx-latest-base-linux.tar.gz \
+    https://www.amxmodx.org/amxxdrop/1.10/amxmodx-latest-cstrike-linux.tar.gz \
+    https://github.com/yapb/yapb/releases/download/4.4.957/yapb-4.4.957-linux.tar.xz
 
 work_dir=$(pwd)
 
@@ -104,12 +106,15 @@ install -vm 644 man/cs16-server.1.gz -t /usr/share/man/man1
 cp -vf install-stage-two /tmp/install-stage-two
 chmod -v 755 /tmp/install-stage-two
 
-if [ -n "$(command -v systemctl)" ]; then
-	install -vm 644 systemd/cs16-server.service -t /usr/lib/systemd/system
-fi
-
 sudo -u $server_user /tmp/install-stage-two
 
 if [ -f "/home/$server_user/.steam/cs16/cstrike/banned.cfg" ]; then
+	if [ -n "$(command -v systemctl)" ]; then
+		install -vm 644 service/systemd/cs16-server.service -t /usr/lib/systemd/system
+		printf '\nRun systemctl enable cs16-server to start server on boot'
+	elif [ -n "$(command -v openrc-run)" ]; then
+		install -vm 755 service/openrc/cs16-server -t /etc/init.d
+		printf '\nRun rc-update add cs16-server to start server on boot'
+	fi
 	printf '\nInstallation completed\n\n'
 fi

@@ -1,0 +1,16 @@
+#!/sbin/openrc-run
+
+supervisor="supervise-daemon"
+description="Counter-Strike 1.6 Dedicated Server"
+command="/usr/bin/cs16-server"
+command_background="yes"
+
+start() {
+	${command} start &> /dev/null
+	einfo "Starting Counter-Strike 1.6 Server"
+}
+
+stop() {
+	${command} stop &> /dev/null
+	einfo "Stopping Counter-Strike 1.6 Server"
+}
