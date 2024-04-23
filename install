@@ -24,7 +24,11 @@ if [ "$1" = remove ]; then
 	fi
 	userdel -f $server_user
 	exit 0
+elif [ -n "$1" ]; then
+	exit 1
 fi
+
+grep -q "^$server_user" /etc/passwd && printf "\nServer is already installed\n\n" && exit 1
 
 ctrl_c() {
 	printf '\nAborted\n'
