@@ -7,10 +7,10 @@ command_background="yes"
 
 start() {
 	${command} start &> /dev/null
-	einfo "Starting Counter-Strike 1.6 Server"
+	einfo "Starting Counter-Strike 1.6 Dedicated Server"
 }
 
 stop() {
 	${command} stop &> /dev/null
-	einfo "Stopping Counter-Strike 1.6 Server"
+	einfo "Stopping Counter-Strike 1.6 Dedicated Server"
 }
