@@ -19,8 +19,8 @@ _start_hlds() {
 }
 
 _kill_hlds() {
-	su "$server_user" -c "kill -15 $(pgrep hlds_linux) &> /dev/null"
-	su "$server_user" -c "kill -15 $(pgrep hlds_run) &> /dev/null"
+	su "$server_user" -c "kill -2 $(pgrep hlds_run) &> /dev/null"
+	su "$server_user" -c "kill -2 $(pgrep hlds_linux) &> /dev/null"
 }
 
 _update_hlds() {
