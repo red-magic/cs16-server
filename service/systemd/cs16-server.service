@@ -3,12 +3,9 @@ Description=Counter-Strike 1.6 Dedicated Server
 
 [Service]
 Type=simple
-User=hlds
-KillSignal=SIGINT
-EnvironmentFile=/etc/hlds/cs16-server.conf
-WorkingDirectory=/home/hlds/.steam/cs16
-ExecStart=/home/hlds/.steam/cs16/hlds_run ${server_params} ${server_dll}
-LogLevelMax=err
+ExecStart=/usr/bin/cs16-server start
+ExecRestart=/usr/bin/cs16-server restart
+ExecStop=/usr/bin/cs16-server stop
 
 [Install]
 WantedBy=multi-user.target
