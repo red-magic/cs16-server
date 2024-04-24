@@ -1,0 +1,14 @@
+[Unit]
+Description=Counter-Strike 1.6 Dedicated Server
+
+[Service]
+Type=simple
+User=steam
+KillSignal=SIGINT
+EnvironmentFile=/etc/cs16-server/cs16-server.conf
+WorkingDirectory=/home/steam/.steam/cs16
+ExecStart=/home/steam/.steam/cs16/hlds_run ${server_params} ${enable_metamod} ${custom_params}
+StandardOutput=null
+
+[Install]
+WantedBy=multi-user.target
