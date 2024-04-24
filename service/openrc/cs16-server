@@ -1,14 +1,26 @@
 #!/sbin/openrc-run
 
 description="Counter-Strike 1.6 Dedicated Server"
-command="/usr/bin/cs16-server"
+command_user="hlds:hlds"
+directory="/home/hlds/.steam/cs16"
+command="${directory}/hlds_run"
+pidfile="/run/cs16-server.pid"
+stopsig="SIGINT"
+
+start_pre() {
+	while IFS= read -r line || [ -n "${line}" ]; do
+		eval "${line}"
+	done < /etc/hlds/cs16-server.conf
+	command_args="${server_params}"
+}
 
 start() {
 	ebegin "Starting ${description}"
-	${command} start &> /dev/null
+	start-stop-daemon ${command} --chdir ${directory} -b -m -p ${pidfile} -u ${command_user} -- ${command_args}
 }
+
 
 stop() {
 	ebegin "Stopping ${description}"
-	${command} stop &> /dev/null
+	killall -s ${stopsig} hlds_run hlds_linux
 }

@@ -1,0 +1,14 @@
+#!/sbin/openrc-run
+
+description="Counter-Strike 1.6 Dedicated Server"
+command="/usr/bin/cs16-server"
+
+start() {
+	ebegin "Starting ${description}"
+	${command} start &> /dev/null
+}
+
+stop() {
+	ebegin "Stopping ${description}"
+	${command} stop &> /dev/null
+}
