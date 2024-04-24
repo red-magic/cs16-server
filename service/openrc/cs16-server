@@ -11,7 +11,7 @@ start_pre() {
 	while IFS= read -r line || [ -n "${line}" ]; do
 		eval "${line}"
 	done < /etc/hlds/cs16-server.conf
-	command_args="${server_params}"
+	command_args="${server_game} ${server_params} ${server_dll}"
 }
 
 start() {

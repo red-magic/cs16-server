@@ -8,6 +8,8 @@ fi
 server_user=hlds
 server_conf=/etc/hlds/cs16-server.conf
 server_workdir=/home/$server_user/.steam
+
+server_game=
 server_params=
 server_dll=
 
@@ -18,7 +20,7 @@ _read_conf() {
 }
 
 _start_hlds() {
-	su "$server_user" -c "cd $server_workdir/cs16 && ./hlds_run ${server_params} ${server_dll} &> /dev/null &"
+	su "$server_user" -c "cd $server_workdir/cs16 && ./hlds_run ${server_game} ${server_params} ${server_dll} &> /dev/null &"
 }
 
 _kill_hlds() {
