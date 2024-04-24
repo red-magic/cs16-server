@@ -1,6 +1,6 @@
 #!/bin/sh
 
-server_user=steam
+server_user=hlds
 
 ctrl_c() {
 	printf '\nAborted\n'

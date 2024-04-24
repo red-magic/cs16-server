@@ -5,7 +5,7 @@ if [ "$(id -u)" -ne 0 ]; then
 	exit 1
 fi
 
-server_user=steam
+server_user=hlds
 
 if [ "$1" = remove ]; then
 	if [ -n "$(pgrep hlds)" ]; then
@@ -14,7 +14,7 @@ if [ "$1" = remove ]; then
 		exit 1
 	fi
 	rm -vrf /home/${server_user:?}
-	rm -vrf /etc/cs16-server
+	rm -vrf /etc/hlds
 	rm -vf /usr/share/man/man1/cs16-server.1.gz
 	rm -vf /usr/bin/cs16-server
 	if [ -n "$(command -v systemctl)" ]; then
@@ -83,7 +83,7 @@ https://www.amxmodx.org/amxxdrop/1.10/amxmodx-latest-base-linux.tar.gz \
 https://www.amxmodx.org/amxxdrop/1.10/amxmodx-latest-cstrike-linux.tar.gz \
 https://github.com/yapb/yapb/releases/download/4.4.957/yapb-4.4.957-linux.tar.xz
 
-work_dir=$(pwd)
+git_dir=$(pwd)
 
 mkdir -vm 755 /tmp/cs16-server
 cd /tmp/cs16-server || exit
@@ -95,7 +95,7 @@ for link in "$@"; do
 	exit 1
 done
 
-cd "$work_dir" || exit
+cd "$git_dir" || exit
 
 chmod -v 644 /tmp/c16-server/*
 
@@ -104,7 +104,7 @@ chmod 700 /home/$server_user
 passwd -l $server_user
 
 install -vm 755 cs16-server/cs16-server -t /usr/bin
-install -vDm 644 cs16-server/cs16-server.conf -t /etc/cs16-server
+install -vDm 644 cs16-server/cs16-server.conf -t /etc/hlds
 install -vm 644 man/cs16-server.1.gz -t /usr/share/man/man1
 
 cp -vf install-stage-two /tmp/install-stage-two

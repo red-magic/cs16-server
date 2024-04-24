@@ -18,13 +18,13 @@ And basic tools:
 
 Run ```./install``` script, first it downloads **steamcmd**, **metamod-p-v1.21p38**, **amxmodx-1.10-latest** and **yapb-4.4.957** to ```/tmp/cs16-server```.
 
-Once it's done it places ```cs16-server``` main script to ```/usr/bin``` and ```cs16-server.conf``` with ```$server_params``` to ```/etc/cs16-server```.
+Once it's done it places ```cs16-server``` main script to ```/usr/bin``` and ```cs16-server.conf``` with ```$server_params``` to ```/etc/hlds```.
 
-It also creates ```steam``` user which launches ```install-stage-two``` script.
+It also creates ```hlds``` user which launches ```install-stage-two``` script.
 
-```install-stage-two``` is run by ```steam``` user and basically extracts all acrhives from ```/tmp/cs16-server``` to ```/home/steam/.steam``` directory, makes necessary symlinks and updates **steamcmd**.
+```install-stage-two``` is run by ```hlds``` user and basically extracts all acrhives from ```/tmp/cs16-server``` to ```/home/hlds/.steam``` directory, makes necessary symlinks and updates **steamcmd**.
 
-```steam``` user is created with account locked and password disabled, you need to use ```sudo su - steam``` if you want to do further server configuration in ```/home/steam/.steam``` directory.
+```hlds``` user is created with account locked and password disabled, you need to use ```sudo su - hlds``` if you want to do further server configuration in ```/home/hlds/.steam``` directory.
 
 yapb bots are disabled by default, if you want to enable them uncomment ```;;linux addons/yapb/bin/yapb.so``` line in ```cs16/cstrike/addons/metamod/plugins.ini```.
 
@@ -36,22 +36,22 @@ yapb bots are disabled by default, if you want to enable them uncomment ```;;lin
 
 ```
 server_params="-game cstrike -secure -pingboost 3 -maxplayers 32 +sv_lan 0 +map de_dust2 +mp_timelimit 40"
-enable_metamod="-dll cstrike/addons/metamod/dlls/metamod.so"
+server_dll="-dll cstrike/addons/metamod/dlls/metamod.so"
 ```
 
 You can change ```server_params``` to whatever you want to, it all just passes options to ```hlds_run```.
 
-Comment out ```enable_metamod``` line with ```#``` if you want to have a pure vanilla server without any mods.
+Comment out ```server_dll``` line with ```#``` if you want to disable metamod and have a pure vanilla server without any mods.
 
 ## Removal
 
 Run ```./install remove``` to uninstall and clean everything.
 
-User ```steam``` will be deleted. The following directories and files will also be deleted:
+User ```hlds``` will be deleted. The following directories and files will also be deleted:
 
 ```
-/home/steam
-/etc/cs16-server
+/home/hlds
+/etc/hlds
 /usr/bin/cs16-server
 ```
 
