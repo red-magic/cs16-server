@@ -35,12 +35,11 @@ yapb bots are disabled by default, if you want to enable them uncomment ```;;lin
 ## cs16-server.conf
 
 ```
-custom_params="-pingboost 3 -maxplayers 32 +sv_lan 0 +map de_dust2 +mp_timelimit 40"
+server_params="-game cstrike -secure -pingboost 3 -maxplayers 32 +sv_lan 0 +map de_dust2 +mp_timelimit 40"
 enable_metamod="-dll cstrike/addons/metamod/dlls/metamod.so"
-server_params="-game cstrike -secure $custom_params $enable_metamod"
 ```
 
-You can change ```custom_params``` to whatever you want to, it all just passes options to ```hlds_run```.
+You can change ```server_params``` to whatever you want to, it all just passes options to ```hlds_run```.
 
 Comment out ```enable_metamod``` line with ```#``` if you want to have a pure vanilla server without any mods.
 

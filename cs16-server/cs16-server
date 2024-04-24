@@ -8,6 +8,9 @@ fi
 server_user=steam
 server_conf=/etc/cs16-server/cs16-server.conf
 
+server_params=
+enable_metamod=
+
 _read_conf() {
 	while read -r line || [ -n "$line" ]; do
 		eval "$line"
@@ -15,7 +18,7 @@ _read_conf() {
 }
 
 _start_hlds() {
-	su "$server_user" -c "cd /home/$server_user/.steam/cs16 && ./hlds_run ${server_params:?} &> /dev/null &"
+	su "$server_user" -c "cd /home/$server_user/.steam/cs16 && ./hlds_run ${server_params} ${enable_metamod} &> /dev/null &"
 }
 
 _kill_hlds() {
