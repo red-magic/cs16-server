@@ -6,7 +6,7 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 server_user=hlds
-server_conf=/etc/cs16-server/cs16-server.conf
+server_conf=/etc/hlds/cs16-server.conf
 server_params=
 server_dll=
 
