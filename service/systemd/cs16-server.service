@@ -2,7 +2,7 @@
 Description=Counter-Strike 1.6 Dedicated Server
 
 [Service]
-Type=simple
+Type=exec
 User=hlds
 KillSignal=SIGINT
 EnvironmentFile=/etc/hlds/cs16-server.conf
