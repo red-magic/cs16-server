@@ -1,9 +1,7 @@
 #!/sbin/openrc-run
 
-supervisor="supervise-daemon"
 description="Counter-Strike 1.6 Dedicated Server"
 command="/usr/bin/cs16-server"
-command_background="yes"
 
 start() {
 	ebegin "Starting ${description}"
