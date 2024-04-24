@@ -4,6 +4,7 @@ rcon maps *
 rcon changelevel cs_assault
 rcon sv_restart 1
 rcon sv_restartround 1
+rcon restart 1
 
 # Admin access for amxmodx
 [cs16/cstrike/addons/amxmodx/configs/users.ini]
