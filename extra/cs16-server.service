@@ -8,7 +8,7 @@ KillSignal=SIGINT
 EnvironmentFile=/etc/cs16-server/cs16-server.conf
 WorkingDirectory=/home/steam/.steam/cs16
 ExecStart=/home/steam/.steam/cs16/hlds_run ${server_params} ${enable_metamod}
-StandardOutput=null
+LogLevelMax=err
 
 [Install]
 WantedBy=multi-user.target
