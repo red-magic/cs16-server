@@ -19,7 +19,6 @@ start() {
 	start-stop-daemon ${command} --chdir ${directory} -b -m -p ${pidfile} -u ${command_user} -- ${command_args}
 }
 
-
 stop() {
 	ebegin "Stopping ${description}"
 	killall -s ${stopsig} hlds_run hlds_linux
