@@ -4,8 +4,6 @@ description="Counter-Strike 1.6 Dedicated Server"
 command_user="hlds:hlds"
 directory="/home/hlds/.steam/cs16"
 command="${directory}/hlds_run"
-pidfile="/run/cs16-server.pid"
-stopsig="SIGINT"
 
 start_pre() {
 	while IFS= read -r line || [ -n "${line}" ]; do
@@ -16,10 +14,10 @@ start_pre() {
 
 start() {
 	ebegin "Starting ${description}"
-	start-stop-daemon ${command} --chdir ${directory} -b -m -p ${pidfile} -u ${command_user} -- ${command_args}
+	start-stop-daemon ${command} --chdir ${directory} -b -u ${command_user} -- ${command_args}
 }
 
 stop() {
 	ebegin "Stopping ${description}"
-	killall -s ${stopsig} hlds_run hlds_linux
+	killall -s SIGINT hlds_run hlds_linux
 }
