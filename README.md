@@ -39,6 +39,7 @@ server_game="-game cstrike -secure"
 ```
 
 You can change `server_params` to whatever you want to, it all just passes options to `hlds_run`.
+
 Comment out `server_dll` line with `#` if you want to disable metamod and have a pure vanilla server without any mods.
 
 ## Removal
