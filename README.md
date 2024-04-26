@@ -10,7 +10,9 @@ Make sure you have 32 bit libraries before installation:
 - `apt install lib32stdc++6` for Debian based distros
 - `dnf install glibc.i686 libstdc++.i686` for RHEL based distros
 
-And basic tools: `sudo tar xz gzip curl`
+And basic tools:
+
+- `sudo tar xz gzip curl`
 
 ## Installation
 
