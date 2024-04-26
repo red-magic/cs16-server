@@ -1,7 +1,8 @@
 #!/bin/sh
 
 if [ "$(id -u)" -ne 0 ]; then
-	printf '\nUse sudo to run this script\n\n'
+	printf '\nUse sudo to run this script'
+	printf '\nPass remove arg to uninstall\n\n'
 	exit 1
 fi
 
