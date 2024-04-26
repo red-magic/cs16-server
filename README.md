@@ -61,3 +61,9 @@ User ```hlds``` will be deleted. The following directories and files will also b
 A big map pack is available on the [Internet Archive](https://archive.org/details/cs-1.6-mega-map-pack-v-2018.1.7z).
 
 Bot waypoints for maps are downloaded automatically if there's no ```.graph``` file for a map, but you can also get them all from [yapb/graph](https://github.com/yapb/graph) repo.
+
+[metamod-p](https://github.com/Bots-United/metamod-p)
+
+[amxmodx](https://github.com/alliedmodders/amxmodx)
+
+[yapb](https://github.com/yapb/yapb)

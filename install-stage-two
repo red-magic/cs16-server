@@ -2,13 +2,6 @@
 
 server_user=hlds
 
-ctrl_c() {
-	printf '\nAborted\n'
-	exit 1
-}
-
-trap ctrl_c INT
-
 cd "/home/$server_user/" || exit
 mkdir -v .steam
 cd .steam || exit

@@ -15,6 +15,7 @@ if [ "$1" = remove ]; then
 	fi
 	rm -vrf /home/${server_user:?}
 	rm -vrf /etc/hlds
+	rm -rf /var/spool/mail/${server_user}
 	rm -vf /usr/share/man/man1/cs16-server.1.gz
 	rm -vf /usr/bin/cs16-server
 	if [ -n "$(command -v systemctl)" ]; then
@@ -31,7 +32,7 @@ fi
 grep -q "^$server_user" /etc/passwd && printf "\nServer is already installed\n\n" && exit 1
 
 ctrl_c() {
-	printf '\nAborted\n'
+	printf '\n\nInstallation aborted\n\n'
 	exit 1
 }
 
@@ -97,7 +98,7 @@ done
 
 cd "$git_dir" || exit
 
-chmod -v 644 /tmp/c16-server/*
+chmod -v 644 /tmp/cs16-server/*
 
 useradd -m -s /usr/bin/sh $server_user
 chmod 700 /home/$server_user
@@ -114,10 +115,18 @@ sudo -u $server_user /tmp/install-stage-two
 
 if [ -f "/home/$server_user/.steam/cs16/cstrike/banned.cfg" ]; then
 	if [ -n "$(command -v systemctl)" ]; then
-		install -vm 644 service/systemd/cs16-server.service -t /usr/lib/systemd/system
+		if [ -n "$(command -v sestatus)" ]; then
+			install -vm 644 service/selinux/cs16-server.service -t /usr/lib/systemd/system
+		else
+			install -vm 644 service/cs16-server.service -t /usr/lib/systemd/system
+		fi
 		printf '\nRun systemctl enable cs16-server to start server on boot'
 	elif [ -n "$(command -v openrc-run)" ]; then
-		install -vm 755 service/openrc/cs16-server -t /etc/init.d
+		if [ -n "$(command -v sestatus)" ]; then
+			install -vm 755 service/selinux/cs16-server -t /etc/init.d
+		else
+			install -vm 755 service/cs16-server -t /etc/init.d
+		fi
 		printf '\nRun rc-update add cs16-server to start server on boot'
 	fi
 	printf '\nInstallation completed\n\n'
