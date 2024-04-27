@@ -16,7 +16,7 @@ if [ "$1" = remove ]; then
 	fi
 	rm -vrf /home/${server_user:?}
 	rm -vrf /etc/hlds
-	rm -rf /var/spool/mail/${server_user}
+	rm -vf /var/spool/mail/${server_user}
 	rm -vf /usr/share/man/man1/cs16-server.1.gz
 	rm -vf /usr/bin/cs16-server
 	if [ -n "$(command -v systemctl)" ]; then
