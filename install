@@ -33,6 +33,7 @@ fi
 grep -q "^$server_user" /etc/passwd && printf "\nServer is already installed\n\n" && exit 1
 
 ctrl_c() {
+	killall -s SIGINT steamcmd > /dev/null 2>&1
 	printf '\n\nInstallation aborted\n\n'
 	exit 1
 }
