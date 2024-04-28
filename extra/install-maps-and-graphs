@@ -8,7 +8,7 @@ if [ "$(id -un)" != "$server_user" ]; then
 fi
 
 ctrl_c() {
-	printf '\nAborted\n'
+	printf '\n\nInstallation aborted\n\n'
 	exit 1
 }
 

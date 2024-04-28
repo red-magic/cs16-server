@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ "$(id -u)" -ne 0 ]; then
-	printf '\nUse sudo to run this script'
+	printf '\nRun this script as root'
 	printf '\nPass remove arg to uninstall\n\n'
 	exit 1
 fi
@@ -65,7 +65,7 @@ else
 	stty echo
 fi
 
-set -- sudo tar xz gzip curl
+set -- tar xz gzip curl
 
 for pkg in "$@"; do
 	if  [ -z "$(command -v "$pkg")" ]; then
@@ -112,7 +112,7 @@ install -vm 644 man/cs16-server.1.gz -t /usr/share/man/man1
 cp -vf install-stage-two /tmp/install-stage-two
 chmod -v 755 /tmp/install-stage-two
 
-sudo -u $server_user /tmp/install-stage-two
+su $server_user -c /tmp/install-stage-two
 
 if [ -f "/home/$server_user/.steam/cs16/cstrike/banned.cfg" ]; then
 	if [ -n "$(command -v systemctl)" ]; then

@@ -12,6 +12,9 @@ for arc in /tmp/cs16-server/*.tar.*; do tar xvf "$arc"; done
 mkdir -pv addons/metamod/dlls
 mv -vf metamod.* addons/metamod/dlls
 
+printf 'linux addons/amxmodx/dlls/amxmodx_mm_i386.so\n' > addons/metamod/plugins.ini
+printf ';;linux addons/yapb/bin/yapb.so\n' >> addons/metamod/plugins.ini
+
 cnt=0
 while [ $((cnt)) -lt 3 ]; do
 	# Update needs to be run a few times to download and validate everything
@@ -21,9 +24,6 @@ done
 
 mv -vf addons cs16/cstrike
 ln -sfv linux32 sdk32
-
-printf 'linux addons/amxmodx/dlls/amxmodx_mm_i386.so\n' >> cs16/cstrike/addons/metamod/plugins.ini
-printf ';;linux addons/yapb/bin/yapb.so\n' >> cs16/cstrike/addons/metamod/plugins.ini
 
 # Create cfg files so steamcmd won't complain
 touch cs16/cstrike/listip.cfg
