@@ -4,7 +4,7 @@
 
 ## Requirements
 
-Make sure you have 32 bit libraries before installation:
+Make sure you have 32-bit libraries before installation:
 
 - `pacman -S lib32-gcc-libs` for Arch (enable multilib repo first)
 - `apt install lib32stdc++6` for Debian based distros

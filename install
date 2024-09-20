@@ -119,7 +119,6 @@ install_services() {
 		fi
 		echo -en '\nRun "rc-update add cs16-server" to start server on boot'
 	fi
-	echo -en '\nInstallation completed\n\n'
 }
 
 case $1 in
@@ -129,5 +128,6 @@ case $1 in
 		check_depends
 		install_stage_one
 		su "$server_user" -c "$(declare -f install_stage_two); install_stage_two"
-		[ -f "/home/$server_user/.steam/cs16/cstrike/banned.cfg" ] && install_services;;
+		install_services
+		echo -en '\nInstallation completed\n\n';;
 esac
