@@ -7,6 +7,7 @@ Type=simple
 ExecStart=/usr/bin/cs16-server start
 ExecStop=/usr/bin/cs16-server stop
 Restart=on-failure
+RemainAfterExit=yes
 
 [Install]
 WantedBy=multi-user.target
