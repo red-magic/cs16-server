@@ -44,6 +44,7 @@ Leave `server_dll` var empty if you want to disable metamod and have a pure vani
 
 `
 #server_dll="-dll cstrike/addons/metamod/dlls/metamod.so"
+
 server_dll=""
 `
 
