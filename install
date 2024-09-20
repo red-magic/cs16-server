@@ -54,7 +54,7 @@ check_depends() {
 }
 
 install_stage_one() {
-	[ -d "/home/$server_user" ] && echo 'Server already installed' && exit 1
+	[ -d "/home/$server_user" ] && echo 'Server is already installed' && exit 1
 
 	useradd -m -s /usr/bin/bash "$server_user"
 	passwd -l "$server_user"
