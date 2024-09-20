@@ -24,7 +24,6 @@ remove_server() {
 	[ -x "$(command -v systemctl)" ] && rm -vf /usr/lib/systemd/system/cs16-server.service
 	[ -x "$(command -v openrc-run)" ] && rm -vf /etc/init.d/cs16-server
 	userdel -f "$server_user"
-	exit 0
 }
 
 check_depends() {
@@ -124,9 +123,11 @@ install_services() {
 }
 
 case $1 in
-	remove) remove_server;;
-	"") check_depends
-	    install_stage_one
-	    su "$server_user" -c "$(declare -f install_stage_two); install_stage_two"
-	    [ -f "/home/$server_user/.steam/cs16/cstrike/banned.cfg" ] && install_services;;
+	remove)
+		remove_server;;
+	"")
+		check_depends
+		install_stage_one
+		su "$server_user" -c "$(declare -f install_stage_two); install_stage_two"
+		[ -f "/home/$server_user/.steam/cs16/cstrike/banned.cfg" ] && install_services;;
 esac

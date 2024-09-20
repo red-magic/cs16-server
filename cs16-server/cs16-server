@@ -23,7 +23,7 @@ _update_hlds() {
 }
 
 start_server() {
-	pgrep hlds > /dev/null 2>&1 && { echo 'Server is already running'; exit 1; }
+	pgrep hlds > /dev/null 2>&1 && echo 'Server is already running' && exit 1
 	echo 'Starting server'
 	_read_conf && _start_hlds
 }
@@ -41,7 +41,7 @@ restart_server() {
 }
 
 update_server() {
-	pgrep hlds > /dev/null 2>&1 && { echo 'Stop server first'; exit 1; }
+	pgrep hlds > /dev/null 2>&1 && echo 'Stop server first' && exit 1
 	echo 'Updating server'
 	_update_hlds
 }
@@ -55,10 +55,7 @@ status_server() {
 	fi
 }
 
-print_help() {
-	echo "Usage: $(basename "$0") [start | restart | stop | update | status]"
-	exit 1
-}
+print_help() { echo "Usage: $(basename "$0") [start | restart | stop | update | status]"; }
 
 case $1 in
 	start) start_server;;
