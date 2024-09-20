@@ -42,11 +42,10 @@ You can change `server_params` to whatever you want to, it all just passes optio
 
 Leave `server_dll` var empty if you want to disable metamod and have a pure vanilla server without any mods.
 
-`
+```
 #server_dll="-dll cstrike/addons/metamod/dlls/metamod.so"
-
 server_dll=""
-`
+```
 
 ## Removal
 
