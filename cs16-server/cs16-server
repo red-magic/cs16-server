@@ -1,26 +1,17 @@
-#!/bin/sh
+#!/bin/bash
 
-if [ "$(id -u)" -ne 0 ]; then
-	printf 'Run this script as root\n'
-	exit 1
-fi
+[ "$(id -u)" -eq 0 ] || { echo 'Run this script as root'; exit 1; }
 
 server_user=hlds
 server_conf=/etc/hlds/cs16-server.conf
-server_workdir=/home/$server_user/.steam
-
-server_game=
-server_params=
-server_dll=
+server_workdir="/home/$server_user/.steam"
 
 _read_conf() {
-	while read -r line || [ -n "$line" ]; do
-		eval "$line"
-	done < "$server_conf"
+	source "$server_conf"
 }
 
 _start_hlds() {
-	su "$server_user" -c "cd $server_workdir/cs16 && ./hlds_run ${server_game} ${server_params} ${server_dll} > /dev/null 2>&1 &"
+	su "$server_user" -c "cd $server_workdir/cs16 && ./hlds_run ${server_game:-} ${server_params:-} ${server_dll:-} > /dev/null 2>&1 &"
 }
 
 _kill_hlds() {
@@ -32,53 +23,40 @@ _update_hlds() {
 }
 
 start_server() {
-	if [ -n "$(pgrep hlds)" ]; then
-		printf 'Server is already running\n'
-		exit 1
-	fi
-	printf 'Starting server\n'
+	pgrep hlds > /dev/null 2>&1 && { echo 'Server is already running'; exit 1; }
+	echo 'Starting server'
 	_read_conf && _start_hlds
 }
 
 stop_server() {
-	if [ -z "$(pgrep hlds)" ]; then
-		printf 'Server is not running\n'
-		exit 1
-	fi
-	printf 'Stopping server\n'
+	pgrep hlds > /dev/null 2>&1 || { echo 'Server is not running'; exit 1; }
+	echo 'Stopping server'
 	_kill_hlds
 }
 
 restart_server() {
-	if [ -n "$(pgrep hlds)" ]; then
-		printf 'Restarting server\n'
-		_kill_hlds
-	else
-		printf 'Starting server\n'
-	fi
+	pgrep hlds > /dev/null 2>&1 && echo 'Restarting server' || echo 'Starting server'
+	_kill_hlds
 	_read_conf && _start_hlds
 }
 
 update_server() {
-	if [ -n "$(pgrep hlds)" ]; then
-		printf 'Stop server first\n'
-		exit 1
-	fi
-	printf 'Updating server\n'
+	pgrep hlds > /dev/null 2>&1 && { echo 'Stop server first'; exit 1; }
+	echo 'Updating server'
 	_update_hlds
 }
 
 status_server() {
-	if [ -z "$(pgrep hlds)" ]; then
-		printf 'Server is not running\n'
-	else
-		printf 'Server is running with the following args:\n'
+	if pgrep hlds > /dev/null 2>&1; then
+		echo 'Server is running with the following args:'
 		pgrep -a hlds_linux | awk '{$1=""}1' | awk '{$1=$1}1'
+	else
+		echo 'Server is not running'
 	fi
 }
 
 print_help() {
-	printf 'Usage: %s [start | restart | stop | update | status]\n' "$(basename "$0")"
+	echo "Usage: $(basename "$0") [start | restart | stop | update | status]"
 	exit 1
 }
 

@@ -18,11 +18,9 @@ And basic tools:
 
 Run `./install` script, first it downloads **steamcmd**, **metamod-p-v1.21p38**, **amxmodx-1.10-latest** and **yapb-4.4.957** to `/tmp/cs16-server`.
 
-Once it's done it places `cs16-server` main script to `/usr/bin` and `cs16-server.conf` with all hlds args to `/etc/hlds`.
+Once it's done it places `cs16-server` script that controls the server to `/usr/bin` and `cs16-server.conf` with all hlds args to `/etc/hlds`.
 
-It also creates `hlds` user which launches `install-stage-two` script.
-
-`install-stage-two` is run by `hlds` user and basically extracts all acrhives from `/tmp/cs16-server` to `/home/hlds/.steam` directory, makes necessary symlinks and updates **steamcmd**.
+It also creates `hlds` user that extracts all acrhives from `/tmp/cs16-server` to `/home/hlds/.steam` directory, makes necessary symlinks and updates **steamcmd**.
 
 `hlds` user is created with account locked and password disabled, you need to use `sudo su - hlds` if you want to do further server configuration in `/home/hlds/.steam` directory.
 
@@ -42,19 +40,16 @@ server_game="-game cstrike -secure"
 
 You can change `server_params` to whatever you want to, it all just passes options to `hlds_run`.
 
-Comment out `server_dll` line with `#` if you want to disable metamod and have a pure vanilla server without any mods.
+Leave `server_dll` var empty if you want to disable metamod and have a pure vanilla server without any mods.
+
+`
+#server_dll="-dll cstrike/addons/metamod/dlls/metamod.so"
+server_dll=""
+`
 
 ## Removal
 
-Run `./install remove` to uninstall and clean everything.
-
-User `hlds` will be deleted. The following directories and files will also be deleted:
-
-```
-/home/hlds
-/etc/hlds
-/usr/bin/cs16-server
-```
+Run `./install remove` to uninstall the server and its files along with `hlds` user.
 
 ## Extra
 
