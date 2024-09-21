@@ -11,7 +11,7 @@ fi
 trap 'pkill -SIGINT steamcmd > /dev/null 2>&1; echo -en "\nInstallation aborted\n"; exit 1' INT
 
 remove_server() {
-	if pgrep hlds > /dev/null 2>&1; then
+	if pgrep -u hlds > /dev/null 2>&1; then
 		echo 'Server is running'
 		echo 'Stop it before uninstalling'
 		exit 1
