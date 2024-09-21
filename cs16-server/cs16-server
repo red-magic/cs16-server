@@ -15,7 +15,7 @@ _start_hlds() {
 }
 
 _kill_hlds() {
-	su "$server_user" -c "killall -s SIGINT hlds_run hlds_linux > /dev/null 2>&1"
+	su "$server_user" -c "pkill -SIGINT hlds_ > /dev/null 2>&1"
 }
 
 _update_hlds() {
