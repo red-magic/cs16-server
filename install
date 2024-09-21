@@ -77,7 +77,7 @@ install_stage_one() {
 
 	install -vm 755 cs16-server/cs16-server -t /usr/bin
 	install -vDm 644 cs16-server/cs16-server.conf -t /etc/hlds
-	install -vm 644 man/cs16-server.1.gz -t /usr/share/man/man1
+	install -vm 644 cs16-server/cs16-server.1.gz -t /usr/share/man/man1
 }
 
 install_stage_two() {
