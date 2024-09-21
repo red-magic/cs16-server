@@ -12,8 +12,8 @@ trap 'pkill -SIGINT steamcmd > /dev/null 2>&1; echo -en "\nInstallation aborted\
 
 remove_server() {
 	if pgrep -u hlds > /dev/null 2>&1; then
-		echo 'Server is running'
-		echo 'Stop it before uninstalling'
+		echo 'hlds user has processes running'
+		echo 'Stop them before uninstalling the server'
 		exit 1
 	fi
 	userdel -r "$server_user"
