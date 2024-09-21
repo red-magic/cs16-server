@@ -16,7 +16,12 @@ And basic tools:
 
 ## Installation
 
-Run `./install` script, first it downloads **steamcmd**, **metamod-p-v1.21p38**, **amxmodx-1.10-latest** and **yapb-4.4.957** to `/tmp/cs16-server`.
+Run `./install` script, first it downloads these files to `/tmp/cs16-server`:
+
+- **steamcmd**
+- **metamod-p-v1.21p38**
+- **amxmodx-1.10-latest**
+- **yapb-4.4.957**
 
 Once it's done it places `cs16-server` script that controls the server to `/usr/bin` and `cs16-server.conf` with all hlds args to `/etc/hlds`.
 
