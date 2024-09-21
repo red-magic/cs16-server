@@ -16,13 +16,11 @@ remove_server() {
 		echo 'Stop it before uninstalling'
 		exit 1
 	fi
-	rm -vrf "/home/${server_user:?}"
+	userdel -r "$server_user"
 	rm -vrf /etc/hlds
 	rm -vf /usr/bin/cs16-server
 	rm -vf /usr/share/man/man1/cs16-server.1.gz
-	rm -vf "/var/spool/mail/$server_user"
 	[ -x "$(command -v systemctl)" ] && rm -vf /usr/lib/systemd/system/cs16-server.service
-	userdel -f "$server_user"
 }
 
 check_depends() {
