@@ -22,7 +22,6 @@ remove_server() {
 	rm -vf /usr/share/man/man1/cs16-server.1.gz
 	rm -vf "/var/spool/mail/$server_user"
 	[ -x "$(command -v systemctl)" ] && rm -vf /usr/lib/systemd/system/cs16-server.service
-	[ -x "$(command -v openrc-run)" ] && rm -vf /etc/init.d/cs16-server
 	userdel -f "$server_user"
 }
 
@@ -103,22 +102,9 @@ install_stage_two() {
 	touch cs16/cstrike/{listip.cfg,banned.cfg}
 }
 
-install_services() {
-	if [ -x "$(command -v systemctl)" ]; then
-		if [ -x "$(command -v sestatus)" ]; then
-			install -m 644 service/selinux/systemd/cs16-server.service -t /usr/lib/systemd/system
-		else
-			install -m 644 service/systemd/cs16-server.service -t /usr/lib/systemd/system
-		fi
-		echo -en '\nRun "systemctl enable cs16-server" to start server on boot'
-	elif [ -x "$(command -v openrc-run)" ]; then
-		if [ -x "$(command -v sestatus)" ]; then
-			install -m 755 service/selinux/openrc/cs16-server -t /etc/init.d
-		else
-			install -m 755 service/openrc/cs16-server -t /etc/init.d
-		fi
-		echo -en '\nRun "rc-update add cs16-server" to start server on boot'
-	fi
+install_service() {
+	install -m 644 cs16-server/cs16-server.service -t /usr/lib/systemd/system
+	echo -en '\nRun "systemctl enable cs16-server" to start server on boot'
 }
 
 case $1 in
@@ -128,6 +114,6 @@ case $1 in
 		check_depends
 		install_stage_one
 		su "$server_user" -c "$(declare -f install_stage_two); install_stage_two"
-		install_services
+		[ -x "$(command -v systemctl)" ] && install_service
 		echo -en '\nInstallation completed\n\n';;
 esac
