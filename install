@@ -44,10 +44,10 @@ check_depends() {
 	pkgs=(tar xz gzip curl)
 
 	for pkg in "${pkgs[@]}"; do
-		[ -x "$(command -v "$pkg")" ] || missing_packages="$missing_packages $pkg"
+		[ -x "$(command -v "$pkg")" ] || missing_pkgs="$missing_pkgs $pkg"
 	done
 
-	[ -n "$missing_packages" ] && echo "Install the following packages:$missing_packages" && exit 1
+	[ -n "$missing_pkgs" ] && echo "Install the following packages:$missing_pkgs" && exit 1
 }
 
 install_stage_one() {
