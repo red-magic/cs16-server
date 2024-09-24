@@ -35,7 +35,6 @@ copy_files() {
 	cp -v graph/graph/* "/home/$server_user/.steam/cs16/cstrike/addons/yapb/data/graph"
 }
 
-
 case $1 in
 	"")
 		check_depends; download_files; copy_files
