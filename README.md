@@ -33,7 +33,7 @@ yapb bots are disabled by default, if you want to enable them uncomment `;;linux
 
 ## Usage
 
-`Usage: cs16-server [start-fg | start-bg | restart | stop | update | status]`
+`Usage: cs16-server [start | restart | stop | update | status]`
 
 ## cs16-server.conf
 

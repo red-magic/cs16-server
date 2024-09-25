@@ -3,11 +3,9 @@ Description=Counter-Strike 1.6 Dedicated Server
 After=network.target
 
 [Service]
-Type=simple
-KillSignal=SIGINT
-ExecStart=/usr/bin/cs16-server start-fg
-StandardOutput=null
-Restart=on-failure
+Type=forking
+ExecStart=/usr/bin/cs16-server start
+ExecStop=/usr/bin/cs16-server stop
 
 [Install]
 WantedBy=multi-user.target

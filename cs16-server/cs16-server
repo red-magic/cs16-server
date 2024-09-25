@@ -11,8 +11,7 @@ _read_conf() {
 }
 
 _start_hlds() {
-	[ -n "$start_fg" ] || bg_arg='> /dev/null 2>&1 &'
-	su "$server_user" -c "cd $server_workdir/cs16 && ./hlds_run ${server_game:-} ${server_params:-} ${server_dll:-} $bg_arg"
+	su "$server_user" -c "cd $server_workdir/cs16 && ./hlds_run ${server_game:-} ${server_params:-} ${server_dll:-} > /dev/null 2>&1 &"
 }
 
 _kill_hlds() {
@@ -56,11 +55,10 @@ status_server() {
 	fi
 }
 
-print_help() { echo "Usage: $(basename "$0") [start-fg | start-bg | restart | stop | update | status]"; }
+print_help() { echo "Usage: $(basename "$0") [start | restart | stop | update | status]"; }
 
 case $1 in
-	start-fg) start_fg=1 start_server;;
-	start-bg) start_server;;
+	start) start_server;;
 	restart) restart_server;;
 	stop) stop_server;;
 	update) update_server;;
