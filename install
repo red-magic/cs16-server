@@ -91,6 +91,9 @@ install_stage_two() {
 		./steamcmd.sh +force_install_dir cs16 +login anonymous +app_update 90 validate +quit
 	done
 
+	# Temporary fix for 4.4.957
+	chmod -v 755 addons/yapb/data/*
+
 	mv -vf addons cs16/cstrike
 
 	mkdir -vp cs16/cstrike/addons/metamod/dlls
