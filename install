@@ -1,60 +1,60 @@
 #!/bin/bash
 
-export server_user=hlds
+export server_user="hlds"
 
-if [ "$(id -u)" -ne 0 ]; then
-	echo 'Run this script as root'
-	echo 'Pass "remove" arg to uninstall'
+if [[ "$(id -u)" -ne 0 ]]; then
+	echo "Run this script as root"
+	echo "Pass \"remove\" arg to uninstall"
 	exit 1
 fi
 
-trap 'pkill -SIGINT steamcmd > /dev/null 2>&1; echo -en "\nInstallation aborted\n"; exit 1' INT
+trap "pkill -SIGINT steamcmd > /dev/null 2>&1; echo -en \"\nInstallation aborted\n\"; exit 1" INT
 
 remove_server() {
 	if pgrep -u hlds > /dev/null 2>&1; then
-		echo 'hlds user has processes running'
-		echo 'Stop them before uninstalling the server'
+		echo "hlds user has processes running"
+		echo "Stop them before uninstalling the server"
 		exit 1
 	fi
-	userdel -r "$server_user"
+	userdel -r "${server_user}"
 	rm -vrf /etc/hlds
 	rm -vf /usr/bin/cs16-server
 	rm -vf /usr/share/man/man1/cs16-server.1.gz
-	[ -x "$(command -v systemctl)" ] && rm -vf /usr/lib/systemd/system/cs16-server.service
+	[[ -x "$(command -v systemctl)" ]] && rm -vf /usr/lib/systemd/system/cs16-server.service
 }
 
 check_depends() {
 	lib32_warn() {
-		echo 'Install 32-bit libstdc++'
-		echo 'See README.md for details'
+		echo "Install 32-bit libstdc++"
+		echo "See README.md for details"
 		exit 1
 	}
 
-	if [ -x "$(command -v pacman)" ] || [ -x "$(command -v apt)" ]; then
-		[ ! -d /usr/lib32 ] && lib32_warn
+	if [[ -x "$(command -v pacman)" ]] || [[ -x "$(command -v apt)" ]]; then
+		[[ ! -d "/usr/lib32" ]] && lib32_warn
 		find /usr/lib32 -type f | grep -q libstdc++ || lib32_warn
-	elif [ -x "$(command -v dnf)" ]; then
+	elif [[ -x "$(command -v dnf)" ]]; then
 		find /usr/lib -type f | grep -q libstdc++ || lib32_warn
 	else
-		echo 'Unknown distro, make sure you have 32-bit libstdc++'
-		echo 'Press Enter to continue'
+		echo "Unknown distro, make sure you have 32-bit libstdc++"
+		echo "Press Enter to continue"
 		read -r
 	fi
 
 	pkgs=(tar xz gzip curl)
 
 	for pkg in "${pkgs[@]}"; do
-		[ -x "$(command -v "$pkg")" ] || missing_pkgs="$missing_pkgs $pkg"
+		[[ -x "$(command -v "${pkg}")" ]] || missing_pkgs="${missing_pkgs} ${pkg}"
 	done
 
-	[ -n "$missing_pkgs" ] && echo "Install the following packages:$missing_pkgs" && exit 1
+	[[ -n "${missing_pkgs}" ]] && echo "Install the following packages:${missing_pkgs}" && exit 1
 }
 
 install_stage_one() {
-	[ -d "/home/$server_user" ] && echo 'Server is already installed' && exit 1
+	[[ -d "/home/${server_user}" ]] && echo "Server is already installed" && exit 1
 
-	useradd -m -s /usr/bin/bash "$server_user"
-	passwd -l "$server_user"
+	useradd -m -s /usr/bin/bash "${server_user}"
+	passwd -l "${server_user}"
 
 	mkdir -vp /tmp/cs16-server && pushd /tmp/cs16-server || exit 1
 
@@ -67,8 +67,8 @@ install_stage_one() {
 	)
 
 	for link in "${links[@]}"; do
-		echo "==> Downloading $link"
-		curl -fLO "$link" || { echo "Failed to download $link"; exit 1; }
+		echo "==> Downloading ${link}"
+		curl -fLO "${link}" || { echo "Failed to download ${link}"; exit 1; }
 	done
 
 	popd || exit 1
@@ -79,12 +79,12 @@ install_stage_one() {
 }
 
 install_stage_two() {
-	cd "/home/$server_user" || exit 1
+	cd "/home/${server_user}" || exit 1
 	mkdir -vp .steam && cd .steam || exit 1
 	ln -sfv . steam
 
 	for arc in /tmp/cs16-server/*.tar.*; do
-		tar xvf "$arc"
+		tar xvf "${arc}"
 	done
 
 	for _i in {1..3}; do
@@ -100,8 +100,8 @@ install_stage_two() {
 	mv -vf metamod.so cs16/cstrike/addons/metamod/dlls
 	rm -vf metamod.dll
 
-	echo 'linux addons/amxmodx/dlls/amxmodx_mm_i386.so' > cs16/cstrike/addons/metamod/plugins.ini
-	echo ';;linux addons/yapb/bin/yapb.so' >> cs16/cstrike/addons/metamod/plugins.ini
+	echo "linux addons/amxmodx/dlls/amxmodx_mm_i386.so" > cs16/cstrike/addons/metamod/plugins.ini
+	echo ";;linux addons/yapb/bin/yapb.so" >> cs16/cstrike/addons/metamod/plugins.ini
 
 	ln -sfv linux32 sdk32
 	touch cs16/cstrike/{listip.cfg,banned.cfg}
@@ -109,17 +109,19 @@ install_stage_two() {
 
 install_service() {
 	install -m 644 cs16-server/cs16-server.service -t /usr/lib/systemd/system
-	echo -en '\nRun "systemctl enable cs16-server" to start server on boot'
+	echo -en "\nRun \"systemctl enable cs16-server\" to start server on boot"
 }
 
-case $1 in
+case "$1" in
 	remove)
-		remove_server;;
+		remove_server
+		;;
 	"")
 		check_depends
 		install_stage_one
-		su "$server_user" -c "$(declare -f install_stage_two); install_stage_two"
-		[ -x "$(command -v systemctl)" ] && install_service
-		echo -en '\nhlds parameters can be set in /etc/hlds/cs16-server.conf\n'
-		echo -en '\nInstallation completed\n\n';;
+		su "${server_user}" -c "$(declare -f install_stage_two); install_stage_two"
+		[[ -x "$(command -v systemctl)" ]] && install_service
+		echo -en "\nhlds parameters can be set in /etc/hlds/cs16-server.conf\n"
+		echo -en "\nInstallation completed\n\n"
+		;;
 esac
