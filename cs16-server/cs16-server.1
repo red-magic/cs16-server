@@ -1,0 +1,62 @@
+.TH CS16\-SERVER "1" "October 2024" "cs16\-server" "Counter\-Strike 1.6 Dedicated Server"
+.hy 0
+.SH NAME
+cs16\-server \- Counter\-Strike 1.6 Dedicated Server for Linux
+.SH SYNOPSIS
+.B cs16\-server
+[\fBstart\fR | \fBrestart\fR | \fBstop\fR | \fBupdate\fR | \fBstatus\fR]
+.SH DESCRIPTION
+A simple script to manage a Counter\-Strike 1.6 server.
+.SH OPTIONS
+.TP
+\fBstart\fR
+.RS
+Start server.
+.RE
+.TP
+\fBrestart\fR
+.RS
+Restart server.
+.RE
+.TP
+\fBstop\fR
+.RS
+Stop server.
+.RE
+.TP
+\fBupdate\fR
+.RS
+Update server.
+.RE
+.TP
+\fBstatus\fR
+.RS
+Print server status with command line args.
+.RE
+.SH EXAMPLES
+\fB$ sudo cs16\-server start\fR
+.SH CONFIGURATION
+\fIcs16\-server.conf\fR file looks like this:
+.PP
+.RS
+server_params="\-pingboost 3 \-maxplayers 32 +sv_lan 0 +map de_dust2"
+.br
+server_dll="\-dll cstrike/addons/metamod/dlls/metamod.so"
+.br
+server_game="\-game cstrike \-secure"
+.RE
+.PP
+\fIserver_params\fR can be changed to whatever you want to, it all just passes options to \fBhlds_run\fR.
+Leave \fIserver_dll\fR var empty to disable \fBmetamod\fR and have a pure vanilla server without any mods.
+By default the server is run by user \fIhlds\fR with account locked.
+You need to use \fBsudo su \- hlds\fR if you plan to do further configuration in the server directory.
+\fBamxmodx\fR and \fBmetamod\fR are included and enabled by default.
+\fByapb\fR bots are uncluded too but disabled, if you want to enable them uncomment the line with \fIyapb.so\fR in the
+\fI/home/hlds/.steam/cs16/cstrike/addons/metamod/plugins.ini\fR file.
+.SH FILES
+.TP
+\fI/etc/hlds/cs16\-server.conf\fR
+Server config.
+.TP
+\fI/home/hlds/.steam\fR
+Location of the server files.
