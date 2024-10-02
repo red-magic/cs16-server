@@ -2,41 +2,44 @@
 
 # Copy this script to /home/hlds directory and run it as hlds user
 
-server_user=hlds
+server_user="hlds"
 
-[ "$(id -un)" = "$server_user" ] || { echo "You must run this script as $server_user user"; exit 1; }
+[[ "$(id -un)" == "${server_user}" ]] || { echo "You must run this script as ${server_user} user"; exit 1; }
 
-trap 'echo -en "\n\nInstallation aborted\n\n"; exit 1' INT
+trap "echo -en \"\n\nInstallation aborted\n\n\"; exit 1" INT
 
 check_depends() {
 	pkgs=(git 7z curl)
 
 	for pkg in "${pkgs[@]}"; do
-		[ -x "$(command -v "$pkg")" ] || missing_pkgs="$missing_pkgs $pkg"
+		[[ -x "$(command -v "${pkg}")" ]] || missing_pkgs="${missing_pkgs} ${pkg}"
 	done
 
-	[ -n "$missing_pkgs" ] && echo "Install the following packages:$missing_pkgs" && exit 1
+	[[ -n "${missing_pkgs}" ] && echo "Install the following packages:${missing_pkgs}" && exit 1
 }
 
 download_files() {
-	cd "/home/$server_user" || exit 1
+	cd "/home/${server_user}" || exit 1
 	mkdir -v cs16-maps-and-graphs
 	cd cs16-maps-and-graphs || exit 1
 
-	echo '==> Downloading map pack, it is going to take some time'
-	map_link='https://archive.org/download/cs-1.6-mega-map-pack-v-2018.1.7z/CS%201.6%20Mega%20Map%20Pack%20v2018.1.7z'
-	curl -fLO "$map_link" -o cs-1.6-mega-map-pack-v-2018.1.7z || { echo 'Failed to download map archive'; exit 1; }
+	echo "==> Downloading map pack, it is going to take some time"
+	map_link="https://archive.org/download/cs-1.6-mega-map-pack-v-2018.1.7z/CS%201.6%20Mega%20Map%20Pack%20v2018.1.7z"
+	curl -fLO "${map_link}" -o cs-1.6-mega-map-pack-v-2018.1.7z || { echo "Failed to download map archive"; exit 1; }
 
 	git clone https://github.com/yapb/graph
 }
 
 copy_files() {
-	7z x -o"/home/$server_user/.steam/cs16" cs-1.6-mega-map-pack-v-2018.1.7z
-	cp -v graph/graph/* "/home/$server_user/.steam/cs16/cstrike/addons/yapb/data/graph"
+	7z x -o"/home/${server_user}/.steam/cs16" cs-1.6-mega-map-pack-v-2018.1.7z
+	cp -v graph/graph/* "/home/${server_user}/.steam/cs16/cstrike/addons/yapb/data/graph"
 }
 
-case $1 in
+case "$1" in
 	"")
-		check_depends; download_files; copy_files
-		echo -en '\nInstallation completed\n\n';;
+		check_depends
+		download_files
+		copy_files
+		echo -en "\nInstallation completed\n\n"
+		;;
 esac
