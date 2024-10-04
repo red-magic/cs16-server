@@ -115,15 +115,15 @@ install_service() {
 
 case "$1" in
     remove)
-            remove_server
-         ;;
+        remove_server
+    ;;
 
-        "")
-            check_depends
-            install_stage_one
-            su "${server_user}" -c "$(declare -f install_stage_two); install_stage_two"
-            [[ -x "$(command -v systemctl)" ]] && install_service
-            printf "\nhlds parameters can be set in /etc/hlds/cs16-server.conf\n"
-            printf "\nInstallation completed\n\n"
-         ;;
+    "")
+        check_depends
+        install_stage_one
+        su "${server_user}" -c "$(declare -f install_stage_two); install_stage_two"
+        [[ -x "$(command -v systemctl)" ]] && install_service
+        printf "\nhlds parameters can be set in /etc/hlds/cs16-server.conf\n"
+        printf "\nInstallation completed\n\n"
+    ;;
 esac
