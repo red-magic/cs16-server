@@ -60,29 +60,25 @@ print_help() { echo "Usage: $(basename "$0") [start | restart | stop | update | 
 case "$1" in
     start)
         start_server
-    ;;
-
+        ;;
     restart)
         restart_server
-    ;;
-
+        ;;
     stop)
         stop_server
-    ;;
-
+        ;;
     update)
         update_server
-    ;;
-
+        ;;
     status)
         status_server
-    ;;
-
+        ;;
     "")
         print_help
-    ;;
-
+        ;;
     *)
-        echo "Invalid option $1"; print_help; exit 1
-    ;;
+        echo "Invalid option $1"
+        print_help
+        exit 1
+        ;;
 esac
