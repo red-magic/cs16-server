@@ -13,6 +13,7 @@ trap "printf \"\n\nInstallation aborted\n\n\"; exit 1" INT
 
 check_depends() {
     pkgs=("git" "7z" "curl")
+    missing_pkgs=""
 
     for pkg in "${pkgs[@]}"; do
         [[ -x "$(command -v "${pkg}")" ]] || missing_pkgs="${missing_pkgs} ${pkg}"
