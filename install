@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 export server_user="hlds"
 
 if [[ "$(id -u)" -ne 0 ]]; then
@@ -47,7 +49,10 @@ check_depends() {
         [[ -x "$(command -v "${pkg}")" ]] || missing_pkgs="${missing_pkgs} ${pkg}"
     done
 
-    [[ -n "${missing_pkgs}" ]] && printf "Install the following packages:%s\n" "${missing_pkgs}" && exit 1
+    if [[ -n "${missing_pkgs}" ]]; then
+        printf "Install the following packages:%s\n" "${missing_pkgs}"
+        exit 1
+    fi
 }
 
 install_stage_one() {
@@ -72,11 +77,6 @@ install_stage_one() {
     done
 
     popd || exit 1
-
-    install -vm 755 cs16-server/cs16-server -t /usr/bin
-    install -vDm 644 cs16-server/cs16-server.conf -t /etc/hlds
-    install -vm 644 cs16-server/cs16-server.1 -t /usr/share/man/man1
-    gzip -vf --best /usr/share/man/man1/cs16-server.1
 }
 
 install_stage_two() {
@@ -108,6 +108,13 @@ install_stage_two() {
     touch cs16/cstrike/{listip.cfg,banned.cfg}
 }
 
+install_stage_three(){
+    install -vm 755 cs16-server/cs16-server -t /usr/bin
+    install -vDm 644 cs16-server/cs16-server.conf -t /etc/hlds
+    install -vm 644 cs16-server/cs16-server.1 -t /usr/share/man/man1
+    gzip -vf --best /usr/share/man/man1/cs16-server.1
+}
+
 install_service() {
     install -m 644 cs16-server/cs16-server.service -t /usr/lib/systemd/system
     printf "\nRun \"systemctl enable cs16-server\" to start server on boot"
@@ -121,6 +128,7 @@ case "$1" in
         check_depends
         install_stage_one
         su "${server_user}" -c "$(declare -f install_stage_two); install_stage_two"
+        install_stage_three
         [[ -x "$(command -v systemctl)" ]] && install_service
         printf "\nhlds parameters can be set in /etc/hlds/cs16-server.conf\n"
         printf "\nInstallation completed\n\n"
