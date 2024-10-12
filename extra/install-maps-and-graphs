@@ -4,7 +4,10 @@
 
 server_user="hlds"
 
-[[ "$(id -un)" == "${server_user}" ]] || { printf "You must run this script as %s user\n" "${server_user}"; exit 1; }
+if [[ "$(id -un)" != "${server_user}" ]]; then
+    printf "You must run this script as %s user\n" "${server_user}"
+    exit 1
+fi
 
 trap "printf \"\n\nInstallation aborted\n\n\"; exit 1" INT
 
@@ -15,17 +18,24 @@ check_depends() {
         [[ -x "$(command -v "${pkg}")" ]] || missing_pkgs="${missing_pkgs} ${pkg}"
     done
 
-    [[ -n "${missing_pkgs}" ]] && printf "Install the following packages:%s\n" "${missing_pkgs}" && exit 1
+    if [[ -n "${missing_pkgs}" ]]; then
+        printf "Install the following packages:%s\n" "${missing_pkgs}"
+        exit 1
+    fi
 }
 
 download_files() {
     cd "/home/${server_user}" || exit 1
-    mkdir -v cs16-maps-and-graphs
+    mkdir -vp cs16-maps-and-graphs
     cd cs16-maps-and-graphs || exit 1
 
     printf "==> Downloading map pack, it is going to take some time\n"
     map_link="https://archive.org/download/cs-1.6-mega-map-pack-v-2018.1.7z/CS%201.6%20Mega%20Map%20Pack%20v2018.1.7z"
-    curl -fLO "${map_link}" -o cs-1.6-mega-map-pack-v-2018.1.7z || { printf "Failed to download map archive\n"; exit 1; }
+
+    if ! curl -fLO "${map_link}" -o cs-1.6-mega-map-pack-v-2018.1.7z; then
+        printf "Failed to download map archive\n"
+        exit 1
+    fi
 
     git clone https://github.com/yapb/graph
 }

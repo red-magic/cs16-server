@@ -34,9 +34,9 @@ check_depends() {
 
     if [[ -x "$(command -v pacman)" ]] || [[ -x "$(command -v apt)" ]]; then
         [[ ! -d "/usr/lib32" ]] && lib32_warn
-        find /usr/lib32 -type f | grep -q libstdc++ || lib32_warn
+        find /usr/lib32 -type f | grep -q libstdc++.so || lib32_warn
     elif [[ -x "$(command -v dnf)" ]]; then
-        find /usr/lib -type f | grep -q libstdc++ || lib32_warn
+        find /usr/lib -type f | grep -q libstdc++.so || lib32_warn
     else
         printf "Unknown distro, make sure you have 32-bit libstdc++\n"
         printf "Press Enter to continue\n"
@@ -56,7 +56,10 @@ check_depends() {
 }
 
 install_stage_one() {
-    [[ -d "/home/${server_user}" ]] && printf "Server is already installed\n" && exit 1
+    if [[ -d "/home/${server_user}" ]]; then
+        printf "Server is already installed\n"
+        exit 1
+    fi
 
     useradd -m -s /usr/bin/bash "${server_user}"
     passwd -l "${server_user}"
@@ -73,7 +76,10 @@ install_stage_one() {
 
     for link in "${links[@]}"; do
         printf "==> Downloading %s\n" "${link}"
-        curl -fLO "${link}" || { printf "Failed to download %s\n" "${link}"; exit 1; }
+        if ! curl -fLO "${link}"; then
+            printf "Failed to download %s\n" "${link}"
+            exit 1
+        fi
     done
 
     popd || exit 1
