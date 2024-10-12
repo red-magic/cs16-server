@@ -26,7 +26,7 @@ _update_hlds() {
 }
 
 _hlds_check() {
-    pgrep hlds_ > /dev/null 2>&1
+    pgrep hlds_ > /dev/null 2>&1 || pgrep steamcmd > /dev/null 2>&1
 }
 
 start_server() {
