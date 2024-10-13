@@ -18,7 +18,7 @@ _start_hlds() {
 }
 
 _kill_hlds() {
-    su "${server_user}" -c "pkill -SIGINT hlds_ > /dev/null 2>&1"
+    su "${server_user}" -c "pkill -u ${server_user} -SIGINT hlds_ > /dev/null 2>&1"
 }
 
 _update_hlds() {
@@ -26,7 +26,13 @@ _update_hlds() {
 }
 
 _hlds_check() {
-    pgrep hlds_ > /dev/null 2>&1 || pgrep steamcmd > /dev/null 2>&1
+    if pgrep -u "${server_user}" steamcmd > /dev/null 2>&1; then
+        echo "Server is being updated"
+        echo "Wait for it to finish"
+        exit 1
+    fi
+
+    pgrep -u "${server_user}" hlds_ > /dev/null 2>&1
 }
 
 start_server() {
