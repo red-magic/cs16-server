@@ -9,6 +9,15 @@ server_user="hlds"
 server_conf="/etc/hlds/cs16-server.conf"
 server_workdir="/home/${server_user}/.steam"
 
+_hlds_check() {
+    if pgrep -u "${server_user}" steamcmd > /dev/null 2>&1; then
+        echo "Server is being updated"
+        echo "Wait for it to finish"
+        exit 1
+    fi
+    pgrep -u "${server_user}" hlds_ > /dev/null 2>&1
+}
+
 _read_conf() {
     source "${server_conf}"
 }
@@ -23,15 +32,6 @@ _kill_hlds() {
 
 _update_hlds() {
     su "${server_user}" -c "cd ${server_workdir} && ./steamcmd.sh +force_install_dir cs16 +login anonymous +app_update 90 validate +quit"
-}
-
-_hlds_check() {
-    if pgrep -u "${server_user}" steamcmd > /dev/null 2>&1; then
-        echo "Server is being updated"
-        echo "Wait for it to finish"
-        exit 1
-    fi
-    pgrep -u "${server_user}" hlds_ > /dev/null 2>&1
 }
 
 start_server() {
