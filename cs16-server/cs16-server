@@ -31,7 +31,6 @@ _hlds_check() {
         echo "Wait for it to finish"
         exit 1
     fi
-
     pgrep -u "${server_user}" hlds_ > /dev/null 2>&1
 }
 
