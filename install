@@ -77,8 +77,8 @@ install_stage_one() {
 }
 
 install_stage_two() {
-    cd "/home/${server_user}" || exit 1
-    mkdir -vp .steam && cd .steam || exit 1
+    mkdir -vp "/home/${server_user}/.steam"
+    cd "/home/${server_user}/.steam" || exit 1
     ln -sfv . steam
 
     for arc in /tmp/cs16-server/*.tar.*; do
