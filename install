@@ -26,21 +26,10 @@ remove_server() {
 }
 
 check_depends() {
-    lib32_warn() {
+    if ! find /usr -name "libstdc++.so.6" -exec file -L {} + 2>/dev/null | grep -q 32-bit; then
         printf "Install 32-bit libstdc++\n"
         printf "See README.md for details\n"
         exit 1
-    }
-
-    if [[ -x "$(command -v pacman)" ]] || [[ -x "$(command -v apt)" ]]; then
-        [[ ! -d "/usr/lib32" ]] && lib32_warn
-        find /usr/lib32 -type f | grep -q libstdc++.so || lib32_warn
-    elif [[ -x "$(command -v dnf)" ]]; then
-        find /usr/lib -type f | grep -q libstdc++.so || lib32_warn
-    else
-        printf "Unknown distro, make sure you have 32-bit libstdc++\n"
-        printf "Press Enter to continue\n"
-        read -r
     fi
 
     pkgs=("tar" "xz" "gzip" "curl")
