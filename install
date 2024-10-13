@@ -54,7 +54,8 @@ install_stage_one() {
     useradd -m -s /usr/bin/bash "${server_user}"
     passwd -l "${server_user}"
 
-    mkdir -vp /tmp/cs16-server && pushd /tmp/cs16-server || exit 1
+    mkdir -vp /tmp/cs16-server
+    pushd /tmp/cs16-server || exit 1
 
     links=(
         "https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz"
