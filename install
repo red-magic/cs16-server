@@ -51,8 +51,6 @@ check_depends() {
 }
 
 install_stage_one() {
-    useradd -m -s "$(whereis -b bash | awk '{ print $2 }')" "${server_user}"
-
     mkdir -vp /tmp/cs16-server
     pushd /tmp/cs16-server || exit 1
 
@@ -73,6 +71,8 @@ install_stage_one() {
     done
 
     popd || exit 1
+
+    useradd -m -s "$(whereis -b bash | awk '{ print $2 }')" "${server_user}"
 }
 
 install_stage_two() {
