@@ -26,6 +26,11 @@ remove_server() {
 }
 
 check_depends() {
+    if [[ -d "/home/${server_user}" ]]; then
+        printf "Server is already installed\n"
+        exit 1
+    fi
+
     if ! find /usr/{lib,lib32} -name "libstdc++.so.6" -exec file -L {} + 2>/dev/null | grep -q 32-bit; then
         printf "Install 32-bit libstdc++\n"
         printf "See README.md for details\n"
@@ -46,11 +51,6 @@ check_depends() {
 }
 
 install_stage_one() {
-    if [[ -d "/home/${server_user}" ]]; then
-        printf "Server is already installed\n"
-        exit 1
-    fi
-
     useradd -m -s "$(whereis -b bash | awk '{ print $2 }')" "${server_user}"
 
     mkdir -vp /tmp/cs16-server
