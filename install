@@ -51,10 +51,7 @@ install_stage_one() {
         exit 1
     fi
 
-    printf "Creating %s user with account locked\n" "${server_user}"
-
     useradd -m -s "$(whereis -b bash | awk '{ print $2 }')" "${server_user}"
-    passwd -l "${server_user}"
 
     mkdir -vp /tmp/cs16-server
     pushd /tmp/cs16-server || exit 1
