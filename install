@@ -72,7 +72,7 @@ install_stage_one() {
 
     popd || exit 1
 
-    useradd -m -s "$(whereis -b bash | awk '{ print $2 }')" "${server_user}"
+    useradd -m -s "$(command -v bash)" "${server_user}"
 }
 
 install_stage_two() {
