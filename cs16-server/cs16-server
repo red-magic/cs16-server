@@ -18,11 +18,8 @@ _hlds_check() {
     pgrep -u "${server_user}" hlds_ > /dev/null 2>&1
 }
 
-_read_conf() {
-    source "${server_conf}"
-}
-
 _start_hlds() {
+    source "${server_conf}"
     su "${server_user}" -c "cd ${server_workdir}/cs16 && ./hlds_run ${server_game:-} ${server_params:-} ${server_dll:-} > /dev/null 2>&1 &"
 }
 
@@ -40,7 +37,7 @@ start_server() {
         exit 1
     fi
     echo "Starting server"
-    _read_conf && _start_hlds
+    _start_hlds
 }
 
 stop_server() {
@@ -59,7 +56,7 @@ restart_server() {
     else
         echo "Starting server"
     fi
-    _read_conf && _start_hlds
+    _start_hlds
 }
 
 update_server() {
