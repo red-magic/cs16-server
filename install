@@ -31,7 +31,7 @@ check_depends() {
         exit 1
     fi
 
-    if ! find /usr/{lib,lib32} -name "libstdc++.so.6" -exec file -L {} + 2>/dev/null | grep -q 32-bit; then
+    if ! find /usr/{lib,lib32} -name "libstdc++.so.6" -exec ldd {} + 2>/dev/null | grep -q ld-linux.so.2; then
         printf "Install 32-bit libstdc++\n"
         printf "See README.md for details\n"
         exit 1
