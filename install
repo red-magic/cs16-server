@@ -105,7 +105,7 @@ install_stage_two() {
     printf ";;linux addons/yapb/bin/yapb.so\n" >> cs16/cstrike/addons/metamod/plugins.ini
 
     ln -sfv linux32 sdk32
-    # Create empty files so steamcmd won't complain
+    # Create empty files so hlds_run won't complain
     touch cs16/cstrike/{listip.cfg,banned.cfg}
 }
 
