@@ -82,19 +82,19 @@ print_help() {
 }
 
 case "$1" in
-    start)
+    "start")
         start_server
         ;;
-    restart)
+    "restart")
         restart_server
         ;;
-    stop)
+    "stop")
         stop_server
         ;;
-    update)
+    "update")
         update_server
         ;;
-    status)
+    "status")
         status_server
         ;;
     "")
