@@ -20,7 +20,7 @@ Run `./install` script as root, first it downloads these files to `/tmp/cs16-ser
 
 - **steamcmd**
 - **metamod-p-v1.21p38**
-- **amxmodx-1.10-latest**
+- **amxmodx-1.10**
 - **yapb-4.4.957**
 
 Once it's done it places `cs16-server` script that controls the server to `/usr/bin` and `cs16-server.conf` with all hlds args to `/etc/hlds`.
