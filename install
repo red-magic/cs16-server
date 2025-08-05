@@ -51,6 +51,8 @@ check_depends() {
 }
 
 install_stage_one() {
+    [[ -d /tmp/cs16-server ]] && rm -vrf /tmp/cs16-server
+
     mkdir -vp /tmp/cs16-server
     pushd /tmp/cs16-server || exit 1
 
@@ -130,6 +132,7 @@ case "$1" in
         install_stage_one
         su "${server_user}" -c "$(declare -f install_stage_two); install_stage_two"
         install_stage_three
+        rm -vrf /tmp/cs16-server
         [[ -x "$(command -v systemctl)" ]] && install_service
         printf "\nhlds parameters can be set in /etc/hlds/cs16-server.conf\n"
         printf "\nInstallation completed\n\n"
