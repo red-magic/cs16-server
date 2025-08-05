@@ -2,6 +2,8 @@
 
 # Copy this script to /home/hlds directory and run it as hlds user
 
+set -euo pipefail
+
 server_user="hlds"
 
 if [[ "$(id -un)" != "${server_user}" ]]; then
