@@ -12,7 +12,7 @@ export server_user="hlds"
 export tmp_dir="/tmp/cs16-server"
 
 abort_install() {
-    pgrep steamcmd > /dev/null 2>&1 && pkill -SIGINT steamcmd > /dev/null 2>&1
+    pgrep steamcmd &> /dev/null && pkill -SIGINT steamcmd &> /dev/null
     printf "\nInstallation aborted\n"
     exit 1
 }
@@ -20,7 +20,7 @@ abort_install() {
 trap abort_install INT
 
 remove_server() {
-    if pgrep -u "${server_user}" > /dev/null 2>&1; then
+    if pgrep -u "${server_user}" &> /dev/null; then
         printf "%s user has processes running\n" "${server_user}"
         printf "Stop them before uninstalling the server\n"
         exit 1

@@ -12,21 +12,21 @@ server_conf="/etc/hlds/cs16-server.conf"
 server_workdir="/home/${server_user}/.steam"
 
 _hlds_check() {
-    if pgrep -u "${server_user}" steamcmd > /dev/null 2>&1; then
+    if pgrep -u "${server_user}" steamcmd &> /dev/null; then
         printf "Server is being updated\n"
         printf "Wait for it to finish\n"
         exit 1
     fi
-    pgrep -u "${server_user}" hlds_ > /dev/null 2>&1
+    pgrep -u "${server_user}" hlds_ &> /dev/null
 }
 
 _start_hlds() {
     source "${server_conf}"
-    su "${server_user}" -c "cd ${server_workdir}/cs16 && ./hlds_run ${server_game:-} ${server_params:-} ${server_dll:-} > /dev/null 2>&1 &"
+    su "${server_user}" -c "cd ${server_workdir}/cs16 && ./hlds_run ${server_game:-} ${server_params:-} ${server_dll:-} &> /dev/null &"
 }
 
 _kill_hlds() {
-    su "${server_user}" -c "pkill -u ${server_user} -SIGINT hlds_ > /dev/null 2>&1"
+    su "${server_user}" -c "pkill -u ${server_user} -SIGINT hlds_ &> /dev/null"
 }
 
 _update_hlds() {
