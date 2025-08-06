@@ -2,6 +2,8 @@
 
 # Copy this script to /home/hlds directory and run it as hlds user
 
+set -euo pipefail
+
 server_user="hlds"
 arc="cs-1.6-mega-map-pack-v-2018.1.7z"
 

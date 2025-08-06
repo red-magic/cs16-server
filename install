@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 if [[ "$(id -u)" -ne 0 ]]; then
     printf "This script must be run as root\n"
     printf "Pass \"remove\" arg to uninstall\n"
@@ -39,7 +41,9 @@ check_depends() {
         exit 1
     fi
 
-    if ! ldconfig -p | grep -q 'libstdc++.so.6.(libc6)'; then
+    ldconfig_libs="$(ldconfig -p)"
+
+    if ! grep -q 'libstdc++.so.6 (libc6)' <<< "${ldconfig_libs}" ; then
         printf "Install 32-bit libstdc++\n"
         printf "See README.md for details\n"
         exit 1
@@ -138,7 +142,7 @@ selinux_fix() {
     restorecon -v "/home/${server_user}/.steam/cs16/hlds_run"
 }
 
-case "$1" in
+case "${1:-}" in
     "remove")
         remove_server
         ;;

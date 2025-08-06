@@ -1,7 +1,9 @@
 #!/bin/bash
 
+set -euo pipefail
+
 if [[ "$(id -u)" -ne 0 ]]; then
-    echo "$(basename "$0") must be run as root"
+    printf "%s must be run as root\n" "$(basename "$0")"
     exit 1
 fi
 
@@ -11,8 +13,8 @@ server_workdir="/home/${server_user}/.steam"
 
 _hlds_check() {
     if pgrep -u "${server_user}" steamcmd > /dev/null 2>&1; then
-        echo "Server is being updated"
-        echo "Wait for it to finish"
+        printf "Server is being updated\n"
+        printf "Wait for it to finish\n"
         exit 1
     fi
     pgrep -u "${server_user}" hlds_ > /dev/null 2>&1
@@ -33,55 +35,55 @@ _update_hlds() {
 
 start_server() {
     if _hlds_check; then
-        echo "Server is already running"
+        printf "Server is already running\n"
         exit 1
     fi
-    echo "Starting server"
+    printf "Starting server\n"
     _start_hlds
 }
 
 stop_server() {
     if ! _hlds_check; then
-        echo "Server is not running"
+        printf "Server is not running\n"
         exit 1
     fi
-    echo "Stopping server"
+    printf "Stopping server\n"
     _kill_hlds
 }
 
 restart_server() {
     if _hlds_check; then
-        echo "Restarting server"
+        printf "Restarting server\n"
         _kill_hlds
     else
-        echo "Starting server"
+        printf "Starting server\n"
     fi
     _start_hlds
 }
 
 update_server() {
     if _hlds_check; then
-        echo "Stop server first"
+        printf "Stop server first\n"
         exit 1
     fi
-    echo "Updating server"
+    printf "Updating server\n"
     _update_hlds
 }
 
 status_server() {
     if _hlds_check; then
-        echo "Server is running with the following args:"
+        printf "Server is running with the following args:\n"
         pgrep -a hlds_linux | awk '{ print substr($0, index($0, $2)) }'
     else
-        echo "Server is not running"
+        printf "Server is not running\n"
     fi
 }
 
 print_help() {
-    echo "Usage: $(basename "$0") [start | restart | stop | update | status]"
+    printf "Usage: %s [start | restart | stop | update | status]\n" "$(basename "$0")"
 }
 
-case "$1" in
+case "${1:-}" in
     "start")
         start_server
         ;;
@@ -101,7 +103,7 @@ case "$1" in
         print_help
         ;;
     *)
-        echo "Invalid option $1"
+        printf "Invalid option %s\n" "$1"
         print_help
         exit 1
         ;;
