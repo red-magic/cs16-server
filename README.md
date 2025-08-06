@@ -47,17 +47,6 @@ server_game="-game cstrike -secure"
 
 Leave `server_dll` var empty to disable metamod and have a pure vanilla server without any mods.
 
-## SELinux
-
-To make the systemd service work with SELinux you need to enter the following:
-
-```
-semanage fcontext -a -t bin_t /home/hlds/.steam/cs16/hlds_run
-restorecon -v /home/hlds/.steam/cs16/hlds_run
-```
-
-Alternatively SELinux can be disabled entirely by setting `SELINUX=disabled` in `/etc/selinux/config` and entering `setenforce 0`.
-
 ## Removal
 
 Run `./install remove` to uninstall the server and its files along with `hlds` user.

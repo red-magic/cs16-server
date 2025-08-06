@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -euo pipefail
-
 if [[ "$(id -u)" -ne 0 ]]; then
     printf "This script must be run as root\n"
     printf "Pass \"remove\" arg to uninstall\n"
@@ -13,12 +11,11 @@ export tmp_dir="/tmp/cs16-server"
 
 abort_install() {
     pkill -SIGINT steamcmd > /dev/null 2>&1
-    [[ -d "${tmp_dir}" ]] && rm -vrf "${tmp_dir}"
     printf "\nInstallation aborted\n"
     exit 1
 }
 
-trap abort_install INT ERR
+trap abort_install INT TERM ERR
 
 remove_server() {
     if pgrep -u "${server_user}" > /dev/null 2>&1; then
@@ -26,10 +23,13 @@ remove_server() {
         printf "Stop them before uninstalling the server\n"
         exit 1
     fi
+
     userdel -r "${server_user}"
+
     rm -vrf /etc/hlds
     rm -vf /usr/bin/cs16-server
     rm -vf /usr/share/man/man1/cs16-server.1*
+
     [[ -x "$(command -v systemctl)" ]] && rm -vf /usr/lib/systemd/system/cs16-server.service
 }
 
@@ -39,7 +39,7 @@ check_depends() {
         exit 1
     fi
 
-    if ! find /usr/{lib,lib32} -name "libstdc++.so.6" -exec ldd {} + 2>/dev/null | grep -q ld-linux.so.2; then
+    if ! ldconfig -p | grep -q 'libstdc++.so.6.(libc6)'; then
         printf "Install 32-bit libstdc++\n"
         printf "See README.md for details\n"
         exit 1
@@ -47,6 +47,8 @@ check_depends() {
 
     pkgs=("tar" "xz" "gzip" "curl")
     missing_pkgs=""
+
+    [[ ! -x "$(command -v sestatus)" ]] && missing_pkgs=" policycoreutils-python-utils"
 
     for pkg in "${pkgs[@]}"; do
         [[ -x "$(command -v "${pkg}")" ]] || missing_pkgs="${missing_pkgs} ${pkg}"
@@ -131,17 +133,27 @@ install_service() {
     printf "\nRun \"systemctl enable cs16-server\" to start server on boot"
 }
 
+selinux_fix() {
+    semanage fcontext -a -t bin_t "/home/${server_user}/.steam/cs16/hlds_run"
+    restorecon -v "/home/${server_user}/.steam/cs16/hlds_run"
+}
+
 case "$1" in
     "remove")
         remove_server
         ;;
     "")
         check_depends
+
         install_stage_one
         su "${server_user}" -c "$(declare -f install_stage_two); install_stage_two"
         install_stage_three
+
         rm -vrf "${tmp_dir}"
+
+        [[ -x "$(command -v semanage)" ]] && selinux_fix
         [[ -x "$(command -v systemctl)" ]] && install_service
+
         printf "\nhlds parameters can be set in /etc/hlds/cs16-server.conf\n"
         printf "\nInstallation completed\n\n"
         ;;
