@@ -10,7 +10,7 @@ export server_user="hlds"
 export tmp_dir="/tmp/cs16-server"
 
 abort_install() {
-    pkill -SIGINT steamcmd > /dev/null 2>&1
+    pgrep steamcmd > /dev/null 2>&1 && pkill -SIGINT steamcmd > /dev/null 2>&1
     printf "\nInstallation aborted\n"
     exit 1
 }
