@@ -12,7 +12,7 @@ export server_user="hlds"
 
 abort_install() {
     pkill -SIGINT steamcmd > /dev/null 2>&1
-    rm -vrf /tmp/cs16-server
+    [[ -d /tmp/cs16-server ]] && rm -vrf /tmp/cs16-server
     printf "\nInstallation aborted\n"
     exit 1
 }
