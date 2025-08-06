@@ -10,7 +10,14 @@ fi
 
 export server_user="hlds"
 
-trap "pkill -SIGINT steamcmd > /dev/null 2>&1; printf \"\nInstallation aborted\n\"; exit 1" INT ERR
+abort_install() {
+    pkill -SIGINT steamcmd > /dev/null 2>&1
+    rm -vrf /tmp/cs16-server
+    printf "\nInstallation aborted\n"
+    exit 1
+}
+
+trap abort_install INT ERR
 
 remove_server() {
     if pgrep -u "${server_user}" > /dev/null 2>&1; then
