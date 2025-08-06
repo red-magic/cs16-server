@@ -13,6 +13,8 @@ fi
 
 trap "printf \"\n\nInstallation aborted\n\n\"; exit 1" INT
 
+arc="cs-1.6-mega-map-pack-v-2018.1.7z"
+
 check_depends() {
     pkgs=("git" "7z" "curl")
     missing_pkgs=""
@@ -32,9 +34,9 @@ download_files() {
     cd "/home/${server_user}/cs16-maps-and-graphs" || exit 1
 
     printf "==> Downloading map pack, it is going to take some time\n"
-    map_link="https://archive.org/download/cs-1.6-mega-map-pack-v-2018.1.7z/CS%201.6%20Mega%20Map%20Pack%20v2018.1.7z"
+    map_link="https://archive.org/download/${arc}/CS%201.6%20Mega%20Map%20Pack%20v2018.1.7z"
 
-    if ! curl -fLO "${map_link}" -o cs-1.6-mega-map-pack-v-2018.1.7z; then
+    if ! curl -fLO "${map_link}" -o "${arc}"; then
         printf "Failed to download map archive\n"
         exit 1
     fi
@@ -43,8 +45,13 @@ download_files() {
 }
 
 copy_files() {
-    7z x -o"/home/${server_user}/.steam/cs16" cs-1.6-mega-map-pack-v-2018.1.7z
+    7z x -o"/home/${server_user}/.steam/cs16" "${arc}"
     cp -v graph/graph/* "/home/${server_user}/.steam/cs16/cstrike/addons/yapb/data/graph"
+}
+
+cleanup() {
+    rm -vf "${arc}"
+    rm -vrf graph
 }
 
 case "$1" in
@@ -52,6 +59,7 @@ case "$1" in
         check_depends
         download_files
         copy_files
+        #cleanup
         printf "\nInstallation completed\n\n"
         ;;
 esac

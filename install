@@ -9,11 +9,11 @@ if [[ "$(id -u)" -ne 0 ]]; then
 fi
 
 export server_user="hlds"
-export temp_dir="/tmp/cs16-server"
+export tmp_dir="/tmp/cs16-server"
 
 abort_install() {
     pkill -SIGINT steamcmd > /dev/null 2>&1
-    [[ -d "${temp_dir}" ]] && rm -vrf "${temp_dir}"
+    [[ -d "${tmp_dir}" ]] && rm -vrf "${tmp_dir}"
     printf "\nInstallation aborted\n"
     exit 1
 }
@@ -59,10 +59,10 @@ check_depends() {
 }
 
 install_stage_one() {
-    [[ -d "${temp_dir}" ]] && rm -vrf "${temp_dir}"
+    [[ -d "${tmp_dir}" ]] && rm -vrf "${tmp_dir}"
 
-    mkdir -vp "${temp_dir}"
-    pushd "${temp_dir}" || exit 1
+    mkdir -vp "${tmp_dir}"
+    pushd "${tmp_dir}" || exit 1
 
     links=(
         "https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz"
@@ -90,7 +90,7 @@ install_stage_two() {
     cd "/home/${server_user}/.steam" || exit 1
     ln -sfv . steam
 
-    for arc in "${temp_dir}/"*.tar.*; do
+    for arc in "${tmp_dir}/"*.tar.*; do
         tar xvf "${arc}"
     done
 
@@ -140,7 +140,7 @@ case "$1" in
         install_stage_one
         su "${server_user}" -c "$(declare -f install_stage_two); install_stage_two"
         install_stage_three
-        rm -vrf "${temp_dir}"
+        rm -vrf "${tmp_dir}"
         [[ -x "$(command -v systemctl)" ]] && install_service
         printf "\nhlds parameters can be set in /etc/hlds/cs16-server.conf\n"
         printf "\nInstallation completed\n\n"
