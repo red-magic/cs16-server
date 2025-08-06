@@ -3,6 +3,7 @@
 # Copy this script to /home/hlds directory and run it as hlds user
 
 server_user="hlds"
+arc="cs-1.6-mega-map-pack-v-2018.1.7z"
 
 if [[ "$(id -un)" != "${server_user}" ]]; then
     printf "You must run this script as %s user\n" "${server_user}"
@@ -10,8 +11,6 @@ if [[ "$(id -un)" != "${server_user}" ]]; then
 fi
 
 trap "printf \"\n\nInstallation aborted\n\n\"; exit 1" INT
-
-arc="cs-1.6-mega-map-pack-v-2018.1.7z"
 
 check_depends() {
     pkgs=("git" "7z" "curl")
