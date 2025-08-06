@@ -24,7 +24,7 @@ remove_server() {
         exit 1
     fi
 
-    userdel -r "${server_user}"
+    userdel -r "${server_user}" && printf "User %s deleted\n" "${server_user}"
 
     rm -vrf /etc/hlds
     rm -vf /usr/bin/cs16-server
