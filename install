@@ -41,9 +41,7 @@ check_depends() {
         exit 1
     fi
 
-    ldconfig_libs="$(ldconfig -p)"
-
-    if ! grep -q 'libstdc++.so.6 (libc6)' <<< "${ldconfig_libs}" ; then
+    if ! grep -q 'libstdc++.so.6 (libc6)' < <(ldconfig -p); then
         printf "Install 32-bit libstdc++\n"
         printf "See README.md for details\n"
         exit 1
