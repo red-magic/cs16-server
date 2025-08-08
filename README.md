@@ -16,7 +16,9 @@ And basic tools:
 
 ## Installation
 
-Run `./install` script as root, first it downloads these files to `/tmp/cs16-server`:
+- `sudo ./install`
+
+First it downloads these files to `/tmp/cs16-server`:
 
 - **steamcmd**
 - **metamod-p-v1.21p38**
