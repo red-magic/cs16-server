@@ -51,7 +51,7 @@ Leave `server_dll` var empty to disable metamod and have a pure vanilla server w
 
 ## Removal
 
-Run `./install remove` to uninstall the server and its files along with `hlds` user.
+- `sudo ./install remove` to uninstall the server and its files along with `hlds` user.
 
 ## Extra
 
