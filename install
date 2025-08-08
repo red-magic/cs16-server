@@ -152,7 +152,7 @@ case "${1:-}" in
         check_depends
 
         install_stage_one
-        su "${server_user}" -c "$(declare -f install_stage_two); install_stage_two"
+        su "${server_user}" -c "$(declare -f install_stage_two) && install_stage_two"
         install_stage_three
 
         rm -vrf "${tmp_dir}"

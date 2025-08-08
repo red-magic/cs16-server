@@ -128,12 +128,24 @@ print_help() {
 }
 
 case "${1:-}" in
-    "start") start_server ;;
-    "stop") stop_server ;;
-    "restart") restart_server ;;
-    "update") update_server ;;
-    "status") status_server ;;
-    "") print_help ;;
+    "start")
+        start_server
+        ;;
+    "stop")
+        stop_server
+        ;;
+    "restart")
+        restart_server
+        ;;
+    "update")
+        update_server
+        ;;
+    "status")
+        status_server
+        ;;
+    "")
+        print_help
+        ;;
     *)
         printf "Invalid option: %s\n" "${1}"
         print_help
