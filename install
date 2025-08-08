@@ -39,9 +39,7 @@ check_depends() {
     if [[ -d "/home/${server_user}" ]]; then
         printf "Server is already installed\n"
         exit 1
-    fi
-
-    if ! grep -q 'libstdc++.so.6 (libc6)' < <(ldconfig -p); then
+    elif ! grep -q 'libstdc++.so.6 (libc6)' < <(ldconfig -p); then
         printf "Install 32-bit libstdc++\n"
         printf "See README.md for details\n"
         exit 1

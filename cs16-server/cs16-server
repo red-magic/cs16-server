@@ -15,9 +15,7 @@ _check_dependencies() {
     if [[ ! -f "${server_conf}" ]]; then
         printf "Error: Configuration file %s not found\n" "${server_conf}"
         exit 1
-    fi
-
-    if [[ ! -x "${server_workdir}/cs16/hlds_run" ]]; then
+    elif [[ ! -x "${server_workdir}/cs16/hlds_run" ]]; then
         printf "Error: Server files not found, run installation first\n"
         exit 1
     fi
@@ -33,9 +31,7 @@ _is_server_updating() {
 
 _start_hlds() {
     source "${server_conf}"
-
     log_file="/home/${server_user}/.steam/cs16/logs/console.log"
-
     su "${server_user}" -c "cd ${server_workdir}/cs16 && \
         ./hlds_run ${server_game:-} ${server_params:-} ${server_dll:-} \
         >> ${log_file} 2>&1 &"
@@ -43,18 +39,14 @@ _start_hlds() {
 
 _kill_hlds() {
     timeout_stop=10
-
     su "${server_user}" -c "pkill -u ${server_user} -SIGINT hlds_" || true
-
     for ((i=0; i<timeout_stop; i++)); do
         if ! _is_server_running; then
             return 0
         fi
         sleep 1
     done
-
     su "${server_user}" -c "pkill -u ${server_user} -SIGKILL hlds_" || true
-
     printf "Warning: Server was forcefully terminated\n"
 }
 
@@ -68,7 +60,6 @@ _update_hlds() {
 
 start_server() {
     _check_dependencies
-
     if _is_server_updating; then
         printf "Server is being updated, wait for it to finish\n"
         exit 1
@@ -76,9 +67,7 @@ start_server() {
         printf "Server is already running\n"
         exit 1
     fi
-
     printf "Starting server\n"
-
     _start_hlds
 }
 
@@ -90,15 +79,12 @@ stop_server() {
         printf "Server is not running\n"
         exit 1
     fi
-
     printf "Stopping server\n"
-
     _kill_hlds
 }
 
 restart_server() {
     _check_dependencies
-
     if _is_server_updating; then
         printf "Server is being updated, wait for it to finish\n"
         exit 1
@@ -108,13 +94,11 @@ restart_server() {
     else
         printf "Starting server\n"
     fi
-
     _start_hlds
 }
 
 update_server() {
     _check_dependencies
-
     if _is_server_updating; then
         printf "Server is already being updated, wait for it to finish\n"
         exit 1
@@ -122,9 +106,7 @@ update_server() {
         printf "Server is running, stop it first\n"
         exit 1
     fi
-
     printf "Updating server\n"
-
     _update_hlds
 }
 
