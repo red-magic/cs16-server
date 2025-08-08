@@ -124,13 +124,7 @@ status_server() {
 }
 
 print_help() {
-    printf "Usage: %s [command]\n" "$(basename "${0}")"
-    printf "Commands:\n"
-    printf "  start      Start the server\n"
-    printf "  stop       Stop the server\n"
-    printf "  restart    Restart the server\n"
-    printf "  update     Update server files\n"
-    printf "  status     Show server status\n"
+    printf "Usage: %s [start | stop | restart | update | status]\n" "$(basename "${0}")"
 }
 
 case "${1:-}" in
