@@ -12,7 +12,7 @@ Make sure you have 32-bit libraries before installation:
 
 And basic tools:
 
-- `tar xz gzip curl`
+- `tar` `xz` `gzip` `curl`
 
 ## Installation
 
