@@ -31,7 +31,6 @@ _is_server_updating() {
 
 _start_hlds() {
     source "${server_conf}"
-    log_file="/home/${server_user}/.steam/cs16/logs/console.log"
     su "${server_user}" -c "cd ${server_workdir}/cs16 && \
         ./hlds_run ${server_game:-} ${server_params:-} ${server_dll:-} 2>&1 &"
 }
