@@ -119,9 +119,6 @@ install_stage_two() {
     ln -sfv linux32 sdk32
     # Create empty files so hlds_run won't complain
     touch cs16/cstrike/{listip.cfg,banned.cfg}
-
-    mkdir -v cs16/logs
-    touch cs16/logs/console.log
 }
 
 install_stage_three(){
@@ -139,9 +136,6 @@ install_service() {
 selinux_fix() {
     semanage fcontext -a -t bin_t "/home/${server_user}/.steam/cs16/hlds_run"
     restorecon -v "/home/${server_user}/.steam/cs16/hlds_run"
-
-    semanage fcontext -a -t var_log_t "/home/${server_user}/.steam/cs16/logs/console.log"
-    restorecon -v "/home/${server_user}/.steam/cs16/logs/console.log"
 }
 
 case "${1:-}" in

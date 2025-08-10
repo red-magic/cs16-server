@@ -9,7 +9,7 @@ KillSignal=SIGINT
 EnvironmentFile=/etc/hlds/cs16-server.conf
 WorkingDirectory=/home/hlds/.steam/cs16
 ExecStart=/home/hlds/.steam/cs16/hlds_run ${server_game} ${server_params} ${server_dll}
-StandardOutput=append:/home/hlds/.steam/cs16/logs/console.log
+StandardOutput=null
 StandardInput=null
 Restart=on-failure
 
