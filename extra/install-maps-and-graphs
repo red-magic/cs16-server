@@ -12,7 +12,12 @@ if [[ "$(id -un)" != "${server_user}" ]]; then
     exit 1
 fi
 
-trap "printf \"\n\nInstallation aborted\n\n\"; exit 1" INT
+abort_install() {
+    printf "\n\nInstallation aborted\n\n"
+    exit 1
+}
+
+trap abort_install INT
 
 check_depends() {
     pkgs=("git" "7z" "curl")
@@ -53,7 +58,7 @@ cleanup() {
     rm -vrf graph
 }
 
-case "$1" in
+case "${1:-}" in
     "")
         check_depends
         download_files
