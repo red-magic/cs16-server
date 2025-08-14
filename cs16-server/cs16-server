@@ -32,7 +32,7 @@ _is_server_updating() {
 _start_hlds() {
     source "${server_conf}"
     su "${server_user}" -c "cd ${server_workdir}/cs16 && \
-        ./hlds_run ${server_game:-} ${server_params:-} ${server_dll:-} 2>&1 &"
+        ./hlds_run ${server_game:-} ${server_params:-} ${server_dll:-} &> /dev/null &"
 }
 
 _kill_hlds() {
