@@ -16,14 +16,14 @@ _check_pre_start() {
         printf "Error: Configuration file %s not found\n" "${server_conf}"
         exit 1
     elif [[ ! -x "${server_workdir}/cs16/hlds_run" ]]; then
-        printf "Error: Required file %s not found/executable\n" "${server_workdir}/cs16/hlds_run}"
+        printf "Error: Required file %s not found/executable\n" "${server_workdir}/cs16/hlds_run"
         exit 1
     fi
 }
 
 _check_pre_update() {
     if [[ ! -x "${server_workdir}/steamcmd.sh" ]]; then
-        printf "Error: Required file %s not found/executable\n" "${server_workdir}/steamcmd.sh}"
+        printf "Error: Required file %s not found/executable\n" "${server_workdir}/steamcmd.sh"
         exit 1
     fi
 }
