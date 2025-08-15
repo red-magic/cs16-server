@@ -25,8 +25,11 @@ _start_hlds() {
         exit 1
     fi
     source "${server_conf}"
-    su "${server_user}" -c "cd ${server_workdir}/cs16 && \
-        ./hlds_run ${server_game:-} ${server_params:-} ${server_dll:-} &> /dev/null &"
+    if ! su "${server_user}" -c "cd ${server_workdir}/cs16 && \
+        ./hlds_run ${server_game:-} ${server_params:-} ${server_dll:-} &> /dev/null &"; then
+        printf "Error: Failed to start server\n"
+        exit 1
+    fi
 }
 
 _kill_hlds() {
@@ -136,7 +139,7 @@ case "${1:-}" in
         print_help
         ;;
     *)
-        printf "Invalid option %s\n" "${1}"
+        printf "Invalid option: %s\n" "${1}"
         print_help
         exit 1
         ;;
