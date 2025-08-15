@@ -11,23 +11,21 @@ server_user="hlds"
 server_conf="/etc/hlds/cs16-server.conf"
 server_workdir="/home/${server_user}/.steam"
 
-_check_depends() {
+_check_pre_start() {
     if [[ ! -f "${server_conf}" ]]; then
         printf "Error: Configuration file %s not found\n" "${server_conf}"
         exit 1
+    elif [[ ! -x "${server_workdir}/cs16/hlds_run}" ]]; then
+        printf "Error: Required file %s not found/executable\n" "${server_workdir}/cs16/hlds_run}"
+        exit 1
     fi
+}
 
-    required_files=(
-        "${server_workdir}/cs16/hlds_run"
-        "${server_workdir}/steamcmd.sh"
-    )
-
-    for file in "${required_files[@]}"; do
-        if [[ ! -x "${file}" ]]; then
-            printf "Error: Required file %s not found/executable\n" "${file}"
-            exit 1
-        fi
-    done
+_check_pre_update() {
+    if [[ ! -x "${server_workdir}/steamcmd.sh}" ]]; then
+        printf "Error: Required file %s not found/executable\n" "${server_workdir}/steamcmd.sh}"
+        exit 1
+    fi
 }
 
 _is_server_running() {
@@ -66,7 +64,7 @@ _update_hlds() {
 }
 
 start_server() {
-    _check_depends
+    _check_pre_start
     if _is_server_updating; then
         printf "Server is being updated, wait for it to finish\n"
         exit 1
@@ -91,7 +89,7 @@ stop_server() {
 }
 
 restart_server() {
-    _check_depends
+    _check_pre_start
     if _is_server_updating; then
         printf "Server is being updated, wait for it to finish\n"
         exit 1
@@ -105,7 +103,7 @@ restart_server() {
 }
 
 update_server() {
-    _check_depends
+    _check_pre_update
     if _is_server_updating; then
         printf "Server is already being updated, wait for it to finish\n"
         exit 1
