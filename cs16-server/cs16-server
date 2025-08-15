@@ -15,10 +15,19 @@ _check_depends() {
     if [[ ! -f "${server_conf}" ]]; then
         printf "Error: Configuration file %s not found\n" "${server_conf}"
         exit 1
-    elif [[ ! -x "${server_workdir}/cs16/hlds_run" ]]; then
-        printf "Error: Server files not found, run installation first\n"
-        exit 1
     fi
+
+    required_files=(
+        "${server_workdir}/cs16/hlds_run"
+        "${server_workdir}/steamcmd.sh"
+    )
+
+    for file in "${required_files[@]}"; do
+        if [[ ! -x "${file}" ]]; then
+            printf "Error: Required file %s not found/executable\n" "${file}"
+            exit 1
+        fi
+    done
 }
 
 _is_server_running() {
