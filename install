@@ -88,7 +88,7 @@ install_stage_one() {
 }
 
 install_stage_two() {
-    mkdir -vp "/var/${server_user}/.steam"
+    mkdir -v "/var/${server_user}/.steam"
     cd "/var/${server_user}/.steam" || exit 1
     ln -sfv . steam
 
