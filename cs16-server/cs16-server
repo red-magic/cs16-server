@@ -104,7 +104,7 @@ status_server() {
     if _is_server_updating; then
         printf "Server is being updated\n"
     elif _is_server_running; then
-        pid="$(pgrep -u "${server_user}" hlds_run)"
+        pid="$(pgrep -u "${server_user}" hlds_linux)"
         uptime_seconds="$(ps -o etimes= -p "${pid}")"
         h="$((uptime_seconds/3600))"
         m="$(((uptime_seconds%3600)/60))"
