@@ -107,9 +107,14 @@ status_server() {
         printf "Server is being updated\n"
     elif _is_server_running; then
         pid="$(pgrep -u "${server_user}" hlds_run)"
+        uptime_seconds="$(ps -o etimes= -p "${pid}")"
+        h="$((uptime_seconds/3600))"
+        m="$(((uptime_seconds%3600)/60))"
+        s="$((uptime_seconds%60))"
+        cmd_line="$(ps -o cmd= -p "${pid}")"
         printf "Server is running (PID: %d)\n" "${pid}"
-        printf "Uptime: %s\n" "$(ps -o etimes= -p "${pid}" | awk '{print int($1/3600)"h "int(($1%3600)/60)"m "($1%60)"s"}')"
-        printf "Command line: %s\n" "$(pgrep -a hlds_linux | awk '{for(i=2;i<=NF;i++) printf $i" "}')"
+        printf "Uptime: %dh %dm %ds\n" "${h}" "${m}" "${s}"
+        printf "Command line: %s\n" "${cmd_line}"
     else
         printf "Server is not running\n"
     fi
