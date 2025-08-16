@@ -36,7 +36,7 @@ remove_server() {
 }
 
 check_depends() {
-    if [[ -d "/home/${server_user}" ]]; then
+    if [[ -d "/var/${server_user}" ]]; then
         printf "Server is already installed\n"
         exit 1
     elif ! grep -q 'libstdc++.so.6 (libc6)' < <(ldconfig -p); then
@@ -84,12 +84,12 @@ install_stage_one() {
 
     popd || exit 1
 
-    useradd -m -s "$(command -v bash)" -c "Counter-Strike 1.6 Dedicated Server" "${server_user}"
+    useradd -r -m -s "$(command -v nologin)" -c "Counter-Strike 1.6 Dedicated Server" "${server_user}" -d /var/hlds
 }
 
 install_stage_two() {
-    mkdir -vp "/home/${server_user}/.steam"
-    cd "/home/${server_user}/.steam" || exit 1
+    mkdir -vp "/var/${server_user}/.steam"
+    cd "/var/${server_user}/.steam" || exit 1
     ln -sfv . steam
 
     for arc in "${tmp_dir}/"*.tar.*; do
@@ -134,8 +134,8 @@ install_service() {
 }
 
 selinux_fix() {
-    semanage fcontext -a -t bin_t "/home/${server_user}/.steam/cs16/hlds_run"
-    restorecon -v "/home/${server_user}/.steam/cs16/hlds_run"
+    semanage fcontext -a -t bin_t "/var/${server_user}/.steam/cs16/hlds_run"
+    restorecon -v "/var/${server_user}/.steam/cs16/hlds_run"
 }
 
 case "${1:-}" in
@@ -146,7 +146,7 @@ case "${1:-}" in
         check_depends
 
         install_stage_one
-        su "${server_user}" -c "$(declare -f install_stage_two) && install_stage_two"
+        runuser -u "${server_user}" -- bash -c "$(declare -f install_stage_two) && install_stage_two"
         install_stage_three
 
         rm -vrf "${tmp_dir}"

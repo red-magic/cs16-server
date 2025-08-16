@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copy this script to /home/hlds directory and run it as hlds user
+# Copy this script to /var/hlds directory and run it as hlds user
 
 set -euo pipefail
 
@@ -13,7 +13,7 @@ if [[ "$(id -un)" != "${server_user}" ]]; then
 fi
 
 abort_install() {
-    printf "\n\nInstallation aborted\n\n"
+    printf "\nInstallation aborted\n"
     exit 1
 }
 
@@ -34,8 +34,8 @@ check_depends() {
 }
 
 download_files() {
-    mkdir -vp "/home/${server_user}/cs16-maps-and-graphs"
-    cd "/home/${server_user}/cs16-maps-and-graphs" || exit 1
+    mkdir -vp "/var/${server_user}/cs16-maps-and-graphs"
+    cd "/var/${server_user}/cs16-maps-and-graphs" || exit 1
 
     printf "==> Downloading map pack, it is going to take some time\n"
     map_link="https://archive.org/download/${arc}/CS%201.6%20Mega%20Map%20Pack%20v2018.1.7z"
@@ -49,8 +49,8 @@ download_files() {
 }
 
 copy_files() {
-    7z x -o"/home/${server_user}/.steam/cs16" "${arc}"
-    cp -v graph/graph/* "/home/${server_user}/.steam/cs16/cstrike/addons/yapb/data/graph"
+    7z x -o"/var/${server_user}/.steam/cs16" "${arc}"
+    cp -v graph/graph/* "/var/${server_user}/.steam/cs16/cstrike/addons/yapb/data/graph"
 }
 
 clean_up() {

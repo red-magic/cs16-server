@@ -9,7 +9,7 @@ fi
 
 server_user="hlds"
 server_conf="/etc/hlds/cs16-server.conf"
-server_workdir="/home/${server_user}/.steam"
+server_workdir="/var/${server_user}/.steam"
 
 _is_server_running() {
     pgrep -u "${server_user}" hlds_ &> /dev/null
@@ -25,7 +25,7 @@ _start_hlds() {
         exit 1
     fi
     source "${server_conf}"
-    if ! su "${server_user}" -c "cd ${server_workdir}/cs16 && ./hlds_run ${server_game:-} ${server_params:-} ${server_dll:-} &> /dev/null &"; then
+    if ! runuser -u "${server_user}" -- bash -c "cd ${server_workdir}/cs16 && ./hlds_run ${server_game:-} ${server_params:-} ${server_dll:-} &> /dev/null &"; then
         printf "Error: Failed to start server\n"
         exit 1
     fi
@@ -33,19 +33,19 @@ _start_hlds() {
 
 _kill_hlds() {
     timeout_stop=10
-    su "${server_user}" -c "pkill -u ${server_user} -SIGINT hlds_" || true
+    runuser -u "${server_user}" -- bash -c "pkill -u ${server_user} -SIGINT hlds_" || true
     for ((i=0; i<timeout_stop; i++)); do
         if ! _is_server_running; then
             return 0
         fi
         sleep 1
     done
-    su "${server_user}" -c "pkill -u ${server_user} -SIGKILL hlds_" || true
+    runuser -u "${server_user}" -- bash -c "pkill -u ${server_user} -SIGKILL hlds_" || true
     printf "Warning: Server was forcefully terminated\n"
 }
 
 _update_hlds() {
-    if ! su "${server_user}" -c "cd ${server_workdir} && ./steamcmd.sh +force_install_dir cs16 +login anonymous +app_update 90 validate +quit"; then
+    if ! runuser -u "${server_user}" -- bash -c "cd ${server_workdir} && ./steamcmd.sh +force_install_dir cs16 +login anonymous +app_update 90 validate +quit"; then
         printf "Error: Server update failed\n"
         exit 1
     fi
