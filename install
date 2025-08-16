@@ -84,7 +84,7 @@ install_stage_one() {
 
     popd || exit 1
 
-    useradd -m -s "$(command -v bash)" "${server_user}"
+    useradd -m -s "$(command -v bash)" -c "Counter-Strike 1.6 Dedicated Server" "${server_user}"
 }
 
 install_stage_two() {
