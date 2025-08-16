@@ -84,7 +84,7 @@ install_stage_one() {
 
     popd || exit 1
 
-    useradd -r -m -s "$(command -v nologin)" -c "Counter-Strike 1.6 Dedicated Server" "${server_user}" -d /var/hlds
+    useradd -r -m -s "$(command -v nologin)" -d /var/hlds -c "Counter-Strike 1.6 Dedicated Server" "${server_user}"
 }
 
 install_stage_two() {
