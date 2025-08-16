@@ -25,8 +25,7 @@ _start_hlds() {
         exit 1
     fi
     source "${server_conf}"
-    if ! su "${server_user}" -c "cd ${server_workdir}/cs16 && \
-        ./hlds_run ${server_game:-} ${server_params:-} ${server_dll:-} &> /dev/null &"; then
+    if ! su "${server_user}" -c "cd ${server_workdir}/cs16 && ./hlds_run ${server_game:-} ${server_params:-} ${server_dll:-} &> /dev/null &"; then
         printf "Error: Failed to start server\n"
         exit 1
     fi
@@ -46,8 +45,7 @@ _kill_hlds() {
 }
 
 _update_hlds() {
-    if ! su "${server_user}" -c "cd ${server_workdir} && \
-        ./steamcmd.sh +force_install_dir cs16 +login anonymous +app_update 90 validate +quit"; then
+    if ! su "${server_user}" -c "cd ${server_workdir} && ./steamcmd.sh +force_install_dir cs16 +login anonymous +app_update 90 validate +quit"; then
         printf "Error: Server update failed\n"
         exit 1
     fi
