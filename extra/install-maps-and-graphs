@@ -53,7 +53,7 @@ copy_files() {
     cp -v graph/graph/* "/var/${server_user}/.steam/cs16/cstrike/addons/yapb/data/graph"
 }
 
-clean_up() {
+cleanup() {
     rm -vf "${arc}"
     rm -vrf graph
 }
@@ -63,7 +63,7 @@ case "${1:-}" in
         check_depends
         download_files
         copy_files
-        #clean_up
+        #cleanup
         printf "\nInstallation completed\n\n"
         ;;
 esac
