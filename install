@@ -48,11 +48,13 @@ check_depends() {
     pkgs=("tar" "xz" "gzip" "curl")
     missing_pkgs=""
 
-    [[ ! -x "$(command -v semanage)" ]] && missing_pkgs=" policycoreutils-python-utils"
-
     for pkg in "${pkgs[@]}"; do
         [[ -x "$(command -v "${pkg}")" ]] || missing_pkgs="${missing_pkgs} ${pkg}"
     done
+
+    if [[ -x "$(command -v sestatus)" ]] && [[ ! -x "$(command -v semanage)" ]]; then
+        missing_pkgs="${missing_pkgs} policycoreutils-python-utils"
+    fi
 
     if [[ -n "${missing_pkgs}" ]]; then
         printf "Install the following packages:%s\n" "${missing_pkgs}"
