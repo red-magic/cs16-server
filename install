@@ -48,7 +48,7 @@ check_depends() {
     pkgs=("tar" "xz" "gzip" "curl")
     missing_pkgs=""
 
-    [[ -x "$(command -v sestatus)" ]] && missing_pkgs=" policycoreutils-python-utils"
+    [[ ! -x "$(command -v semanage)" ]] && missing_pkgs=" policycoreutils-python-utils"
 
     for pkg in "${pkgs[@]}"; do
         [[ -x "$(command -v "${pkg}")" ]] || missing_pkgs="${missing_pkgs} ${pkg}"
