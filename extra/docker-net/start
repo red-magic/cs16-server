@@ -1,3 +1,0 @@
-#!/bin/bash
-
-sudo docker run -d --name cs16-server cs16-server

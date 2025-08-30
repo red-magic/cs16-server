@@ -1,3 +1,0 @@
-#!/bin/bash
-
-sudo docker build --progress plain -t cs16-server .
