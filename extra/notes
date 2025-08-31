@@ -6,13 +6,13 @@ rcon sv_restart 1
 rcon restart 1
 
 # Admin access for amxmodx
-[cs16/cstrike/addons/amxmodx/configs/users.ini]
+[cstrike/addons/amxmodx/configs/users.ini]
 "STEAM_0:0:YOUR_STEAM_ID" "" "abcdefghijklmnopqrstuv" "ce"
 [console]
 bind "]" "amxmodmenu"
 
 # Yapb
-[cs16/cstrike/addons/yapb/conf/yapb.cfg]
+[cstrike/addons/yapb/conf/yapb.cfg]
 yb_password="your_password"
 [console]
 bind "[" "yb menu"

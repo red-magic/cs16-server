@@ -5,6 +5,7 @@
 set -euo pipefail
 
 server_user="hlds"
+home_dir="/var/${server_user}"
 arc="cs-1.6-mega-map-pack-v-2018.1.7z"
 
 if [[ "$(id -un)" != "${server_user}" ]]; then
@@ -34,8 +35,8 @@ check_depends() {
 }
 
 download_files() {
-    mkdir -vp "/var/${server_user}/cs16-maps-and-graphs"
-    cd "/var/${server_user}/cs16-maps-and-graphs" || exit 1
+    mkdir -vp "${home_dir}/cs16-maps-and-graphs"
+    cd "${home_dir}/cs16-maps-and-graphs" || exit 1
 
     printf "==> Downloading map pack, it is going to take some time\n"
     map_link="https://archive.org/download/${arc}/CS%201.6%20Mega%20Map%20Pack%20v2018.1.7z"
@@ -49,8 +50,8 @@ download_files() {
 }
 
 copy_files() {
-    7z x -o"/var/${server_user}/.steam/cs16" "${arc}"
-    cp -v graph/graph/* "/var/${server_user}/.steam/cs16/cstrike/addons/yapb/data/graph"
+    7z x -o"${home_dir}/cs16" "${arc}"
+    cp -v graph/graph/* "${home_dir}/cs16/cstrike/addons/yapb/data/graph"
 }
 
 cleanup() {

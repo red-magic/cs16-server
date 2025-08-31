@@ -30,9 +30,9 @@ Once it's done it places `cs16-server` script that controls the server to `/usr/
 It also creates `hlds` user that extracts all acrhives from `/tmp/cs16-server` to `/var/hlds/.steam` directory, makes necessary symlinks and updates **steamcmd**.
 
 > [!NOTE]
-> `hlds` user is created with account locked, you need to use `sudo -u hlds bash` if you plan to do further server configuration in `/var/hlds/.steam` directory.
+> `hlds` user is created with account locked, you need to use `sudo -u hlds bash` if you plan to do further server configuration in `/var/hlds/cs16` directory.
 >
-> yapb bots are disabled by default, if you want to enable them uncomment `;;linux addons/yapb/bin/yapb.so` line in `cs16/cstrike/addons/metamod/plugins.ini`.
+> yapb bots are disabled by default, if you want to enable them uncomment `;;linux addons/yapb/bin/yapb.so` line in `cstrike/addons/metamod/plugins.ini`.
 
 ## Usage
 
