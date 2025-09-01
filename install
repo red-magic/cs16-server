@@ -67,7 +67,7 @@ install_stage_one() {
     [[ -d "${tmp_dir}" ]] && rm -vrf "${tmp_dir}"
 
     mkdir -vp "${tmp_dir}"
-    pushd "${tmp_dir}" || exit 1
+    pushd "${tmp_dir}"
 
     links=(
         "https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz"
@@ -85,7 +85,7 @@ install_stage_one() {
         fi
     done
 
-    popd || exit 1
+    popd
 
     mkdir -v "${home_dir}"
     chmod -v 700 "${home_dir}"
