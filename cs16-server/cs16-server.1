@@ -39,15 +39,10 @@ Show server status.
 \fIcs16\-server.conf\fR file looks like this:
 .PP
 .RS
-server_params="\-pingboost 3 \-maxplayers 32 +sv_lan 0 +map de_dust2"
-.br
-server_dll="\-dll cstrike/addons/metamod/dlls/metamod.so"
-.br
-server_game="\-game cstrike \-secure"
+server_params="\-secure \-pingboost 3 \-maxplayers 32 +sv_lan 0 +map de_dust2 \-dll cstrike/addons/metamod/dlls/metamod.so"
 .RE
 .PP
 \fIserver_params\fR can be changed to whatever you want to, it all just passes options to \fBhlds_run\fR.
-Leave \fIserver_dll\fR var empty to disable \fBmetamod\fR and have a pure vanilla server without any mods.
 By default the server is run by user \fIhlds\fR with account locked.
 You need to use \fBsudo \-u hlds bash\fR if you plan to do further configuration in the server directory.
 \fBamxmodx\fR and \fBmetamod\fR are included and enabled by default.

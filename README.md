@@ -40,15 +40,7 @@ It also creates `hlds` user that extracts all acrhives from `/tmp/cs16-server` t
 
 ## cs16-server.conf
 
-```
-server_params="-pingboost 3 -maxplayers 32 +sv_lan 0 +map de_dust2"
-server_dll="-dll cstrike/addons/metamod/dlls/metamod.so"
-server_game="-game cstrike -secure"
-```
-
-`server_params` can be changed to whatever you want to, it all just passes options to `hlds_run`.
-
-Leave `server_dll` var empty to disable metamod and have a pure vanilla server without any mods.
+`server_params="-secure -pingboost 3 +sv_lan 0 -maxplayers 32 +map de_dust2 -dll cstrike/addons/metamod/dlls/metamod.so"`
 
 ## Removal
 
