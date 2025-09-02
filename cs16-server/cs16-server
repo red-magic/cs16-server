@@ -40,7 +40,7 @@ _kill_hlds() {
         fi
         sleep 1
     done
-    runuser -u "${server_user}" -- bash -c "pkill -u ${server_user} -SIGKILL hlds_" || true
+    runuser -u "${server_user}" -- bash -c "pkill -u ${server_user} -SIGTERM hlds_" || true
     printf "Warning: Server was forcefully terminated\n"
 }
 
