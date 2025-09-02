@@ -95,7 +95,7 @@ install_stage_one() {
 
 install_stage_two() {
     mkdir -v "${home_dir}/.steam"
-    cd "${home_dir}/.steam" || exit 1
+    cd "${home_dir}/.steam"
     ln -sfv . steam
 
     for arc in "${tmp_dir}/"*.tar.*; do
