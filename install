@@ -31,7 +31,7 @@ remove_server() {
 
     rm -vrf /etc/hlds
     rm -vf /usr/bin/cs16-server
-    rm -vf /usr/share/man/man1/cs16-server.1*
+    rm -vf /usr/share/man/man1/cs16-server.1.gz
 
     [[ -x "$(command -v systemctl)" ]] && rm -vf /usr/lib/systemd/system/cs16-server.service
 }
