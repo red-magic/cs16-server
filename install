@@ -18,7 +18,7 @@ abort_install() {
     exit 1
 }
 
-trap abort_install INT
+trap abort_install SIGINT
 
 remove_server() {
     if pgrep -u "${server_user}" &> /dev/null; then

@@ -18,7 +18,7 @@ abort_install() {
     exit 1
 }
 
-trap abort_install INT
+trap abort_install SIGINT
 
 check_depends() {
     pkgs=("git" "7z" "curl")
