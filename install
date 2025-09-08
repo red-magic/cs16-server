@@ -21,13 +21,16 @@ abort_install() {
 trap abort_install SIGINT
 
 remove_server() {
-    if pgrep -u "${server_user}" &> /dev/null; then
+    if [[ ! -d "${home_dir}" ]]; then
+        printf "Server isn't installed\n"
+        exit 1
+    elif [[ -n "$(pgrep -u "${server_user}")" ]]; then
         printf "%s user has processes running\n" "${server_user}"
         printf "Stop them before uninstalling the server\n"
         exit 1
     fi
 
-    userdel -r "${server_user}" && printf "User %s deleted\n" "${server_user}"
+    userdel -r "${server_user}" &> /dev/null
 
     rm -vrf /etc/hlds
     rm -vf /usr/bin/cs16-server
@@ -37,7 +40,7 @@ remove_server() {
 }
 
 check_depends() {
-    if [[ -d "/var/${server_user}" ]]; then
+    if [[ -d "${home_dir}" ]]; then
         printf "Server is already installed\n"
         exit 1
     elif ! grep -q 'libstdc++.so.6 (libc6)' < <(ldconfig -p); then
