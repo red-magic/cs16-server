@@ -30,14 +30,14 @@ _start_hlds() {
 
 _kill_hlds() {
     timeout_stop=10
-    runuser -u "${server_user}" -- bash -c "pkill -u ${server_user} -SIGINT hlds_" || true
+    runuser -u "${server_user}" -- bash -c "pkill -u ${server_user} -SIGINT hlds_"
     for ((i=0; i<timeout_stop; i++)); do
         if ! _is_server_running; then
             return 0
         fi
         sleep 1
     done
-    runuser -u "${server_user}" -- bash -c "pkill -u ${server_user} -SIGTERM hlds_" || true
+    runuser -u "${server_user}" -- bash -c "pkill -u ${server_user} -SIGTERM hlds_"
     printf "Warning: Server was forcefully terminated\n"
 }
 
