@@ -40,10 +40,7 @@ remove_server() {
 }
 
 check_depends() {
-    if [[ -d "${home_dir}" ]]; then
-        printf "Server is already installed\n"
-        exit 1
-    elif ! grep -q 'libstdc++.so.6 (libc6)' < <(ldconfig -p); then
+    if ! grep -q 'libstdc++.so.6 (libc6)' < <(ldconfig -p); then
         printf "Install 32-bit libstdc++\n"
         printf "See README.md for details\n"
         exit 1
@@ -67,6 +64,11 @@ check_depends() {
 }
 
 install_stage_one() {
+    if [[ -d "${home_dir}" ]]; then
+        printf "Server is already installed\n"
+        exit 1
+    fi
+
     [[ -d "${tmp_dir}" ]] && rm -vrf "${tmp_dir}"
 
     mkdir -vp "${tmp_dir}"
@@ -131,20 +133,22 @@ install_stage_two() {
 }
 
 install_stage_three(){
+    rm -vrf "${tmp_dir}"
+
     install -vm 755 cs16-server/cs16-server -t /usr/bin
     install -vDm 644 cs16-server/cs16-server.conf -t /etc/hlds
     install -vm 644 cs16-server/cs16-server.1 -t /usr/share/man/man1
-    gzip -vf --best /usr/share/man/man1/cs16-server.1
-}
+    gzip -vf /usr/share/man/man1/cs16-server.1
 
-install_service() {
-    install -m 644 cs16-server/cs16-server.service -t /usr/lib/systemd/system
-    printf "\nRun \"systemctl enable cs16-server\" to start server on boot"
-}
+    if [[ -x "$(command -v semanage)" ]]; then
+        semanage fcontext -a -t bin_t "${home_dir}/cs16/hlds_run"
+        restorecon -v "${home_dir}/cs16/hlds_run"
+    fi
 
-selinux_fix() {
-    semanage fcontext -a -t bin_t "${home_dir}/cs16/hlds_run"
-    restorecon -v "${home_dir}/cs16/hlds_run"
+    if [[ -x "$(command -v systemctl)" ]]; then
+        install -m 644 cs16-server/cs16-server.service -t /usr/lib/systemd/system
+        printf "\nRun \"systemctl enable cs16-server\" to start server on boot"
+    fi
 }
 
 case "${1:-}" in
@@ -157,11 +161,6 @@ case "${1:-}" in
         install_stage_one
         runuser -u "${server_user}" -- bash -c "$(declare -f install_stage_two) && install_stage_two"
         install_stage_three
-
-        rm -vrf "${tmp_dir}"
-
-        [[ -x "$(command -v semanage)" ]] && selinux_fix
-        [[ -x "$(command -v systemctl)" ]] && install_service
 
         printf "\nhlds parameters can be set in /etc/hlds/cs16-server.conf\n"
         printf "\nInstallation completed\n\n"
