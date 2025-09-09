@@ -138,6 +138,7 @@ install_stage_three(){
     install -vm 755 cs16-server/cs16-server -t /usr/bin
     install -vDm 644 cs16-server/cs16-server.conf -t /etc/hlds
     install -vm 644 cs16-server/cs16-server.1 -t /usr/share/man/man1
+
     gzip -vf /usr/share/man/man1/cs16-server.1
 
     if [[ -x "$(command -v semanage)" ]]; then
@@ -149,6 +150,9 @@ install_stage_three(){
         install -m 644 cs16-server/cs16-server.service -t /usr/lib/systemd/system
         printf "\nRun \"systemctl enable cs16-server\" to start server on boot"
     fi
+
+    printf "\nhlds parameters can be set in /etc/hlds/cs16-server.conf\n"
+    printf "\nInstallation completed\n\n"
 }
 
 case "${1:-}" in
@@ -157,12 +161,8 @@ case "${1:-}" in
         ;;
     "")
         check_depends
-
         install_stage_one
         runuser -u "${server_user}" -- bash -c "$(declare -f install_stage_two) && install_stage_two"
         install_stage_three
-
-        printf "\nhlds parameters can be set in /etc/hlds/cs16-server.conf\n"
-        printf "\nInstallation completed\n\n"
         ;;
 esac
