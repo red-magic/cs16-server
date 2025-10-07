@@ -44,7 +44,7 @@ It also creates `hlds` user that extracts all acrhives from `/tmp/cs16-server` t
 
 ## Removal
 
-- `sudo ./install remove` to uninstall the server and its files along with `hlds` user.
+- `./install remove` to uninstall the server and its files along with `hlds` user.
 
 ## Extra
 
