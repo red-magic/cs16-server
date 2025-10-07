@@ -3,7 +3,7 @@
 set -euo pipefail
 
 if [[ "$(id -u)" -ne 0 ]]; then
-    printf "%s must be run as root\n" "$(basename "${0}")"
+    printf "%s requires root privileges\n" "$(basename "${0}")"
     exit 1
 fi
 
