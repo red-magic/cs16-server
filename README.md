@@ -16,7 +16,7 @@ And basic tools:
 
 ## Installation
 
-- `sudo ./install`
+- `./install`
 
 First it downloads these files to `/tmp/cs16-server`:
 
