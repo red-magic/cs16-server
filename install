@@ -47,7 +47,7 @@ check_depends() {
         exit 1
     fi
 
-    pkgs=("tar" "xz" "gzip" "curl")
+    pkgs=("xz" "curl")
     missing_pkgs=""
 
     for pkg in "${pkgs[@]}"; do
