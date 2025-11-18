@@ -78,8 +78,8 @@ install_stage_one() {
     links=(
         "https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz"
         "https://github.com/Bots-United/metamod-p/releases/download/v1.21p38/metamod_i686_linux_win32-1.21p38.tar.xz"
-        "https://www.amxmodx.org/amxxdrop/1.10/amxmodx-1.10.0-git5472-base-linux.tar.gz"
-        "https://www.amxmodx.org/amxxdrop/1.10/amxmodx-1.10.0-git5472-cstrike-linux.tar.gz"
+        "https://www.amxmodx.org/amxxdrop/1.10/amxmodx-1.10.0-git5473-base-linux.tar.gz"
+        "https://www.amxmodx.org/amxxdrop/1.10/amxmodx-1.10.0-git5473-cstrike-linux.tar.gz"
         "https://github.com/yapb/yapb/releases/download/4.4.957/yapb-4.4.957-linux.tar.xz"
     )
 
