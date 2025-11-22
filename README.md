@@ -8,7 +8,7 @@ Make sure you have 32-bit libraries before installation:
 
 - `apt install lib32stdc++6` for Debian based distros
 - `dnf install libstdc++.i686` for RHEL based distros
-- `pacman -S lib32-gcc-libs` for Arch (enable multilib repo first)
+- `pacman -S lib32-gcc-libs` for Arch
 
 ## Installation
 
