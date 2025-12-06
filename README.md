@@ -31,7 +31,7 @@ It also creates `hlds` user that extracts all acrhives from `/tmp/cs16-server` t
 
 ## Usage
 
-`cs16-server [start | stop | restart | update | status]`
+`cs16-server <start | stop | restart | update | status>`
 
 ## cs16-server.conf
 
