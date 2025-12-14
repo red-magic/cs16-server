@@ -36,7 +36,7 @@ check_depends() {
 
 download_files() {
     mkdir -vp "${home_dir}/cs16-maps-and-graphs"
-    cd "${home_dir}/cs16-maps-and-graphs" || exit 1
+    cd "${home_dir}/cs16-maps-and-graphs"
 
     printf "==> Downloading map pack, it is going to take some time\n"
     map_link="https://archive.org/download/${arc}/CS%201.6%20Mega%20Map%20Pack%20v2018.1.7z"
