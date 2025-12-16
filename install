@@ -5,8 +5,8 @@ set -euo pipefail
 [[ "$(id -u)" -ne 0 ]] && exec sudo "${0}" "${@}"
 
 export server_user="hlds"
-export tmp_dir="/tmp/cs16-server"
 export home_dir="/var/${server_user}"
+export tmp_dir="/tmp/cs16-server"
 
 bin_dir="/usr/bin"
 config_dir="/etc/hlds"
@@ -163,7 +163,7 @@ case "${1:-}" in
     "")
         check_depends
         install_stage_one
-        runuser -u "${server_user}" -- bash -c "$(declare -f install_stage_two) && install_stage_two"
+        runuser -u "${server_user}" -- /bin/bash -c "$(declare -f install_stage_two) && install_stage_two"
         install_stage_three
         ;;
 esac

@@ -25,24 +25,24 @@ _start_hlds() {
         exit 1
     fi
     eval "$(grep server_params "${server_conf}")"
-    runuser -u "${server_user}" -- bash -c "cd ${server_workdir}/cs16 && exec ./hlds_run -game cstrike ${server_params:-} &"
+    runuser -u "${server_user}" -- /bin/bash -c "cd ${server_workdir}/cs16 && exec ./hlds_run -game cstrike ${server_params:-} &"
 }
 
 _kill_hlds() {
     timeout_stop=10
-    runuser -u "${server_user}" -- bash -c "pkill -u ${server_user} -SIGINT hlds_"
+    runuser -u "${server_user}" -- /bin/bash -c "pkill -u ${server_user} -SIGINT hlds_"
     for ((i=0; i<timeout_stop; i++)); do
         if ! _is_server_running; then
             return 0
         fi
         sleep 1
     done
-    runuser -u "${server_user}" -- bash -c "pkill -u ${server_user} -SIGTERM hlds_"
+    runuser -u "${server_user}" -- /bin/bash -c "pkill -u ${server_user} -SIGTERM hlds_"
     printf "Warning: Server was forcefully terminated\n"
 }
 
 _update_hlds() {
-    runuser -u "${server_user}" -- bash -c "cd ${server_workdir}/.steam && exec ./steamcmd.sh +force_install_dir ${server_workdir}/cs16 +login anonymous +app_update 90 validate +quit"
+    runuser -u "${server_user}" -- /bin/bash -c "cd ${server_workdir}/.steam && exec ./steamcmd.sh +force_install_dir ${server_workdir}/cs16 +login anonymous +app_update 90 validate +quit"
 }
 
 start_server() {
@@ -98,12 +98,12 @@ status_server() {
     if _is_server_updating; then
         printf "Server is being updated\n"
     elif _is_server_running; then
-        pid="$(pgrep -u "${server_user}" hlds_linux)"
+        pid="$(pgrep -u "${server_user}" hlds_run)"
         uptime_seconds="$(ps -o etimes= -p "${pid}")"
         h="$((uptime_seconds/3600))"
         m="$(((uptime_seconds%3600)/60))"
         s="$((uptime_seconds%60))"
-        cmd_line="$(ps -o cmd= -p "${pid}")"
+        cmd_line="$(ps -o cmd= -p "${pid}" | cut -d' ' -f 3-)"
         printf "Server is running (PID: %s)\n" "${pid}"
         printf "Uptime: %sh %sm %ss\n" "${h}" "${m}" "${s}"
         printf "Command line: %s\n" "${cmd_line}"
