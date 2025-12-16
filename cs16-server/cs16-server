@@ -103,7 +103,7 @@ status_server() {
         h="$((uptime_seconds/3600))"
         m="$(((uptime_seconds%3600)/60))"
         s="$((uptime_seconds%60))"
-        cmd_line="$(ps -o cmd= -p "${pid}" | cut -d' ' -f 3-)"
+        cmd_line="$(ps -o cmd= -p "${pid}" | cut -d " " -f 3-)"
         printf "Server is running (PID: %s)\n" "${pid}"
         printf "Uptime: %sh %sm %ss\n" "${h}" "${m}" "${s}"
         printf "Command line: %s\n" "${cmd_line}"
