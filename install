@@ -100,6 +100,8 @@ install_stage_one() {
 }
 
 install_stage_two() {
+    set -euo pipefail
+
     mkdir -v "${home_dir}/.steam"
     cd "${home_dir}/.steam"
     ln -sfv . steam
@@ -110,7 +112,8 @@ install_stage_two() {
 
     # Needs to run a few times to download and validate everything
     for _i in {1..3}; do
-        ./steamcmd.sh +force_install_dir "${home_dir}/cs16" +login anonymous +app_update 90 validate +quit
+        # steamcmd update returns an error on first tries, redirect stderr to stdout
+        ./steamcmd.sh +force_install_dir "${home_dir}/cs16" +login anonymous +app_update 90 validate +quit 2>&1
     done
 
     # Temporary fix for 4.4.957
