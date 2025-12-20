@@ -155,7 +155,7 @@ install_stage_three(){
         printf "\nRun \"systemctl enable cs16-server\" to start server on boot"
     fi
 
-    printf "\nhlds parameters can be set in /etc/hlds/cs16-server.conf\n"
+    printf "\nhlds parameters can be set in %s/cs16-server.conf\n" "${config_dir}"
     printf "\nInstallation completed\n\n"
 }
 
