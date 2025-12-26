@@ -118,6 +118,15 @@ print_help() {
     printf "Usage: %s <start | stop | restart | update | status>\n" "$(basename "${0}")"
 }
 
+if [[ "${#}" -gt 1 ]]; then
+    printf "Only one command is accepted\n" >&2
+    print_help
+    exit 1
+elif [[ "${#}" -eq 0 ]]; then
+    print_help
+    exit 0
+fi
+
 case "${1:-}" in
     "start")
         start_server
@@ -133,9 +142,6 @@ case "${1:-}" in
         ;;
     "status")
         status_server
-        ;;
-    "")
-        print_help
         ;;
     *)
         printf "Invalid command: %s\n" "${1}" >&2
