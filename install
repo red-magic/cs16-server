@@ -15,7 +15,7 @@ service_dir="/usr/lib/systemd/system"
 
 abort_install() {
     pgrep steamcmd &> /dev/null && pkill -SIGINT steamcmd &> /dev/null
-    printf "\nInstallation aborted\n"
+    printf "\nInstallation aborted\n" >&2
     exit 1
 }
 
@@ -23,11 +23,11 @@ trap abort_install SIGINT
 
 remove_server() {
     if [[ ! -d "${home_dir}" ]]; then
-        printf "Server isn't installed\n"
+        printf "Server isn't installed\n" >&2
         exit 1
     elif [[ -n "$(pgrep -u "${server_user}")" ]]; then
-        printf "%s user has processes running\n" "${server_user}"
-        printf "Stop them before uninstalling the server\n"
+        printf "%s user has processes running\n" "${server_user}" >&2
+        printf "Stop them before uninstalling the server\n" >&2
         exit 1
     fi
 
@@ -42,8 +42,8 @@ remove_server() {
 
 check_depends() {
     if ! grep -q 'libstdc++.so.6 (libc6)' < <(ldconfig -p); then
-        printf "Install 32-bit libstdc++\n"
-        printf "See README.md for details\n"
+        printf "Install 32-bit libstdc++\n" >&2
+        printf "See README.md for details\n" >&2
         exit 1
     fi
 
@@ -59,14 +59,14 @@ check_depends() {
     fi
 
     if [[ -n "${missing_pkgs}" ]]; then
-        printf "Install the following packages:%s\n" "${missing_pkgs}"
+        printf "Install the following packages:%s\n" "${missing_pkgs}" >&2
         exit 1
     fi
 }
 
 install_stage_one() {
     if [[ -d "${home_dir}" ]]; then
-        printf "Server is already installed\n"
+        printf "Server is already installed\n" >&2
         exit 1
     fi
 
@@ -86,7 +86,7 @@ install_stage_one() {
     for link in "${links[@]}"; do
         printf "==> Downloading %s\n" "${link}"
         if ! curl -fLO "${link}"; then
-            printf "Failed to download %s\n" "${link}"
+            printf "Failed to download %s\n" "${link}" >&2
             exit 1
         fi
     done

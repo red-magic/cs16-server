@@ -21,7 +21,7 @@ _is_server_updating() {
 
 _start_hlds() {
     if [[ ! -f "${server_conf}" ]]; then
-        printf "Error: Configuration file %s not found\n" "${server_conf}"
+        printf "Error: Configuration file %s not found\n" "${server_conf}" >&2
         exit 1
     fi
     eval "$(grep server_params "${server_conf}")"
@@ -40,7 +40,7 @@ _kill_hlds() {
         sleep 1
     done
     runuser -u "${server_user}" -- /bin/bash -c "pkill -u ${server_user} -SIGTERM hlds_"
-    printf "Warning: Server was forcefully terminated\n"
+    printf "Warning: Server was forcefully terminated\n" >&2
 }
 
 _update_hlds() {
@@ -49,10 +49,10 @@ _update_hlds() {
 
 start_server() {
     if _is_server_updating; then
-        printf "Server is being updated, wait for it to finish\n"
+        printf "Server is being updated, wait for it to finish\n" >&2
         exit 1
     elif _is_server_running; then
-        printf "Server is already running\n"
+        printf "Server is already running\n" >&2
         exit 1
     fi
     printf "Starting server\n"
@@ -61,10 +61,10 @@ start_server() {
 
 stop_server() {
     if _is_server_updating; then
-        printf "Server is being updated, wait for it to finish\n"
+        printf "Server is being updated, wait for it to finish\n" >&2
         exit 1
     elif ! _is_server_running; then
-        printf "Server is not running\n"
+        printf "Server is not running\n" >&2
         exit 1
     fi
     printf "Stopping server\n"
@@ -73,7 +73,7 @@ stop_server() {
 
 restart_server() {
     if _is_server_updating; then
-        printf "Server is being updated, wait for it to finish\n"
+        printf "Server is being updated, wait for it to finish\n" >&2
         exit 1
     elif _is_server_running; then
         printf "Restarting server\n"
@@ -86,10 +86,10 @@ restart_server() {
 
 update_server() {
     if _is_server_updating; then
-        printf "Server is already being updated, wait for it to finish\n"
+        printf "Server is already being updated, wait for it to finish\n" >&2
         exit 1
     elif _is_server_running; then
-        printf "Server is running, stop it first\n"
+        printf "Server is running, stop it first\n" >&2
         exit 1
     fi
     printf "Updating server\n"
@@ -138,7 +138,7 @@ case "${1:-}" in
         print_help
         ;;
     *)
-        printf "Invalid command: %s\n" "${1}"
+        printf "Invalid command: %s\n" "${1}" >&2
         print_help
         exit 1
         ;;
