@@ -119,7 +119,7 @@ print_help() {
 }
 
 if [[ "${#}" -gt 1 ]]; then
-    printf "Only one command is accepted\n" >&2
+    printf "Only 1 command is accepted\n" >&2
     print_help
     exit 1
 elif [[ "${#}" -eq 0 ]]; then
