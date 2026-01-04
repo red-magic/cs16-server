@@ -2,8 +2,10 @@
 
 set -euo pipefail
 
+progname="$(basename "${0}")"
+
 if [[ "$(id -u)" -ne 0 ]]; then
-    printf "%s requires root privileges\n" "$(basename "${0}")" >&2
+    printf "%s requires root privileges\n" "${progname}" >&2
     exit 1
 fi
 
@@ -115,7 +117,7 @@ status_server() {
 }
 
 print_help() {
-    printf "Usage: %s <start | stop | restart | update | status>\n" "$(basename "${0}")"
+    printf "Usage: %s <start | stop | restart | update | status>\n" "${progname}"
 }
 
 if [[ "${#}" -gt 1 ]]; then
