@@ -9,12 +9,12 @@ home_dir="/var/${server_user}"
 arc="cs-1.6-mega-map-pack-v-2018.1.7z"
 
 if [[ "$(id -un)" != "${server_user}" ]]; then
-    printf "You must run this script as %s user\n" "${server_user}" >&2
+    printf "You must run this script as %s user\n" "${server_user}" 1>&2
     exit 1
 fi
 
 abort_install() {
-    printf "\nInstallation aborted\n" >&2
+    printf "\nInstallation aborted\n" 1>&2
     exit 1
 }
 
@@ -29,7 +29,7 @@ check_depends() {
     done
 
     if [[ -n "${missing_pkgs}" ]]; then
-        printf "Install the following packages:%s\n" "${missing_pkgs}" >&2
+        printf "Install the following packages:%s\n" "${missing_pkgs}" 1>&2
         exit 1
     fi
 }
