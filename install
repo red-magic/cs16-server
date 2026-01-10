@@ -22,22 +22,22 @@ abort_install() {
 trap abort_install SIGINT
 
 remove_server() {
-    if [[ ! -d "${home_dir}" ]]; then
+    if ! id "${server_user}" &> /dev/null; then
         printf "Server isn't installed\n" 1>&2
         exit 1
-    elif [[ -n "$(pgrep -u "${server_user}")" ]]; then
+    elif pgrep -u "${server_user}" &> /dev/null; then
         printf "%s user has processes running\n" "${server_user}" 1>&2
         printf "Stop them before uninstalling the server\n" 1>&2
         exit 1
     fi
-
-    userdel -r "${server_user}" &> /dev/null
 
     rm -vrf "${config_dir}"
     rm -vf "${bin_dir}/cs16-server"
     rm -vf "${man_dir}/cs16-server.1.gz"
 
     [[ -x "$(command -v systemctl)" ]] && rm -vf "${service_dir}/cs16-server.service"
+
+    userdel -r "${server_user}" &> /dev/null
 }
 
 check_depends() {
@@ -65,7 +65,7 @@ check_depends() {
 }
 
 install_stage_one() {
-    if [[ -d "${home_dir}" ]]; then
+    if id "${server_user}" &> /dev/null; then
         printf "Server is already installed\n" 1>&2
         exit 1
     fi
