@@ -35,10 +35,8 @@ _kill_hlds() {
     runuser -u "${server_user}" -- /bin/bash -c "pkill -u ${server_user} -SIGINT hlds_"
     # Since procps-ng 4.0.5 SIGINT won't stop the server.
     # Sending SIGINT from the systemd service works fine.
-    for ((i=0; i<timeout_stop; i++)); do
-        if ! _is_server_running; then
-            return 0
-        fi
+    for ((i=0; i < timeout_stop; i++)); do
+        ! _is_server_running && return 0
         sleep 1
     done
     runuser -u "${server_user}" -- /bin/bash -c "pkill -u ${server_user} -SIGTERM hlds_"
@@ -104,9 +102,9 @@ status_server() {
     elif _is_server_running; then
         pid="$(pgrep -u "${server_user}" hlds_run)"
         uptime_seconds="$(ps -o etimes= -p "${pid}")"
-        h="$((uptime_seconds/3600))"
-        m="$(((uptime_seconds%3600)/60))"
-        s="$((uptime_seconds%60))"
+        h="$((uptime_seconds / 3600))"
+        m="$(((uptime_seconds % 3600) / 60))"
+        s="$((uptime_seconds % 60))"
         cmd_line="$(ps -o cmd= -p "${pid}" | cut -d " " -f 3-)"
         printf "Server is running (PID: %s)\n" "${pid}"
         printf "Uptime: %sh %sm %ss\n" "${h}" "${m}" "${s}"
