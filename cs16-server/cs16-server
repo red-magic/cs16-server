@@ -26,8 +26,8 @@ _start_hlds() {
         printf "Error: Configuration file %s not found\n" "${server_conf}" 1>&2
         exit 1
     fi
-    eval "$(grep server_params "${server_conf}")"
-    runuser -u "${server_user}" -- /bin/bash -c "cd ${server_workdir}/cs16 && exec ./hlds_run -game cstrike ${server_params:-} &"
+    eval "$(grep hlds_args "${server_conf}")"
+    runuser -u "${server_user}" -- /bin/bash -c "cd ${server_workdir}/cs16 && exec ./hlds_run -game cstrike ${hlds_args:-} &"
 }
 
 _kill_hlds() {

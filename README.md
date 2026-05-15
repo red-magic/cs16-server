@@ -21,13 +21,13 @@ First it downloads these files to `/tmp/cs16-server`:
 - **amxmodx-1.10**
 - **yapb-4.4.957**
 
-Once it's done it places `cs16-server` script that controls the server to `/usr/bin` and `cs16-server.conf` with all hlds args to `/etc/hlds`.
+Once it's done it places `cs16-server` script that controls the server to `/usr/bin` and `cs16-server.conf` with all `hlds_args` to `/etc/hlds`.
 
-It also creates `hlds` user that extracts all acrhives from `/tmp/cs16-server` to `/var/hlds/.steam` directory, makes necessary symlinks and updates **steamcmd**.
+It also creates `hlds` user that extracts all archives from `/tmp/cs16-server` to `/var/hlds/.steam` directory, makes necessary symlinks and updates **steamcmd**.
 
 > [!NOTE]
-> - `hlds` user is created with account locked, you need to use `sudo -u hlds bash` if you plan to do further server configuration in `/var/hlds/cs16` directory.
-> - yapb bots are disabled by default, if you want to enable them uncomment `;;linux addons/yapb/bin/yapb.so` line in `cstrike/addons/metamod/plugins.ini`.
+> - `hlds` user is created with the account locked, you need to use `sudo -u hlds bash` if you plan to do further server configuration in `/var/hlds/cs16` directory.
+> - YaPB bots are disabled by default, if you want to enable them, uncomment `;;linux addons/yapb/bin/yapb.so` line in `cstrike/addons/metamod/plugins.ini`.
 
 ## Usage
 
@@ -35,7 +35,7 @@ It also creates `hlds` user that extracts all acrhives from `/tmp/cs16-server` t
 
 ## cs16-server.conf
 
-`server_params="-secure -pingboost 3 +sv_lan 0 -maxplayers 32 +map de_dust2 -dll cstrike/addons/metamod/dlls/metamod.so"`
+`hlds_args="-secure -pingboost 3 +sv_lan 0 -maxplayers 32 +map de_dust2 -dll cstrike/addons/metamod/dlls/metamod.so"`
 
 ## Removal
 
