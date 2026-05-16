@@ -108,7 +108,7 @@ status_server() {
         cmd_line="$(ps -o cmd= -p "${pid}" | cut -d " " -f 3-)"
         printf "Server is running (PID: %s)\n" "${pid}"
         printf "Uptime: %sh %sm %ss\n" "${h}" "${m}" "${s}"
-        printf "Command line: %s\n" "${cmd_line}"
+        printf "HLDS args: %s\n" "${cmd_line}"
     else
         printf "Server is not running\n"
     fi
