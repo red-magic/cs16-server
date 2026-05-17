@@ -13,7 +13,7 @@ bind "]" "amxmodmenu"
 
 # Yapb
 [cstrike/addons/yapb/conf/yapb.cfg]
-yb_password="your_password"
+yb_password "bots_password"
 [console]
 bind "[" "yb menu"
-setinfo _ybpw "your_password"
+setinfo _ybpw "bots_password"
