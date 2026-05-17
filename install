@@ -126,8 +126,8 @@ install_stage_two() {
     # Remove part for Windows
     rm -vf metamod.dll
 
-    # amxmodx: on
-    # yapb bots: off
+    # AMX Mod X: On
+    # YaPB bots: Off
     printf "linux addons/amxmodx/dlls/amxmodx_mm_i386.so\n" > ../cs16/cstrike/addons/metamod/plugins.ini
     printf ";;linux addons/yapb/bin/yapb.so\n" >> ../cs16/cstrike/addons/metamod/plugins.ini
 
