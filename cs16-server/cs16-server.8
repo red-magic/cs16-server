@@ -1,4 +1,4 @@
-.TH CS16\-SERVER "1" "May 2026" "cs16\-server" "Counter\-Strike 1.6 Dedicated Server"
+.TH CS16\-SERVER "8" "May 2026" "cs16\-server" "System Administration"
 .SH NAME
 cs16\-server \- Counter\-Strike 1.6 Dedicated Server for Linux
 .SH SYNOPSIS
@@ -33,7 +33,7 @@ Update server files.
 Show server status.
 .RE
 .SH EXAMPLES
-\fB$ sudo cs16\-server start\fR
+\fB# cs16\-server start\fR
 .SH CONFIGURATION
 \fIcs16\-server.conf\fR file looks like this:
 .PP
@@ -46,7 +46,7 @@ By default the server is run by user \fIhlds\fR with the account locked.
 You need to use \fBsudo \-u hlds bash\fR if you plan to do further configuration in the server directory.
 \fBAMX Mod X\fR and \fBMetamod-P\fR are included and enabled by default.
 \fBYaPB\fR bots are included too but disabled; if you want to enable them, uncomment the line with \fIyapb.so\fR in the
- \fIcstrike/addons/metamod/plugins.ini\fR file.
+\fIcstrike/addons/metamod/plugins.ini\fR file.
 .SH FILES
 .TP
 \fI/etc/hlds/cs16\-server.conf\fR

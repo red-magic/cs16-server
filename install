@@ -10,7 +10,7 @@ export tmp_dir="/tmp/cs16-server"
 
 bin_dir="/usr/bin"
 config_dir="/etc/hlds"
-man_dir="/usr/share/man/man1"
+man_dir="/usr/share/man/man8"
 service_dir="/usr/lib/systemd/system"
 
 abort_install() {
@@ -33,7 +33,7 @@ remove_server() {
 
     rm -vrf "${config_dir}"
     rm -vf "${bin_dir}/cs16-server"
-    rm -vf "${man_dir}/cs16-server.1.gz"
+    rm -vf "${man_dir}/cs16-server.8.gz"
 
     [[ -x "$(command -v systemctl)" ]] && rm -vf "${service_dir}/cs16-server.service"
 
@@ -141,9 +141,9 @@ install_stage_three(){
 
     install -vm 755 cs16-server/cs16-server -t "${bin_dir}"
     install -vDm 644 cs16-server/cs16-server.conf -t "${config_dir}"
-    install -vm 644 cs16-server/cs16-server.1 -t "${man_dir}"
+    install -vm 644 cs16-server/cs16-server.8 -t "${man_dir}"
 
-    gzip -vf "${man_dir}/cs16-server.1"
+    gzip -vf "${man_dir}/cs16-server.8"
 
     if [[ -x "$(command -v semanage)" ]]; then
         semanage fcontext -a -t bin_t "${home_dir}/cs16/hlds_run"
