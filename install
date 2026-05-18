@@ -64,6 +64,7 @@ check_depends() {
     fi
 }
 
+# Running as root
 install_stage_one() {
     if id "${server_user}" &> /dev/null; then
         printf "Server is already installed\n" 1>&2
@@ -99,6 +100,7 @@ install_stage_one() {
     chown -v "${server_user}":"${server_user}" "${home_dir}"
 }
 
+# Running as $server_user
 install_stage_two() {
     set -euo pipefail
 
@@ -131,6 +133,7 @@ install_stage_two() {
     touch ../cs16/cstrike/{listip.cfg,banned.cfg}
 }
 
+# Running as root
 install_stage_three(){
     rm -vrf "${tmp_dir}"
 
