@@ -16,10 +16,10 @@ Make sure you have the required 32-bit libraries before installation:
 
 First, it downloads these files to `/tmp/cs16-server`:
 
-- **steamcmd**
-- **metamod-p-v1.21p109**
-- **amxmodx-1.10**
-- **yapb-4.4.957**
+- [steamcmd](https://developer.valvesoftware.com/wiki/SteamCMD)
+- [metamod-p-v1.21p109](https://github.com/Bots-United/metamod-p)
+- [amxmodx-1.10](https://github.com/alliedmodders/amxmodx)
+- [yapb-4.4.957](https://github.com/yapb/yapb)
 
 Once it's done, it places the `cs16-server` script that controls the server into `/usr/bin` and the `cs16-server.conf` with all `hlds_args` into `/etc/hlds`.
 
@@ -46,7 +46,3 @@ It also creates the `hlds` user, which extracts all archives from `/tmp/cs16-ser
 A big map pack is available on the [Internet Archive](https://archive.org/details/cs-1.6-mega-map-pack-v-2018.1.7z).
 
 Bot waypoints for maps are downloaded automatically if there's no `.graph` file for a map, but you can also get them all from [yapb/graph](https://github.com/yapb/graph) repo.
-
-- [metamod-p](https://github.com/Bots-United/metamod-p)
-- [amxmodx](https://github.com/alliedmodders/amxmodx)
-- [yapb](https://github.com/yapb/yapb)
