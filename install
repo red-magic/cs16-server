@@ -77,7 +77,7 @@ install_stage_one() {
 
     links=(
         "https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz"
-        "https://github.com/Bots-United/metamod-p/releases/download/v1.21p38/metamod_i686_linux_win32-1.21p38.tar.xz"
+        "https://github.com/Bots-United/metamod-p/releases/download/v1.21p109/metamod-p-v1.21p109-linux_ubuntu2404.tar.xz"
         "https://github.com/alliedmodders/amxmodx/releases/download/1.10.0.5476/amxmodx-1.10.0-git5476-base-linux.tar.gz"
         "https://github.com/alliedmodders/amxmodx/releases/download/1.10.0.5476/amxmodx-1.10.0-git5476-cstrike-linux.tar.gz"
         "https://github.com/yapb/yapb/releases/download/4.4.957/yapb-4.4.957-linux.tar.xz"
@@ -120,11 +120,6 @@ install_stage_two() {
     chmod -v 755 addons/yapb/data/*
 
     mv -vf addons ../cs16/cstrike
-
-    mkdir -vp ../cs16/cstrike/addons/metamod/dlls
-    mv -vf metamod.so ../cs16/cstrike/addons/metamod/dlls
-    # Remove part for Windows
-    rm -vf metamod.dll
 
     # AMX Mod X: On
     # YaPB bots: Off

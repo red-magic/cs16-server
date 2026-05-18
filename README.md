@@ -17,7 +17,7 @@ Make sure you have the required 32-bit libraries before installation:
 First, it downloads these files to `/tmp/cs16-server`:
 
 - **steamcmd**
-- **metamod-p-v1.21p38**
+- **metamod-p-v1.21p109**
 - **amxmodx-1.10**
 - **yapb-4.4.957**
 
