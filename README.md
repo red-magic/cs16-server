@@ -18,7 +18,7 @@ First, it downloads these files to `/tmp/cs16-server`:
 
 - [steamcmd](https://developer.valvesoftware.com/wiki/SteamCMD)
 - [metamod-p-v1.21p109](https://github.com/Bots-United/metamod-p)
-- [amxmodx-1.10](https://github.com/alliedmodders/amxmodx)
+- [amxmodx-1.10.0.5476](https://github.com/alliedmodders/amxmodx)
 - [yapb-4.4.957](https://github.com/yapb/yapb)
 
 Once it's done, it places the `cs16-server` script that controls the server into `/usr/bin` and the `cs16-server.conf` with all `hlds_args` into `/etc/hlds`.
