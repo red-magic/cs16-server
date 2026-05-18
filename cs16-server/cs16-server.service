@@ -5,13 +5,14 @@ After=network.target
 [Service]
 Type=simple
 User=hlds
+Group=hlds
 KillSignal=SIGINT
 EnvironmentFile=/etc/hlds/cs16-server.conf
 WorkingDirectory=/var/hlds/cs16
 ExecStart=/var/hlds/cs16/hlds_run -game cstrike ${hlds_args}
-StandardOutput=null
 StandardInput=null
-Restart=on-failure
+StandardOutput=null
+StandardError=null
 
 [Install]
 WantedBy=multi-user.target
