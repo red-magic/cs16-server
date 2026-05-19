@@ -27,12 +27,12 @@ _start_hlds() {
         exit 1
     fi
     eval "$(grep hlds_args "${server_conf}")"
-    # Since procps-ng 4.0.5 SIGINT won't stop the server
+    # Since procps-ng 4.0.5, SIGINT won't stop the server
     # normally. It needs to be launched with 'setsid -f'
     # instead of 'exec ./hlds_run ... &'. Sending SIGINT
-    # from the systemd service works fine even if the
-    # service started the hlds_run wrapper script as the
-    # main process (without -norestart).
+    # from the systemd service works fine, even if the
+    # service starts the hlds_run wrapper script as the main
+    # process (without -norestart).
     runuser -u "${server_user}" -- setsid -f /bin/bash -c "cd ${server_workdir}/cs16 && exec ./hlds_run -game cstrike ${hlds_args:-}"
 }
 
