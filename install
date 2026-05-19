@@ -94,8 +94,7 @@ install_stage_one() {
 
     popd
 
-    mkdir -v "${home_dir}"
-    chmod -v 700 "${home_dir}"
+    mkdir -vm 700 "${home_dir}"
     useradd -r -M -s "$(command -v nologin)" -d "${home_dir}" -c "Counter-Strike 1.6 Dedicated Server" "${server_user}"
     chown -v "${server_user}":"${server_user}" "${home_dir}"
 }
