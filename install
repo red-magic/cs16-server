@@ -106,7 +106,7 @@ install_stage_two() {
 
     mkdir -v "${home_dir}/.steam"
     cd "${home_dir}/.steam"
-    ln -sfv . steam
+    ln -vsf . steam
 
     for arc in "${tmp_dir}/"*.tar.*; do
         tar xvf "${arc}"
@@ -118,17 +118,17 @@ install_stage_two() {
         ./steamcmd.sh +force_install_dir "${home_dir}/cs16" +login anonymous +app_update 90 validate +quit 2>&1
     done
 
+    # AMX Mod X: On
+    # YaPB bots: Off
+    printf "linux addons/amxmodx/dlls/amxmodx_mm_i386.so\n" > addons/metamod/plugins.ini
+    printf ";;linux addons/yapb/bin/yapb.so\n" >> addons/metamod/plugins.ini
+
     # Temporary fix for 4.4.957
     chmod -v 755 addons/yapb/data/*
 
     mv -vf addons ../cs16/cstrike
 
-    # AMX Mod X: On
-    # YaPB bots: Off
-    printf "linux addons/amxmodx/dlls/amxmodx_mm_i386.so\n" > ../cs16/cstrike/addons/metamod/plugins.ini
-    printf ";;linux addons/yapb/bin/yapb.so\n" >> ../cs16/cstrike/addons/metamod/plugins.ini
-
-    ln -sfv linux32 sdk32
+    ln -vsf linux32 sdk32
     # Create empty files so hlds_run won't complain
     touch ../cs16/cstrike/{listip.cfg,banned.cfg}
 }
