@@ -11,7 +11,7 @@ export tmp_dir="/tmp/cs16-server"
 bin_dir="/usr/bin"
 config_dir="/etc/hlds"
 man_dir="/usr/share/man/man8"
-service_dir="/usr/lib/systemd/system"
+service_dir="/etc/systemd/system"
 
 abort_install() {
     pgrep steamcmd &> /dev/null && pkill -SIGINT steamcmd &> /dev/null
