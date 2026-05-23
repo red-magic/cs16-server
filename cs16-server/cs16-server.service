@@ -11,7 +11,7 @@ ExecStart=/var/hlds/cs16/hlds_run -game cstrike -norestart ${hlds_args}
 KillSignal=SIGINT
 Restart=on-failure
 RestartSec=10
-TimeoutStopSec=10
+TimeoutStopSec=60
 
 [Install]
 WantedBy=multi-user.target
