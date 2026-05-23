@@ -35,7 +35,7 @@ It also creates the `hlds` user, which extracts all archives from `/tmp/cs16-ser
 
 ## cs16-server.conf
 
-`hlds_args="-secure -pingboost 3 -maxplayers 32 +sv_lan 0 +map de_dust2 -dll cstrike/addons/metamod/dlls/metamod.so"`
+`hlds_args="-secure -pingboost 3 -maxplayers 32 +sys_ticrate 1000 +sv_lan 0 +map de_dust2 -dll cstrike/addons/metamod/dlls/metamod.so"`
 
 ## Removal
 
