@@ -7,7 +7,7 @@ rcon restart 1
 
 # Admin access for AMX Mod X
 [cstrike/addons/amxmodx/configs/users.ini]
-"STEAM_0:0:YOUR_STEAM_ID" "" "abcdefghijklmnopqrstuv" "ce"
+"STEAM_0:0:YOUR_STEAMID" "" "abcdefghijklmnopqrstuv" "ce"
 
 [console]
 bind "]" "amxmodmenu"
