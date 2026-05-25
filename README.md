@@ -27,7 +27,8 @@ It also creates the `hlds` user, which extracts all archives from `/tmp/hlds` to
 
 > [!NOTE]
 > - The `hlds` user is created with the account locked. You need to use `sudo -u hlds bash` if you plan to do further server configuration in the `/opt/hlds/cs16` directory.
-> - YaPB bots are disabled by default. If you want to enable them, uncomment the `;;linux addons/yapb/bin/yapb.so` line in `cstrike/addons/metamod/plugins.ini`.
+> - To get AMX Mod X admin access, edit `cstrike/addons/amxmodx/configs/users.ini` accordingly.
+> - YaPB bots are disabled by default. If you want to enable them, uncomment the line with `yapb.so` in `cstrike/addons/metamod/plugins.ini`.
 
 ## Usage
 

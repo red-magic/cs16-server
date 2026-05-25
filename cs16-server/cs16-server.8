@@ -35,18 +35,21 @@ Show server status.
 .SH EXAMPLES
 \fB# cs16\-server start\fR
 .SH CONFIGURATION
-\fIcs16\-server.conf\fR file looks like this:
+\fIcs16\-server.conf\fR has the following format:
 .PP
 .RS
 hlds_args="\-secure \-pingboost 3 \-maxplayers 32 +sys_ticrate 1024 +sv_lan 0 +map de_dust2 \-dll addons/metamod/dlls/metamod.so"
 .RE
 .PP
-\fIhlds_args\fR can be changed to whatever you want; it just passes options to \fBhlds_run\fR.
-By default the server is run by user \fIhlds\fR with the account locked.
-You need to use \fBsudo \-u hlds bash\fR if you plan to do further configuration in the server directory.
-\fBAMX Mod X\fR and \fBMetamod-P\fR are included and enabled by default.
-\fBYaPB\fR bots are included too but disabled; if you want to enable them, uncomment the line with \fIyapb.so\fR in the
-\fIcstrike/addons/metamod/plugins.ini\fR file.
+\fIhlds_args\fR can be changed to whatever you want, it just passes options to \fBhlds_run\fR.
+.P
+The server is run by user \fIhlds\fR with the account locked.
+You need to use \fBsudo \-u hlds bash\fR if you plan to do further configuration in the \fI/opt/hlds/cs16\fR directory.
+.P
+To get \fBAMX Mod X\fR admin access, edit \fIcstrike/addons/amxmodx/configs/users.ini\fR accordingly.
+.P
+\fBYaPB\fR bots are disabled by default. If you want to enable them, uncomment the line with \fIyapb.so\fR in
+\fIcstrike/addons/metamod/plugins.ini\fR.
 .SH FILES
 .TP
 \fI/etc/hlds/cs16\-server.conf\fR
