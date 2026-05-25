@@ -26,7 +26,7 @@ Once it's done, it places the `cs16-server` script that controls the server into
 It also creates the `hlds` user, which extracts all archives from `/tmp/hlds` to the `/opt/hlds/.steam` directory, makes necessary symlinks, and updates **steamcmd**.
 
 > [!NOTE]
-> - The `hlds` user is created with the account locked. You need to use `sudo -u hlds bash` if you plan to do further server configuration in the `/opt/hlds/cs16` directory.
+> - The server is run by user `hlds` with the account locked. You need to use `sudo -u hlds bash` if you plan to do further server configuration in the `/opt/hlds/cs16` directory.
 > - To get AMX Mod X admin access, edit `cstrike/addons/amxmodx/configs/users.ini` accordingly.
 > - YaPB bots are disabled by default. If you want to enable them, uncomment the line with `yapb.so` in `cstrike/addons/metamod/plugins.ini`.
 
