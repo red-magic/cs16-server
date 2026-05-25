@@ -21,9 +21,9 @@ First, it downloads these files to `/tmp/hlds`:
 - [amxmodx-1.10.0.5476](https://github.com/alliedmodders/amxmodx)
 - [yapb-4.4.957](https://github.com/yapb/yapb)
 
-Once it's done, it places the `cs16-server` script that controls the server into `/usr/bin` and the `cs16-server.conf` with all `hlds_args` into `/etc/hlds`.
+Once it's done, it creates the `hlds` user, which extracts all archives from `/tmp/hlds` to the `/opt/hlds/.steam` directory, makes necessary symlinks, and downloads all server files.
 
-It also creates the `hlds` user, which extracts all archives from `/tmp/hlds` to the `/opt/hlds/.steam` directory, makes necessary symlinks, and updates **steamcmd**.
+It also places the `cs16-server` script that controls the server into `/usr/bin` and the `cs16-server.conf` with all `hlds_args` into `/etc/hlds`.
 
 > [!NOTE]
 > - The server is run by user `hlds` with the account locked. You need to use `sudo -u hlds bash` if you plan to do further server configuration in the `/opt/hlds/cs16` directory.
