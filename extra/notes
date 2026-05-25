@@ -3,7 +3,7 @@ rcon_password admin_password
 rcon changelevel cs_assault
 rcon sv_restart 1
 rcon restart 1
-maps *
+rcon maps *
 
 # Admin access for AMX Mod X
 [cstrike/addons/amxmodx/configs/users.ini]
