@@ -26,7 +26,7 @@ _start_hlds() {
         printf "Error: Configuration file %s not found\n" "${server_conf}" 1>&2
         exit 1
     fi
-    eval "$(grep hlds_args "${server_conf}")"
+    source "${server_conf}"
     # Since procps-ng 4.0.5, SIGINT won't stop the server
     # normally. It needs to be launched with 'setsid -f'
     # instead of 'exec ./hlds_run ... &'. Sending SIGINT
