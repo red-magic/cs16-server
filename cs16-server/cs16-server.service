@@ -5,9 +5,9 @@ After=network.target
 [Service]
 Type=simple
 User=hlds
-WorkingDirectory=/var/hlds/cs16
+WorkingDirectory=/opt/hlds/cs16
 EnvironmentFile=/etc/hlds/cs16-server.conf
-ExecStart=/var/hlds/cs16/hlds_run -game cstrike -norestart ${hlds_args}
+ExecStart=/opt/hlds/cs16/hlds_run -game cstrike -norestart ${hlds_args}
 KillSignal=SIGINT
 Restart=on-failure
 RestartSec=10

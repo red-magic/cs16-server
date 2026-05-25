@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Copy this script to /var/hlds directory and run it as hlds user
+# Copy this script to /opt/hlds directory and run it as hlds user
 
 set -euo pipefail
 
 server_user="hlds"
-home_dir="/var/${server_user}"
+home_dir="/opt/hlds"
 arc="cs-1.6-mega-map-pack-v-2018.1.7z"
 
 if [[ "$(id -un)" != "${server_user}" ]]; then

@@ -5,8 +5,8 @@ set -euo pipefail
 [[ "$(id -u)" -ne 0 ]] && exec sudo "${0}" "${@}"
 
 export server_user="hlds"
-export home_dir="/var/${server_user}"
-export tmp_dir="/tmp/cs16-server"
+export home_dir="/opt/hlds"
+export tmp_dir="/tmp/hlds"
 
 bin_dir="/usr/bin"
 config_dir="/etc/hlds"
@@ -53,10 +53,6 @@ check_depends() {
     for pkg in "${pkgs[@]}"; do
         [[ -x "$(command -v "${pkg}")" ]] || missing_pkgs="${missing_pkgs} ${pkg}"
     done
-
-    if [[ -x "$(command -v sestatus)" ]] && [[ ! -x "$(command -v semanage)" ]]; then
-        missing_pkgs="${missing_pkgs} policycoreutils-python-utils"
-    fi
 
     if [[ -n "${missing_pkgs}" ]]; then
         printf "Install the following packages:%s\n" "${missing_pkgs}" 1>&2
@@ -144,11 +140,6 @@ install_stage_three(){
     install -vm 644 cs16-server/cs16-server.8 -t "${man_dir}"
 
     gzip -vf "${man_dir}/cs16-server.8"
-
-    if [[ -x "$(command -v semanage)" ]]; then
-        semanage fcontext -a -t bin_t "${home_dir}/cs16/hlds_run"
-        restorecon -v "${home_dir}/cs16/hlds_run"
-    fi
 
     if [[ -x "$(command -v systemctl)" ]]; then
         install -m 644 cs16-server/cs16-server.service -t "${service_dir}"

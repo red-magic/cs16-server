@@ -14,7 +14,7 @@ Make sure you have the required 32-bit libraries before installation:
 
 - `./install`
 
-First, it downloads these files to `/tmp/cs16-server`:
+First, it downloads these files to `/tmp/hlds`:
 
 - [steamcmd](https://developer.valvesoftware.com/wiki/SteamCMD)
 - [metamod-p-v1.21p109](https://github.com/Bots-United/metamod-p)
@@ -23,10 +23,10 @@ First, it downloads these files to `/tmp/cs16-server`:
 
 Once it's done, it places the `cs16-server` script that controls the server into `/usr/bin` and the `cs16-server.conf` with all `hlds_args` into `/etc/hlds`.
 
-It also creates the `hlds` user, which extracts all archives from `/tmp/cs16-server` to the `/var/hlds/.steam` directory, makes necessary symlinks, and updates **steamcmd**.
+It also creates the `hlds` user, which extracts all archives from `/tmp/hlds` to the `/opt/hlds/.steam` directory, makes necessary symlinks, and updates **steamcmd**.
 
 > [!NOTE]
-> - The `hlds` user is created with the account locked. You need to use `sudo -u hlds bash` if you plan to do further server configuration in the `/var/hlds/cs16` directory.
+> - The `hlds` user is created with the account locked. You need to use `sudo -u hlds bash` if you plan to do further server configuration in the `/opt/hlds/cs16` directory.
 > - YaPB bots are disabled by default. If you want to enable them, uncomment the `;;linux addons/yapb/bin/yapb.so` line in `cstrike/addons/metamod/plugins.ini`.
 
 ## Usage
