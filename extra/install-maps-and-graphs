@@ -21,12 +21,10 @@ abort_install() {
 trap abort_install SIGINT
 
 check_depends() {
-    pkgs=("git" "7z" "curl")
+    pkgs=("curl" "git" "7z")
     missing_pkgs=""
 
-    for pkg in "${pkgs[@]}"; do
-        [[ -x "$(command -v "${pkg}")" ]] || missing_pkgs="${missing_pkgs} ${pkg}"
-    done
+    for pkg in "${pkgs[@]}"; do [[ -x "$(command -v "${pkg}")" ]] || missing_pkgs="${missing_pkgs} ${pkg}"; done
 
     if [[ -n "${missing_pkgs}" ]]; then
         printf "Install the following packages:%s\n" "${missing_pkgs}" 1>&2
@@ -42,7 +40,7 @@ download_files() {
     map_link="https://archive.org/download/${arc}/CS%201.6%20Mega%20Map%20Pack%20v2018.1.7z"
 
     if ! curl -fLO "${map_link}" -o "${arc}"; then
-        printf "Failed to download map archive\n"
+        printf "Failed to download map archive\n" 1>&2
         exit 1
     fi
 
