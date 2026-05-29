@@ -50,9 +50,7 @@ check_depends() {
     pkgs=("xz" "curl")
     missing_pkgs=""
 
-    for pkg in "${pkgs[@]}"; do
-        [[ -x "$(command -v "${pkg}")" ]] || missing_pkgs="${missing_pkgs} ${pkg}"
-    done
+    for pkg in "${pkgs[@]}"; do [[ -x "$(command -v "${pkg}")" ]] || missing_pkgs="${missing_pkgs} ${pkg}"; done
 
     if [[ -n "${missing_pkgs}" ]]; then
         printf "Install the following packages:%s\n" "${missing_pkgs}" 1>&2
@@ -103,9 +101,7 @@ install_stage_two() {
     cd "${home_dir}/.steam"
     ln -vsf . steam
 
-    for arc in "${tmp_dir}/"*.tar.*; do
-        tar xvf "${arc}"
-    done
+    for arc in "${tmp_dir}/"*.tar.*; do tar xvf "${arc}"; done
 
     ./steamcmd.sh +force_install_dir "${home_dir}/cs16" +login anonymous +app_update 90 validate +quit
 
