@@ -33,7 +33,7 @@ _start_hlds() {
     # from the systemd service works fine, even if the
     # service starts the hlds_run wrapper script as the main
     # process (without -norestart).
-    runuser -u "${server_user}" -- setsid -f /bin/bash -c "cd ${server_workdir}/cs16 && exec ./hlds_run -game cstrike ${hlds_args:-}"
+    runuser -u "${server_user}" -- setsid -f /bin/bash -c "cd ${server_workdir}/cs16 && exec ./hlds_run -game cstrike ${hlds_args:?}"
 }
 
 _kill_hlds() {
