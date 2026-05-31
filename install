@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-[[ "$(id -u)" -ne 0 ]] && exec sudo "${0}" "${@}"
+[[ "$(id -u)" -ne 0 ]] && exec sudo "${0}" "${1:-}"
 
 export server_user="hlds"
 export home_dir="/opt/hlds"
@@ -142,7 +142,7 @@ install_stage_three(){
     printf "\nInstallation completed\n\n"
 }
 
-case "${1:-}" in
+case "${1}" in
     "remove")
         remove_server
         ;;
