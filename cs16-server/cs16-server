@@ -37,7 +37,7 @@ _start_hlds() {
 }
 
 _kill_hlds() {
-    timeout_stop=60
+    timeout_stop="60"
     runuser -u "${server_user}" -- /bin/bash -c "pkill -u ${server_user} -SIGINT hlds_"
     for ((i=0; i < timeout_stop; i++)); do
         ! _is_server_running && return 0
