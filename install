@@ -142,7 +142,7 @@ install_stage_three(){
     printf "\nInstallation completed\n\n"
 }
 
-case "${1}" in
+case "${1:-}" in
     "remove")
         remove_server
         ;;
