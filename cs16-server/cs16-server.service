@@ -13,6 +13,7 @@ KillSignal=SIGINT
 Restart=on-failure
 RestartSec=10
 TimeoutStopSec=60
+LimitNOFILE=1024
 
 NoNewPrivileges=yes
 PrivateDevices=yes
@@ -20,6 +21,10 @@ PrivateTmp=yes
 ProtectHome=yes
 ProtectSystem=strict
 ReadWritePaths=/opt/hlds
+
+CapabilityBoundingSet=
+AmbientCapabilities=
+RestrictAddressFamilies=AF_INET AF_INET6
 
 [Install]
 WantedBy=multi-user.target
