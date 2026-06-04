@@ -111,7 +111,7 @@ install_stage_two() {
     printf ";;linux addons/yapb/bin/yapb.so\n" >> addons/metamod/plugins.ini
 
     # Remove graph files for Counter-Strike: Condition Zero
-    find addons/yapb/data/graph -name '*_cz.graph' -delete
+    find addons/yapb/data/graph -name "*_cz.graph" -delete
 
     # Temporary fix for 4.4.957
     chmod -v 755 addons/yapb/data/*
