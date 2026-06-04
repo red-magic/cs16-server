@@ -4,14 +4,14 @@ set -euo pipefail
 
 [[ "$(id -u)" -ne 0 ]] && exec sudo "${0}" "${1:-}"
 
-export server_user="hlds"
-export home_dir="/opt/hlds"
-export tmp_dir="/tmp/hlds"
-
+server_user="hlds"
 bin_dir="/usr/bin"
 config_dir="/etc/hlds"
 man_dir="/usr/share/man/man8"
 service_dir="/etc/systemd/system"
+
+export home_dir="/opt/hlds"
+export tmp_dir="/tmp/hlds"
 
 abort_install() {
     pgrep steamcmd &> /dev/null && pkill -SIGINT steamcmd &> /dev/null
@@ -111,7 +111,7 @@ install_stage_two() {
     printf ";;linux addons/yapb/bin/yapb.so\n" >> addons/metamod/plugins.ini
 
     # Remove graph files for Counter-Strike: Condition Zero
-    find addons/yapb/data/graph -name "*_cz.graph" -delete
+    find addons/yapb/data/graph -name '*_cz.graph' -delete
 
     # Temporary fix for 4.4.957
     chmod -v 755 addons/yapb/data/*
