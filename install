@@ -21,26 +21,12 @@ abort_install() {
 
 trap abort_install SIGINT
 
-remove_server() {
-    if ! id "${server_user}" &> /dev/null; then
-        printf "Server isn't installed\n" 1>&2
-        exit 1
-    elif pgrep -u "${server_user}" &> /dev/null; then
-        printf "%s user has processes running\n" "${server_user}" 1>&2
-        printf "Stop them before uninstalling the server\n" 1>&2
+pre_install_check() {
+    if id "${server_user}" &> /dev/null; then
+        printf "Server is already installed\n" 1>&2
         exit 1
     fi
 
-    rm -vrf "${config_dir}"
-    rm -vf "${bin_dir}/cs16-server"
-    rm -vf "${man_dir}/cs16-server.8.gz"
-
-    [[ -x "$(command -v systemctl)" ]] && rm -vf "${service_dir}/cs16-server.service"
-
-    userdel -r "${server_user}" &> /dev/null
-}
-
-check_depends() {
     if ! grep -q 'libstdc++.so.6 (libc6)' < <(ldconfig -p); then
         printf "Install 32-bit libstdc++\n" 1>&2
         printf "See README.md for details\n" 1>&2
@@ -60,11 +46,6 @@ check_depends() {
 
 # Running as root
 install_stage_one() {
-    if id "${server_user}" &> /dev/null; then
-        printf "Server is already installed\n" 1>&2
-        exit 1
-    fi
-
     [[ -d "${tmp_dir}" ]] && rm -vrf "${tmp_dir}"
 
     mkdir -vp "${tmp_dir}"
@@ -124,7 +105,7 @@ install_stage_two() {
 }
 
 # Running as root
-install_stage_three(){
+install_stage_three() {
     rm -vrf "${tmp_dir}"
 
     install -vm 755 cs16-server/cs16-server -t "${bin_dir}"
@@ -142,12 +123,34 @@ install_stage_three(){
     printf "\nInstallation completed\n\n"
 }
 
+pre_remove_check() {
+    if ! id "${server_user}" &> /dev/null; then
+        printf "Server isn't installed\n" 1>&2
+        exit 1
+    elif pgrep -u "${server_user}" &> /dev/null; then
+        printf "%s user has processes running\n" "${server_user}" 1>&2
+        printf "Stop them before uninstalling the server\n" 1>&2
+        exit 1
+    fi
+}
+
+remove_server() {
+    rm -vrf "${config_dir}"
+    rm -vf "${bin_dir}/cs16-server"
+    rm -vf "${man_dir}/cs16-server.8.gz"
+
+    [[ -x "$(command -v systemctl)" ]] && rm -vf "${service_dir}/cs16-server.service"
+
+    userdel -r "${server_user}" &> /dev/null
+}
+
 case "${1}" in
     "remove")
+        pre_remove_check
         remove_server
         ;;
     "")
-        check_depends
+        pre_install_check
         install_stage_one
         runuser -u "${server_user}" -- /bin/bash -c "$(declare -f install_stage_two) && install_stage_two"
         install_stage_three
