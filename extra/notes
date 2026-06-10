@@ -19,3 +19,20 @@ yb_password "bots_password"
 [console]
 bind "[" "yb menu"
 setinfo _ybpw "bots_password"
+
+# Optional server cvars
+[cstrike/server.cfg]
+rcon_password "admin_password"
+sv_password "server_password"
+
+sv_downloadurl "http://example.com/cstrike"
+sv_allowdownload 1
+sv_allowupload 1
+
+log on
+sv_log_onefile 1
+
+mp_timelimit 0
+mp_freezetime 0
+mp_buytime 10
+mp_startmoney 16000
