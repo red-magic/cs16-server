@@ -69,7 +69,7 @@ install_stage_one() {
 
     popd
 
-    useradd -r -M -s "$(command -v nologin)" -d "${home_dir}" -c "Counter-Strike 1.6 Dedicated Server" "${server_user}"
+    useradd -r -M -d "${home_dir}" -s "$(command -v nologin)" -c "Counter-Strike 1.6 Dedicated Server" "${server_user}"
     install -vdm 700 -o "${server_user}" -g "${server_user}" "${home_dir}"
 }
 
