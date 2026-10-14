@@ -48,7 +48,7 @@ pre_install_check() {
 install_stage_one() {
     [[ -d "${tmp_dir}" ]] && rm -vrf "${tmp_dir}"
 
-    mkdir -vp "${tmp_dir}"
+    mkdir -v "${tmp_dir}"
     pushd "${tmp_dir}"
 
     links=(
