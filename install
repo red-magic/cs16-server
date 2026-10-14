@@ -46,7 +46,7 @@ pre_install_check() {
 
 # Running as root
 install_stage_one() {
-    [[ -d "${tmp_dir}" ]] && rm -vrf "${tmp_dir}"
+    [[ -d "${tmp_dir}" ]] && rm -rf "${tmp_dir}"
 
     mkdir -v "${tmp_dir}"
     pushd "${tmp_dir}"
@@ -105,7 +105,7 @@ install_stage_two() {
 
 # Running as root
 install_stage_three() {
-    rm -vrf "${tmp_dir}"
+    rm -rf "${tmp_dir}"
 
     install -vm 755 cs16-server/cs16-server -t "${bin_dir}"
     install -vDm 644 cs16-server/cs16-server.conf -t "${config_dir}"
