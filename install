@@ -114,7 +114,7 @@ install_stage_three() {
     gzip -vf "${man_dir}/cs16-server.8"
 
     if [[ -x "$(command -v systemctl)" ]]; then
-        install -m 644 cs16-server/cs16-server.service -t "${service_dir}"
+        install -vm 644 cs16-server/cs16-server.service -t "${service_dir}"
         printf "\nRun \"systemctl enable cs16-server\" to start server on boot"
     fi
 
