@@ -17,9 +17,9 @@ Make sure you have the required 32-bit libraries before installation:
 First, it downloads these files to `/tmp/hlds`:
 
 - [steamcmd](https://developer.valvesoftware.com/wiki/SteamCMD)
-- [metamod-p-v1.21p109](https://github.com/Bots-United/metamod-p)
-- [amxmodx-1.10.0.5476](https://github.com/alliedmodders/amxmodx)
-- [yapb-4.4.957](https://github.com/yapb/yapb)
+- [metamod-p](https://github.com/Bots-United/metamod-p)
+- [amxmodx](https://github.com/alliedmodders/amxmodx)
+- [yapb](https://github.com/yapb/yapb)
 
 Once it's done, it creates the `hlds` user, which extracts all archives from `/tmp/hlds` to the `/opt/hlds/.steam` directory, makes necessary symlinks, and downloads all server files.
 
