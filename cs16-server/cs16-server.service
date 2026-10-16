@@ -31,13 +31,12 @@ ProtectKernelTunables=yes
 ProtectKernelModules=yes
 ProtectKernelLogs=yes
 ProtectControlGroups=yes
-ProtectClock=yes
 ProtectHostname=yes
 ProtectProc=invisible
 ProcSubset=all
 
 # Network
-RestrictAddressFamilies=AF_INET AF_INET6
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
 
 # Kernel/Process
 RestrictNamespaces=yes
