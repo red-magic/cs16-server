@@ -3,7 +3,7 @@ Description=Counter-Strike 1.6 Dedicated Server
 After=network.target
 
 [Service]
-Type=simple
+Type=exec
 User=hlds
 Group=hlds
 WorkingDirectory=/opt/hlds/cs16
@@ -15,18 +15,33 @@ RestartSec=10
 TimeoutStopSec=60
 LimitNOFILE=1024
 
-NoNewPrivileges=yes
-
-ProtectSystem=strict
 ReadWritePaths=/opt/hlds
-ProtectHome=yes
-PrivateTmp=yes
-PrivateDevices=yes
 
+NoNewPrivileges=yes
 CapabilityBoundingSet=
 AmbientCapabilities=
 
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+PrivateMounts=yes
+ProtectClock=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+ProtectClock=yes
+ProtectHostname=yes
+ProtectProc=invisible
+ProcSubset=all
+
 RestrictAddressFamilies=AF_INET AF_INET6
+
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
 
 [Install]
 WantedBy=multi-user.target
