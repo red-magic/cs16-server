@@ -42,6 +42,7 @@ RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
 RestrictNamespaces=yes
 RestrictRealtime=yes
 RestrictSUIDSGID=yes
+PrivateUsers=yes
 LockPersonality=yes
 RemoveIPC=yes
 KeyringMode=private
