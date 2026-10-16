@@ -13,14 +13,14 @@ KillSignal=SIGINT
 Restart=on-failure
 RestartSec=10
 TimeoutStopSec=60
-LimitNOFILE=1024
-
 ReadWritePaths=/opt/hlds
 
+# Privileges
 NoNewPrivileges=yes
 CapabilityBoundingSet=
 AmbientCapabilities=
 
+# Filesystem
 ProtectSystem=strict
 ProtectHome=yes
 PrivateTmp=yes
@@ -36,12 +36,21 @@ ProtectHostname=yes
 ProtectProc=invisible
 ProcSubset=all
 
+# Network
 RestrictAddressFamilies=AF_INET AF_INET6
 
+# Kernel/Process
 RestrictNamespaces=yes
 RestrictRealtime=yes
 RestrictSUIDSGID=yes
 LockPersonality=yes
+RemoveIPC=yes
+KeyringMode=private
+
+# Misc
+UMask=0077
+LimitCORE=0
+LimitNOFILE=1024
 
 [Install]
 WantedBy=multi-user.target
