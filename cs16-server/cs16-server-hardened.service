@@ -1,0 +1,61 @@
+[Unit]
+Description=Counter-Strike 1.6 Dedicated Server
+After=network.target
+
+[Service]
+Type=exec
+User=hlds
+Group=hlds
+WorkingDirectory=/opt/hlds/cs16
+EnvironmentFile=/etc/hlds/cs16-server.conf
+ExecStart=/opt/hlds/cs16/hlds_run -game cstrike -norestart ${hlds_args}
+KillSignal=SIGINT
+Restart=on-failure
+RestartSec=10
+TimeoutStopSec=60
+ReadWritePaths=/opt/hlds
+
+# Privileges
+NoNewPrivileges=yes
+CapabilityBoundingSet=
+AmbientCapabilities=
+
+# Filesystem
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+PrivateMounts=yes
+ProtectClock=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+ProtectHostname=yes
+ProtectProc=invisible
+ProcSubset=all
+
+# Network
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+
+# Kernel/Process
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+PrivateUsers=yes
+LockPersonality=yes
+RemoveIPC=yes
+KeyringMode=private
+
+# Syscalls
+SystemCallFilter=@system-service
+SystemCallFilter=~@clock @cpu-emulation @debug @keyring @module @mount @obsolete @privileged @raw-io @reboot @resources @swap
+SystemCallErrorNumber=EPERM
+
+# Misc
+UMask=0022
+LimitCORE=0
+LimitNOFILE=1024
+
+[Install]
+WantedBy=multi-user.target
