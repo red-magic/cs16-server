@@ -14,7 +14,7 @@ export home_dir="/opt/hlds"
 export tmp_dir="/tmp/hlds"
 
 abort_install() {
-    pgrep steamcmd &> /dev/null && pkill -SIGINT steamcmd &> /dev/null
+    pgrep --quiet -u "${server_user}" steamcmd && pkill --quiet -u "${server_user}" -SIGINT steamcmd
     printf "\nInstallation aborted\n" 1>&2
     exit 1
 }
@@ -126,7 +126,7 @@ pre_remove_check() {
     if ! id "${server_user}" &> /dev/null; then
         printf "Server isn't installed\n" 1>&2
         exit 1
-    elif pgrep -u "${server_user}" &> /dev/null; then
+    elif pgrep --quiet -u "${server_user}"; then
         printf "%s user has processes running\n" "${server_user}" 1>&2
         printf "Stop them before uninstalling the server\n" 1>&2
         exit 1
