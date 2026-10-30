@@ -22,6 +22,10 @@ abort_install() {
 trap abort_install SIGINT
 
 pre_install_check() {
+    local pkg
+    local missing_pkgs=""
+    local -a pkgs=("xz" "curl")
+
     if id "${server_user}" &> /dev/null; then
         printf "Server is already installed\n" 1>&2
         exit 1
@@ -33,9 +37,6 @@ pre_install_check() {
         exit 1
     fi
 
-    pkgs=("xz" "curl")
-    missing_pkgs=""
-
     for pkg in "${pkgs[@]}"; do [[ -x "$(command -v "${pkg}")" ]] || missing_pkgs="${missing_pkgs} ${pkg}"; done
 
     if [[ -n "${missing_pkgs}" ]]; then
@@ -46,18 +47,19 @@ pre_install_check() {
 
 # Running as root
 install_stage_one() {
-    [[ -d "${tmp_dir}" ]] && rm -rf "${tmp_dir}"
-
-    mkdir -v "${tmp_dir}"
-    pushd "${tmp_dir}"
-
-    links=(
+    local link
+    local -a links=(
         "https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz"
         "https://github.com/Bots-United/metamod-p/releases/download/v1.21p109/metamod-p-v1.21p109-linux_ubuntu2404.tar.xz"
         "https://github.com/alliedmodders/amxmodx/releases/download/1.10.0.5487/amxmodx-1.10.0-git5487-base-linux.tar.gz"
         "https://github.com/alliedmodders/amxmodx/releases/download/1.10.0.5487/amxmodx-1.10.0-git5487-cstrike-linux.tar.gz"
         "https://github.com/yapb/yapb/releases/download/4.4.957/yapb-4.4.957-linux.tar.xz"
     )
+
+    [[ -d "${tmp_dir}" ]] && rm -rf "${tmp_dir}"
+
+    mkdir -v "${tmp_dir}"
+    pushd "${tmp_dir}"
 
     for link in "${links[@]}"; do
         printf "==> Downloading %s\n" "${link}"
@@ -76,6 +78,8 @@ install_stage_one() {
 # Running as $server_user
 install_stage_two() {
     set -euo pipefail
+
+    local arc
 
     mkdir -v "${home_dir}/.steam"
     cd "${home_dir}/.steam"

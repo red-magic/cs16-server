@@ -21,8 +21,9 @@ abort_install() {
 trap abort_install SIGINT
 
 check_depends() {
-    pkgs=("curl" "git" "7z")
-    missing_pkgs=""
+    local pkg
+    local missing_pkgs=""
+    local -a pkgs=("curl" "git" "7z")
 
     for pkg in "${pkgs[@]}"; do [[ -x "$(command -v "${pkg}")" ]] || missing_pkgs="${missing_pkgs} ${pkg}"; done
 
@@ -33,6 +34,8 @@ check_depends() {
 }
 
 download_files() {
+    local map_link
+
     mkdir -vp "${home_dir}/cs16-maps-and-graphs"
     cd "${home_dir}/cs16-maps-and-graphs"
 

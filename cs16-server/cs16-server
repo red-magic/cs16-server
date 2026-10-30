@@ -22,6 +22,7 @@ _is_server_updating() {
 }
 
 _start_hlds() {
+    local hlds_args
     if [[ ! -f "${server_conf}" ]]; then
         printf "Error: Configuration file %s not found\n" "${server_conf}" 1>&2
         exit 1
@@ -37,7 +38,8 @@ _start_hlds() {
 }
 
 _kill_hlds() {
-    timeout_stop="60"
+    local timeout_stop="60"
+    local i
     runuser -u "${server_user}" -- /bin/bash -c "pkill --quiet -u ${server_user} -SIGINT hlds_"
     for ((i=0; i < timeout_stop; i++)); do
         _is_server_running || return 0
@@ -101,6 +103,7 @@ update_server() {
 }
 
 status_server() {
+    local pid uptime_seconds h m s cmdline
     if _is_server_updating; then
         printf "Server is being updated\n"
     elif _is_server_running; then
