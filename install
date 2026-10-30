@@ -31,7 +31,7 @@ pre_install_check() {
         exit 1
     fi
 
-    if ! grep -q 'libstdc++.so.6 (libc6)' < <(ldconfig -p); then
+    if ! ldconfig -p | grep -q 'libstdc++.so.6 (libc6)'; then
         printf "Install 32-bit libstdc++\n" 1>&2
         printf "See README.md for details\n" 1>&2
         exit 1
