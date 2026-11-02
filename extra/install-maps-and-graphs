@@ -4,14 +4,11 @@
 
 set -euo pipefail
 
-server_user="hlds"
-home_dir="/opt/hlds"
-arc="cs-1.6-mega-map-pack-v-2018.1.7z"
+progname="${0##*/}"
 
-if [[ "$(id -un)" != "${server_user}" ]]; then
-    printf "%s must be run as %s user\n" "${0##*/}" "${server_user}" 1>&2
-    exit 1
-fi
+readonly server_user="hlds"
+readonly home_dir="/opt/hlds"
+readonly arc="cs-1.6-mega-map-pack-v-2018.1.7z"
 
 abort_install() {
     printf "\nInstallation aborted\n" 1>&2
@@ -60,12 +57,21 @@ clean_up() {
     rm -vrf graph
 }
 
-case "${1:-}" in
-    "")
-        check_depends
-        download_files
-        copy_files
-        #clean_up
-        printf "\nInstallation completed\n\n"
-        ;;
-esac
+main() {
+    if [[ "$(id -un)" != "${server_user}" ]]; then
+        printf "%s must be run as %s user\n" "${progname}" "${server_user}" 1>&2
+        exit 1
+    fi
+
+    case "${1:-}" in
+        "")
+            check_depends
+            download_files
+            copy_files
+            #clean_up
+            printf "\nInstallation completed\n\n"
+            ;;
+    esac
+}
+
+main "$@"
