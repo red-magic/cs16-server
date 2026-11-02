@@ -4,11 +4,6 @@ set -euo pipefail
 
 progname="${0##*/}"
 
-if [[ "$(id -u)" -ne 0 ]]; then
-    printf "%s requires root privileges\n" "${progname}" 1>&2
-    exit 1
-fi
-
 readonly server_user="hlds"
 readonly server_conf="/etc/hlds/cs16-server.conf"
 readonly server_workdir="/opt/hlds"
@@ -40,7 +35,7 @@ _start_hlds() {
 _kill_hlds() {
     local timeout_stop="60" i
     runuser -u "${server_user}" -- /bin/bash -c "pkill --quiet -u ${server_user} -SIGINT hlds_"
-    for ((i=0; i < timeout_stop; i++)); do
+    for ((i = 0; i < timeout_stop; i++)); do
         _is_server_running || return 0
         sleep 1
     done
@@ -124,34 +119,43 @@ print_help() {
     printf "Usage: %s <start | stop | restart | update | status>\n" "${progname}"
 }
 
-if [[ "${#}" -gt 1 ]]; then
-    printf "Too many arguments\n" 1>&2
-    print_help
-    exit 1
-elif [[ "${#}" -eq 0 ]]; then
-    print_help
-    exit 0
-fi
+main() {
+    if [[ "$(id -u)" -ne 0 ]]; then
+        printf "%s requires root privileges\n" "${progname}" 1>&2
+        exit 1
+    fi
 
-case "${1}" in
-    "start")
-        start_server
-        ;;
-    "stop")
-        stop_server
-        ;;
-    "restart")
-        restart_server
-        ;;
-    "update")
-        update_server
-        ;;
-    "status")
-        status_server
-        ;;
-    *)
-        printf "Invalid command: %s\n" "${1}" 1>&2
+    if [[ "${#}" -gt 1 ]]; then
+        printf "Too many arguments\n" 1>&2
         print_help
         exit 1
-        ;;
-esac
+    elif [[ "${#}" -eq 0 ]]; then
+        print_help
+        exit 0
+    fi
+
+    case "${1}" in
+        "start")
+            start_server
+            ;;
+        "stop")
+            stop_server
+            ;;
+        "restart")
+            restart_server
+            ;;
+        "update")
+            update_server
+            ;;
+        "status")
+            status_server
+            ;;
+        *)
+            printf "Invalid command: %s\n" "${1}" 1>&2
+            print_help
+            exit 1
+            ;;
+    esac
+}
+
+main "${@}"
