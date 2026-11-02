@@ -115,7 +115,7 @@ status_server() {
     fi
 }
 
-print_help() {
+usage() {
     printf "Usage: %s <start | stop | restart | update | status>\n" "${progname}"
 }
 
@@ -127,10 +127,10 @@ main() {
 
     if [[ "$#" -gt 1 ]]; then
         printf "Too many arguments\n" 1>&2
-        print_help
+        usage
         exit 1
     elif [[ "$#" -eq 0 ]]; then
-        print_help
+        usage
         exit 0
     fi
 
@@ -152,7 +152,7 @@ main() {
             ;;
         *)
             printf "Invalid command: %s\n" "$1" 1>&2
-            print_help
+            usage
             exit 1
             ;;
     esac
