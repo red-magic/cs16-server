@@ -125,16 +125,16 @@ main() {
         exit 1
     fi
 
-    if [[ "${#}" -gt 1 ]]; then
+    if [[ "$#" -gt 1 ]]; then
         printf "Too many arguments\n" 1>&2
         print_help
         exit 1
-    elif [[ "${#}" -eq 0 ]]; then
+    elif [[ "$#" -eq 0 ]]; then
         print_help
         exit 0
     fi
 
-    case "${1}" in
+    case "$1" in
         "start")
             start_server
             ;;
@@ -151,11 +151,11 @@ main() {
             status_server
             ;;
         *)
-            printf "Invalid command: %s\n" "${1}" 1>&2
+            printf "Invalid command: %s\n" "$1" 1>&2
             print_help
             exit 1
             ;;
     esac
 }
 
-main "${@}"
+main "$@"

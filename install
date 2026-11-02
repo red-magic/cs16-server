@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-[[ "$(id -u)" -ne 0 ]] && exec sudo "${0}" "${1:-}"
+[[ "$(id -u)" -ne 0 ]] && exec sudo "$0" "${1:-}"
 
 server_user="hlds"
 bin_dir="/usr/bin"
@@ -147,7 +147,7 @@ remove_server() {
     userdel -r "${server_user}" &> /dev/null
 }
 
-case "${1}" in
+case "$1" in
     "remove")
         pre_remove_check
         remove_server
